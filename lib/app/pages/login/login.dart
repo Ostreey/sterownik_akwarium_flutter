@@ -26,6 +26,7 @@ class _LoginState extends ConsumerState<Login> {
   final TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
      // backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
@@ -78,7 +79,7 @@ class _LoginState extends ConsumerState<Login> {
                 CustomButton(
                   text: "Zaloguj",
                   onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
+                //    if (_formKey.currentState!.validate()) {
                       print(loginController.text);
                       print(passwordController.text);
                       //context.go("/home/parameters");
@@ -88,7 +89,7 @@ class _LoginState extends ConsumerState<Login> {
                           'tab': Parameters.pageConfig.name,
                         },
                       );
-                    }
+                   // }
                   },
                 ),
               ],

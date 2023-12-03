@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 const lightColorScheme = ColorScheme(
@@ -16,7 +17,7 @@ const lightColorScheme = ColorScheme(
   onTertiaryContainer: Color(0xFF2E1125),
   error: Color(0xFFBA1A1A),
   onError: Color(0xFFFFFFFF),
-  errorContainer: Color(0xFFFFDAD6),
+  errorContainer: Color(0xFFFF897D),
   onErrorContainer: Color(0xFF410002),
   outline: Color(0xFF777680),
   background: Color(0xFFFFFBFF),
