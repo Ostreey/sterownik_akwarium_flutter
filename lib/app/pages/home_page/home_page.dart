@@ -45,6 +45,7 @@ class _HomePageState extends ConsumerState<HomePage> {
     return Scaffold(
       body: SafeArea(
           child: AdaptiveLayout(
+
             primaryNavigation: SlotLayout(
               config: <Breakpoint, SlotLayoutConfig>{
                 Breakpoints.mediumAndUp: SlotLayout.from(
@@ -69,10 +70,12 @@ class _HomePageState extends ConsumerState<HomePage> {
                 Breakpoints.small: SlotLayout.from(
                   key: const Key("bottom-navigation-small"),
                   builder: (_) => AdaptiveScaffold.standardBottomNavigationBar(
+
                       destinations: destinations,
                       onDestinationSelected: (index) =>
                           _tapOnNavigationDestination(context, index),
-                      currentIndex: widget.index
+                      currentIndex: widget.index,
+
                   ),
                 ),
               },
