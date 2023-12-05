@@ -86,7 +86,7 @@ class Gauge extends StatelessWidget {
           right: 0,
           child: Center(
             child: Text(
-              currentValue.toString(),
+              currentValue.toString() + "'C",
               style: textTheme.titleLarge!.copyWith(color: themeColor.primary), // Adjust text style as needed
             ),
           ),

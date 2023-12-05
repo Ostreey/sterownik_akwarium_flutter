@@ -43,6 +43,9 @@ class _HomePageState extends ConsumerState<HomePage> {
     final theme = Theme.of(context);
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text("parameter"),
+      ),
       body: SafeArea(
           child: AdaptiveLayout(
 
