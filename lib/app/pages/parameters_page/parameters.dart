@@ -29,10 +29,10 @@ class Parameters extends StatelessWidget {
           child:
               GridView.count(
                 shrinkWrap: true,
-                crossAxisCount: 2, // Number of columns in the grid
-                crossAxisSpacing: 10, // Spacing between columns
+                crossAxisCount: 2,
+                crossAxisSpacing: 10,
                 mainAxisSpacing: 20.0,
-                childAspectRatio: 1.3, // Spacing between rows
+                childAspectRatio: 1.3,
                 children: [
                   ParameterWidget(labelName: "Temp. wody", currentValue: 29.3),
                   ParameterWidget(labelName: "Temo. powietrza", currentValue: 29.3),

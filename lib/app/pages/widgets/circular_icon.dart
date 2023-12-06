@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 
 class CircularIcon extends StatelessWidget {
-  final String value;
+  final String labelName;
 
-  const CircularIcon({Key? key, required this.value}) : super(key: key);
+  const CircularIcon({Key? key, required this.labelName}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class CircularIcon extends StatelessWidget {
         color: theme.primary, // Blue background color for the circle
       ),
       child: Center(
-        child: Text(value, style: textTheme.labelLarge!.copyWith(color: Colors.white))
+        child: Text(labelName, style: textTheme.labelLarge!.copyWith(color: Colors.white))
       ),
     );
   }
