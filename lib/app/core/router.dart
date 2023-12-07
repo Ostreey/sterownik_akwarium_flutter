@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sterownik_akwarium/app/pages/change_socket_name/change_socket_name.dart';
 
 import '../pages/devices_page/devices.dart';
 import '../pages/home_page/home_page.dart';
@@ -44,11 +45,12 @@ final routes = GoRouter(
           ]
       ),
 
-/*GoRoute(
-          path: '/setup_page',
-          name: "/setup_page",
+      GoRoute(
+          path: "/change_socket_name",
+          name: ChangeSocketName.pageConfig.name,
           builder: (context, state) {
-            return SetupPage();
-          }),*/
+            return ChangeSocketName();
+          }
+      )
 
     ]);

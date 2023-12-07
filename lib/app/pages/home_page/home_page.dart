@@ -15,7 +15,6 @@ class HomePage extends ConsumerStatefulWidget {
     super.key,
     required String tab,
   }) : index = tabs.indexWhere((element) {
-    debugPrint(element.name);
     return element.name == tab;
   });
 
