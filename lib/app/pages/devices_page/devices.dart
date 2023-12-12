@@ -32,6 +32,7 @@ class _DevicesState extends State<Devices> {
     super.initState();
     socketName = List.generate(numberOfSockets, (index) => 'Nazwa gniazda');
     _loadNamesFromPrefs();
+    debugPrint("FROM PREVIOUS");
   }
 
   Future<void> _loadNamesFromPrefs() async {
@@ -79,7 +80,9 @@ class _DevicesState extends State<Devices> {
                         GestureDetector(
                             child: Icon(Icons.edit_outlined, color: colorTheme.primary),
                             onTap: (){
-                              context.pushNamed(ChangeSocketName.pageConfig.name);
+                              context.pushNamed(ChangeSocketName.pageConfig.name, extra: socketName).then((value) => setState(() {
+                                socketName = value  as List<String>;
+                              }));
                             }
                         ),
                       ],

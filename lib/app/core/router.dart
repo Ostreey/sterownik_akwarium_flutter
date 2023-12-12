@@ -46,11 +46,16 @@ final routes = GoRouter(
       ),
 
       GoRoute(
-          path: "/change_socket_name",
-          name: ChangeSocketName.pageConfig.name,
-          builder: (context, state) {
-            return ChangeSocketName();
-          }
+        path: "/change_socket_name",
+        name: ChangeSocketName.pageConfig.name,
+        builder: (context, state) {
+          final List<String>? socketNames = state.extra as List<String>?;
+
+          return ChangeSocketName(
+            socketNames: socketNames,
+          );
+        },
       )
+
 
     ]);
