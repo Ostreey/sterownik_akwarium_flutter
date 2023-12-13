@@ -49,6 +49,8 @@ dependencies:
   gauge_indicator: ^0.4.3
   fl_chart: ^0.65.0
   shared_preferences: ^2.2.2
+  mqtt_client: ^10.0.0
+  freezed: ^2.4.5
 
 
 
@@ -58,7 +60,6 @@ dev_dependencies:
   riverpod_generator: ^2.2.3
   build_runner: ^2.4.5
   flutter_lints: ^2.0.0
-  freezed: ^2.4.1
   json_serializable: ^6.7.1
   envied_generator: ^0.3.0+3
 
