@@ -1,17 +1,11 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:gauge_indicator/gauge_indicator.dart';
-import 'package:sterownik_akwarium/app/domain/models/mqtt_model.dart';
+import 'package:sterownik_akwarium/app/domain/models/device_state/device_state_model.dart';
+import 'package:sterownik_akwarium/app/domain/models/sensor_model/sensor_model.dart';
 import 'package:sterownik_akwarium/app/pages/widgets/gauge.dart';
-
-
-
 import '../../core/page_config.dart';
 import '../widgets/label.dart';
 import 'mqtt_provider.dart';
-import 'parameters_provider.dart';
 
 class Parameters extends ConsumerWidget {
   const Parameters({Key? key}) : super(key: key);
@@ -26,7 +20,7 @@ class Parameters extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
-    SensorModel sensorData = SensorModel(waterTemp: 0, waterTempMin: 0, waterTempMax: 0, airTemp: 0, airTempMin: 0, airTempMax: 0, ph: 0, phMin: 0, phMax: 0, tds: 0, tdsMin: 0, tdsMax: 0);
+    SensorModel sensorData = SensorModel();
     final sensorDataAsyncValue = ref.watch(mqttUpdatesProvider);
     sensorDataAsyncValue.whenData((value) => sensorData = value);
 
@@ -43,13 +37,12 @@ class Parameters extends ConsumerWidget {
             mainAxisSpacing: 20.0,
             childAspectRatio: 1.3,
             children: [
-              ParameterWidget(labelName: "Temp. wody", currentValue: sensorData.waterTemp, minAlarmValue: sensorData.waterTempMin, maxAlarmValue: sensorData.waterTempMax),
-              ParameterWidget(labelName: "Temo. powietrza", currentValue: sensorData.airTemp, minAlarmValue: sensorData.airTempMin, maxAlarmValue: sensorData.airTempMax),
+              ParameterWidget(labelName: "Temp. wody", currentValue: sensorData.waterTemp, minAlarmValue: sensorData.waterTempMin, maxAlarmValue: sensorData.waterTempMax, unit: "'C",),
+              ParameterWidget(labelName: "Temo. powietrza", currentValue: sensorData.airTemp, minAlarmValue: sensorData.airTempMin, maxAlarmValue: sensorData.airTempMax, unit: "'C",),
               ParameterWidget(labelName: "pH", currentValue: sensorData.ph, minAlarmValue: sensorData.phMin, maxAlarmValue: sensorData.phMax),
-              ParameterWidget(labelName: "TDS", currentValue: sensorData.tds, minAlarmValue: sensorData.tdsMin, maxAlarmValue: sensorData.tdsMax),
-
-              ParameterWidget(labelName: "CO2", currentValue: 25.3, minAlarmValue: 24.0, maxAlarmValue: 26.0),
-              ParameterWidget(labelName: "Przepływomierz", currentValue: 23.3, minAlarmValue: 21.3, maxAlarmValue: 25.3),
+              ParameterWidget(labelName: "TDS", currentValue: sensorData.tds, minAlarmValue: sensorData.tdsMin, maxAlarmValue: sensorData.tdsMax, unit: ' ppm',),
+              ParameterWidget(labelName: "CO2", currentValue: sensorData.co2, minAlarmValue: sensorData.co2Min, maxAlarmValue: sensorData.co2Max),
+              ParameterWidget(labelName: "Przepływomierz", currentValue: sensorData.waterFlow, minAlarmValue: sensorData.waterFlowMin, maxAlarmValue: sensorData.waterFlowMax, unit: ' L/h',),
             ],
           ),
 
@@ -60,14 +53,20 @@ class Parameters extends ConsumerWidget {
 }
 
 class ParameterWidget extends StatelessWidget {
-  const ParameterWidget({
-    super.key, required this.labelName, required this.currentValue, required this.minAlarmValue, required this.maxAlarmValue,
+   ParameterWidget({
+    super.key,
+    required this.labelName,
+    required this.currentValue,
+    required this.minAlarmValue,
+    required this.maxAlarmValue,
+    this.unit = '',
   });
 
   final String labelName;
-  final  currentValue;
-  final  minAlarmValue;
-  final  maxAlarmValue;
+  final  double currentValue;
+  final  double minAlarmValue;
+  final  double maxAlarmValue;
+  String? unit;
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +85,7 @@ class ParameterWidget extends StatelessWidget {
           Label(label: labelName),
           Container(
               margin: EdgeInsets.symmetric(vertical: 15),
-              child: Gauge(currentValue: currentValue, minAlarmValue: minAlarmValue, maxAlarmValue: maxAlarmValue)
+              child: Gauge(currentValue: currentValue, minAlarmValue: minAlarmValue, maxAlarmValue: maxAlarmValue, unit: unit!)
           ),
         ],
       ),

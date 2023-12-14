@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sterownik_akwarium/app/core/page_config.dart';
+import 'package:sterownik_akwarium/app/domain/models/device_state/device_state_model.dart';
 import 'package:sterownik_akwarium/app/pages/change_socket_name/change_socket_name.dart';
+import 'package:sterownik_akwarium/app/pages/devices_page/devices_provider.dart';
 import 'package:sterownik_akwarium/app/pages/devices_page/widgets/led_state.dart';
 import 'package:sterownik_akwarium/app/pages/widgets/circular_icon.dart';
 
+import '../../domain/models/sensor_model/sensor_model.dart';
+import '../parameters_page/mqtt_provider.dart';
 import 'widgets/cicrulation_section.dart';
 import 'widgets/pumps_section.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class Devices extends StatefulWidget {
+class Devices extends ConsumerStatefulWidget {
   const Devices({Key? key}) : super(key: key);
 
   static const PageConfig pageConfig = PageConfig(
@@ -18,11 +23,12 @@ class Devices extends StatefulWidget {
     name: 'Urządzenia',
     child: Devices(),
   );
+
   @override
   _DevicesState createState() => _DevicesState();
 }
 
-class _DevicesState extends State<Devices> {
+class _DevicesState extends ConsumerState<Devices> {
   late List<String> socketName = [];
 
   int numberOfSockets = 7;
@@ -57,6 +63,9 @@ class _DevicesState extends State<Devices> {
     final size = MediaQuery.of(context).size;
     final textTheme = Theme.of(context).textTheme;
     final colorTheme = Theme.of(context).colorScheme;
+
+    final devices = ref.watch(devicesProvider);
+
     return SafeArea(
         child: SingleChildScrollView(
           child: Container(

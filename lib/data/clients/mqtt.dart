@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
-import 'package:sterownik_akwarium/app/domain/models/mqtt_model.dart';
+import 'package:sterownik_akwarium/app/domain/models/sensor_model/sensor_model.dart';
 
 class MyMqttClient {
   late MqttServerClient _client;
@@ -72,6 +72,7 @@ class MyMqttClient {
     } else {
       print('MQTT Client Connection Failed - status is ${_client.connectionStatus}');
       _client.disconnect();
+
     }
   }
 

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gauge_indicator/gauge_indicator.dart';
 
 class Gauge extends StatelessWidget {
-  const Gauge({Key? key, required this.currentValue, required this.minAlarmValue, required this.maxAlarmValue}) : super(key: key);
+  const Gauge({Key? key, required this.currentValue, required this.minAlarmValue, required this.maxAlarmValue, required this.unit}) : super(key: key);
 
   Color getValidValueColor(ColorScheme themeColor) {
     return themeColor.inversePrimary;
@@ -17,17 +17,23 @@ class Gauge extends StatelessWidget {
     return themeColor.primary;
   }
 
+  String parseCurentValue(double value) {
+    String parsedValue;
+    value  > 100 ? parsedValue = value.toStringAsFixed(0) : parsedValue = value.toString();
+    return parsedValue;
+  }
+
   final double currentValue;
   final double minAlarmValue;
   final double maxAlarmValue;
+  final String unit;
   @override
   Widget build(BuildContext context) {
     final themeColor = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
-    final midValue = (minAlarmValue + maxAlarmValue) / 2;
-    final double minRange = midValue - 3;
-    final double maxRange = midValue + 3;
+    final double minRange = minAlarmValue * 0.9;
+    final double maxRange = maxAlarmValue * 1.1;
     return Stack(
       children: [
         Container(
@@ -66,7 +72,7 @@ class Gauge extends StatelessWidget {
                 GaugeSegment(
                   from: minAlarmValue,
                   to: maxAlarmValue,
-                  color: getValidValueColor(themeColor), // Use the function to get color dynamically
+                  color: getValidValueColor(themeColor),
                   cornerRadius: Radius.zero,
                 ),
                 GaugeSegment(
@@ -86,7 +92,7 @@ class Gauge extends StatelessWidget {
           right: 0,
           child: Center(
             child: Text(
-              currentValue.toString() + "'C",
+              parseCurentValue(currentValue) + unit,
               style: textTheme.titleLarge!.copyWith(color: themeColor.primary), // Adjust text style as needed
             ),
           ),
