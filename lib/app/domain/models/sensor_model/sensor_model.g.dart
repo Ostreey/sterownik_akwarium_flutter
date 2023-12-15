@@ -40,6 +40,16 @@ _$SensorModelImpl _$$SensorModelImplFromJson(Map<String, dynamic> json) =>
           ? const DeviceStateModel()
           : DeviceStateModel.fromJson(
               json['circulation2'] as Map<String, dynamic>),
+      led: json['led'] == null
+          ? const DeviceStateModel()
+          : DeviceStateModel.fromJson(json['led'] as Map<String, dynamic>),
+      socket1: json['socket1'] as bool? ?? false,
+      socket2: json['socket2'] as bool? ?? false,
+      socket3: json['socket3'] as bool? ?? false,
+      socket4: json['socket4'] as bool? ?? false,
+      socket5: json['socket5'] as bool? ?? false,
+      socket6: json['socket6'] as bool? ?? false,
+      socket7: json['socket7'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$SensorModelImplToJson(_$SensorModelImpl instance) =>
@@ -66,4 +76,12 @@ Map<String, dynamic> _$$SensorModelImplToJson(_$SensorModelImpl instance) =>
       'pompa2': instance.pompa2,
       'circulation1': instance.circulation1,
       'circulation2': instance.circulation2,
+      'led': instance.led,
+      'socket1': instance.socket1,
+      'socket2': instance.socket2,
+      'socket3': instance.socket3,
+      'socket4': instance.socket4,
+      'socket5': instance.socket5,
+      'socket6': instance.socket6,
+      'socket7': instance.socket7,
     };

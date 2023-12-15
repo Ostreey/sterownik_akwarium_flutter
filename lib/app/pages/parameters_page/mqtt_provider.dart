@@ -17,6 +17,14 @@ final mqttUpdatesProvider = StreamProvider<SensorModel>((ref) {
           circulation2: sensorModel.circulation2,
           pompa1: sensorModel.pompa1,
           pompa2: sensorModel.pompa2,
+          socket1: sensorModel.socket1,
+          socket2: sensorModel.socket2,
+          socket3: sensorModel.socket3,
+          socket4: sensorModel.socket4,
+          socket5: sensorModel.socket5,
+          socket6: sensorModel.socket6,
+          socket7: sensorModel.socket7,
+          led: sensorModel.led,
     ));
   });
 

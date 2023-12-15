@@ -42,6 +42,14 @@ mixin _$SensorModel {
   DeviceStateModel get pompa2 => throw _privateConstructorUsedError;
   DeviceStateModel get circulation1 => throw _privateConstructorUsedError;
   DeviceStateModel get circulation2 => throw _privateConstructorUsedError;
+  DeviceStateModel get led => throw _privateConstructorUsedError;
+  bool get socket1 => throw _privateConstructorUsedError;
+  bool get socket2 => throw _privateConstructorUsedError;
+  bool get socket3 => throw _privateConstructorUsedError;
+  bool get socket4 => throw _privateConstructorUsedError;
+  bool get socket5 => throw _privateConstructorUsedError;
+  bool get socket6 => throw _privateConstructorUsedError;
+  bool get socket7 => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -77,12 +85,21 @@ abstract class $SensorModelCopyWith<$Res> {
       DeviceStateModel pompa1,
       DeviceStateModel pompa2,
       DeviceStateModel circulation1,
-      DeviceStateModel circulation2});
+      DeviceStateModel circulation2,
+      DeviceStateModel led,
+      bool socket1,
+      bool socket2,
+      bool socket3,
+      bool socket4,
+      bool socket5,
+      bool socket6,
+      bool socket7});
 
   $DeviceStateModelCopyWith<$Res> get pompa1;
   $DeviceStateModelCopyWith<$Res> get pompa2;
   $DeviceStateModelCopyWith<$Res> get circulation1;
   $DeviceStateModelCopyWith<$Res> get circulation2;
+  $DeviceStateModelCopyWith<$Res> get led;
 }
 
 /// @nodoc
@@ -120,6 +137,14 @@ class _$SensorModelCopyWithImpl<$Res, $Val extends SensorModel>
     Object? pompa2 = null,
     Object? circulation1 = null,
     Object? circulation2 = null,
+    Object? led = null,
+    Object? socket1 = null,
+    Object? socket2 = null,
+    Object? socket3 = null,
+    Object? socket4 = null,
+    Object? socket5 = null,
+    Object? socket6 = null,
+    Object? socket7 = null,
   }) {
     return _then(_value.copyWith(
       waterTemp: null == waterTemp
@@ -210,6 +235,38 @@ class _$SensorModelCopyWithImpl<$Res, $Val extends SensorModel>
           ? _value.circulation2
           : circulation2 // ignore: cast_nullable_to_non_nullable
               as DeviceStateModel,
+      led: null == led
+          ? _value.led
+          : led // ignore: cast_nullable_to_non_nullable
+              as DeviceStateModel,
+      socket1: null == socket1
+          ? _value.socket1
+          : socket1 // ignore: cast_nullable_to_non_nullable
+              as bool,
+      socket2: null == socket2
+          ? _value.socket2
+          : socket2 // ignore: cast_nullable_to_non_nullable
+              as bool,
+      socket3: null == socket3
+          ? _value.socket3
+          : socket3 // ignore: cast_nullable_to_non_nullable
+              as bool,
+      socket4: null == socket4
+          ? _value.socket4
+          : socket4 // ignore: cast_nullable_to_non_nullable
+              as bool,
+      socket5: null == socket5
+          ? _value.socket5
+          : socket5 // ignore: cast_nullable_to_non_nullable
+              as bool,
+      socket6: null == socket6
+          ? _value.socket6
+          : socket6 // ignore: cast_nullable_to_non_nullable
+              as bool,
+      socket7: null == socket7
+          ? _value.socket7
+          : socket7 // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 
@@ -244,6 +301,14 @@ class _$SensorModelCopyWithImpl<$Res, $Val extends SensorModel>
       return _then(_value.copyWith(circulation2: value) as $Val);
     });
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $DeviceStateModelCopyWith<$Res> get led {
+    return $DeviceStateModelCopyWith<$Res>(_value.led, (value) {
+      return _then(_value.copyWith(led: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -276,7 +341,15 @@ abstract class _$$SensorModelImplCopyWith<$Res>
       DeviceStateModel pompa1,
       DeviceStateModel pompa2,
       DeviceStateModel circulation1,
-      DeviceStateModel circulation2});
+      DeviceStateModel circulation2,
+      DeviceStateModel led,
+      bool socket1,
+      bool socket2,
+      bool socket3,
+      bool socket4,
+      bool socket5,
+      bool socket6,
+      bool socket7});
 
   @override
   $DeviceStateModelCopyWith<$Res> get pompa1;
@@ -286,6 +359,8 @@ abstract class _$$SensorModelImplCopyWith<$Res>
   $DeviceStateModelCopyWith<$Res> get circulation1;
   @override
   $DeviceStateModelCopyWith<$Res> get circulation2;
+  @override
+  $DeviceStateModelCopyWith<$Res> get led;
 }
 
 /// @nodoc
@@ -321,6 +396,14 @@ class __$$SensorModelImplCopyWithImpl<$Res>
     Object? pompa2 = null,
     Object? circulation1 = null,
     Object? circulation2 = null,
+    Object? led = null,
+    Object? socket1 = null,
+    Object? socket2 = null,
+    Object? socket3 = null,
+    Object? socket4 = null,
+    Object? socket5 = null,
+    Object? socket6 = null,
+    Object? socket7 = null,
   }) {
     return _then(_$SensorModelImpl(
       waterTemp: null == waterTemp
@@ -411,6 +494,38 @@ class __$$SensorModelImplCopyWithImpl<$Res>
           ? _value.circulation2
           : circulation2 // ignore: cast_nullable_to_non_nullable
               as DeviceStateModel,
+      led: null == led
+          ? _value.led
+          : led // ignore: cast_nullable_to_non_nullable
+              as DeviceStateModel,
+      socket1: null == socket1
+          ? _value.socket1
+          : socket1 // ignore: cast_nullable_to_non_nullable
+              as bool,
+      socket2: null == socket2
+          ? _value.socket2
+          : socket2 // ignore: cast_nullable_to_non_nullable
+              as bool,
+      socket3: null == socket3
+          ? _value.socket3
+          : socket3 // ignore: cast_nullable_to_non_nullable
+              as bool,
+      socket4: null == socket4
+          ? _value.socket4
+          : socket4 // ignore: cast_nullable_to_non_nullable
+              as bool,
+      socket5: null == socket5
+          ? _value.socket5
+          : socket5 // ignore: cast_nullable_to_non_nullable
+              as bool,
+      socket6: null == socket6
+          ? _value.socket6
+          : socket6 // ignore: cast_nullable_to_non_nullable
+              as bool,
+      socket7: null == socket7
+          ? _value.socket7
+          : socket7 // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -440,7 +555,15 @@ class _$SensorModelImpl implements _SensorModel {
       this.pompa1 = const DeviceStateModel(),
       this.pompa2 = const DeviceStateModel(),
       this.circulation1 = const DeviceStateModel(),
-      this.circulation2 = const DeviceStateModel()});
+      this.circulation2 = const DeviceStateModel(),
+      this.led = const DeviceStateModel(),
+      this.socket1 = false,
+      this.socket2 = false,
+      this.socket3 = false,
+      this.socket4 = false,
+      this.socket5 = false,
+      this.socket6 = false,
+      this.socket7 = false});
 
   factory _$SensorModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$SensorModelImplFromJson(json);
@@ -511,10 +634,34 @@ class _$SensorModelImpl implements _SensorModel {
   @override
   @JsonKey()
   final DeviceStateModel circulation2;
+  @override
+  @JsonKey()
+  final DeviceStateModel led;
+  @override
+  @JsonKey()
+  final bool socket1;
+  @override
+  @JsonKey()
+  final bool socket2;
+  @override
+  @JsonKey()
+  final bool socket3;
+  @override
+  @JsonKey()
+  final bool socket4;
+  @override
+  @JsonKey()
+  final bool socket5;
+  @override
+  @JsonKey()
+  final bool socket6;
+  @override
+  @JsonKey()
+  final bool socket7;
 
   @override
   String toString() {
-    return 'SensorModel(waterTemp: $waterTemp, waterTempMin: $waterTempMin, waterTempMax: $waterTempMax, airTemp: $airTemp, airTempMin: $airTempMin, airTempMax: $airTempMax, ph: $ph, phMin: $phMin, phMax: $phMax, tds: $tds, tdsMin: $tdsMin, tdsMax: $tdsMax, co2: $co2, co2Min: $co2Min, co2Max: $co2Max, waterFlow: $waterFlow, waterFlowMin: $waterFlowMin, waterFlowMax: $waterFlowMax, pompa1: $pompa1, pompa2: $pompa2, circulation1: $circulation1, circulation2: $circulation2)';
+    return 'SensorModel(waterTemp: $waterTemp, waterTempMin: $waterTempMin, waterTempMax: $waterTempMax, airTemp: $airTemp, airTempMin: $airTempMin, airTempMax: $airTempMax, ph: $ph, phMin: $phMin, phMax: $phMax, tds: $tds, tdsMin: $tdsMin, tdsMax: $tdsMax, co2: $co2, co2Min: $co2Min, co2Max: $co2Max, waterFlow: $waterFlow, waterFlowMin: $waterFlowMin, waterFlowMax: $waterFlowMax, pompa1: $pompa1, pompa2: $pompa2, circulation1: $circulation1, circulation2: $circulation2, led: $led, socket1: $socket1, socket2: $socket2, socket3: $socket3, socket4: $socket4, socket5: $socket5, socket6: $socket6, socket7: $socket7)';
   }
 
   @override
@@ -553,7 +700,15 @@ class _$SensorModelImpl implements _SensorModel {
             (identical(other.circulation1, circulation1) ||
                 other.circulation1 == circulation1) &&
             (identical(other.circulation2, circulation2) ||
-                other.circulation2 == circulation2));
+                other.circulation2 == circulation2) &&
+            (identical(other.led, led) || other.led == led) &&
+            (identical(other.socket1, socket1) || other.socket1 == socket1) &&
+            (identical(other.socket2, socket2) || other.socket2 == socket2) &&
+            (identical(other.socket3, socket3) || other.socket3 == socket3) &&
+            (identical(other.socket4, socket4) || other.socket4 == socket4) &&
+            (identical(other.socket5, socket5) || other.socket5 == socket5) &&
+            (identical(other.socket6, socket6) || other.socket6 == socket6) &&
+            (identical(other.socket7, socket7) || other.socket7 == socket7));
   }
 
   @JsonKey(ignore: true)
@@ -581,7 +736,15 @@ class _$SensorModelImpl implements _SensorModel {
         pompa1,
         pompa2,
         circulation1,
-        circulation2
+        circulation2,
+        led,
+        socket1,
+        socket2,
+        socket3,
+        socket4,
+        socket5,
+        socket6,
+        socket7
       ]);
 
   @JsonKey(ignore: true)
@@ -621,7 +784,15 @@ abstract class _SensorModel implements SensorModel {
       final DeviceStateModel pompa1,
       final DeviceStateModel pompa2,
       final DeviceStateModel circulation1,
-      final DeviceStateModel circulation2}) = _$SensorModelImpl;
+      final DeviceStateModel circulation2,
+      final DeviceStateModel led,
+      final bool socket1,
+      final bool socket2,
+      final bool socket3,
+      final bool socket4,
+      final bool socket5,
+      final bool socket6,
+      final bool socket7}) = _$SensorModelImpl;
 
   factory _SensorModel.fromJson(Map<String, dynamic> json) =
       _$SensorModelImpl.fromJson;
@@ -670,6 +841,22 @@ abstract class _SensorModel implements SensorModel {
   DeviceStateModel get circulation1;
   @override
   DeviceStateModel get circulation2;
+  @override
+  DeviceStateModel get led;
+  @override
+  bool get socket1;
+  @override
+  bool get socket2;
+  @override
+  bool get socket3;
+  @override
+  bool get socket4;
+  @override
+  bool get socket5;
+  @override
+  bool get socket6;
+  @override
+  bool get socket7;
   @override
   @JsonKey(ignore: true)
   _$$SensorModelImplCopyWith<_$SensorModelImpl> get copyWith =>

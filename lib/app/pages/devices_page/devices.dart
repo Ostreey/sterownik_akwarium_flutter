@@ -93,35 +93,36 @@ class _DevicesState extends ConsumerState<Devices> {
                                 socketName = value  as List<String>;
                               }));
                             }
+
                         ),
                       ],
                     ),
                     SizedBox(height: 15,),
-                    DeviceStateLongWidget(state: true,
+                    DeviceStateLongWidget(state: devices.socket1,
                         labelName:socketName[0]
                     ),
                     SizedBox(height: 7,),
-                    DeviceStateLongWidget(state: false,
+                    DeviceStateLongWidget(state: devices.socket2,
                         labelName:socketName[1]
                     ),
                     SizedBox(height: 7,),
-                    DeviceStateLongWidget(state: false,
+                    DeviceStateLongWidget(state: devices.socket3,
                         labelName:socketName[2]
                     ),
                     SizedBox(height: 7,),
-                    DeviceStateLongWidget(state: true,
+                    DeviceStateLongWidget(state: devices.socket4,
                         labelName:socketName[3]
                     ),
                     SizedBox(height: 7,),
-                    DeviceStateLongWidget(state: true,
+                    DeviceStateLongWidget(state: devices.socket5,
                         labelName:socketName[4]
                     ),
                     SizedBox(height: 7,),
-                    DeviceStateLongWidget(state: true,
+                    DeviceStateLongWidget(state: devices.socket6,
                         labelName:socketName[5]
                     ),
                     SizedBox(height: 7,),
-                    DeviceStateLongWidget(state: true,
+                    DeviceStateLongWidget(state: devices.socket7,
                         labelName:socketName[6]
                     ),
                     SizedBox(height: 7,),
