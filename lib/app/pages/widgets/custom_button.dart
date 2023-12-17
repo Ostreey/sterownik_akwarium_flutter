@@ -10,13 +10,18 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeColor = Theme.of(context).colorScheme;
     return ElevatedButton(
+        style: ElevatedButton.styleFrom(
+            backgroundColor: themeColor.primary,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0))),
         onPressed: () => onPressed(),
         child: isLoading ?? false
             ?  SizedBox(
             width: 20,
             height: 20,
-            child: CircularProgressIndicator(color: Theme.of(context).colorScheme.primary))
-            : Text(text));
+            child: CircularProgressIndicator(color: Colors.white))
+            : Text(text, style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Colors.white),));
   }
 }

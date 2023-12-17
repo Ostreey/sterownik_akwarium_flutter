@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sterownik_akwarium/app/domain/models/device_state/device_state_model.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sterownik_akwarium/app/domain/models/sensor_model/sensor_model.dart';
 import 'package:sterownik_akwarium/app/pages/widgets/gauge.dart';
+
 import '../../core/page_config.dart';
+import '../timer_page/timer_page.dart';
 import '../widgets/label.dart';
 import 'mqtt_provider.dart';
 
@@ -18,7 +20,6 @@ class Parameters extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
     SensorModel sensorData = SensorModel();
     final sensorDataAsyncValue = ref.watch(mqttUpdatesProvider);
@@ -37,7 +38,11 @@ class Parameters extends ConsumerWidget {
             mainAxisSpacing: 20.0,
             childAspectRatio: 1.3,
             children: [
-              ParameterWidget(labelName: "Temp. wody", currentValue: sensorData.waterTemp, minAlarmValue: sensorData.waterTempMin, maxAlarmValue: sensorData.waterTempMax, unit: "'C",),
+              GestureDetector(
+                  onTap: () {
+                    context.pushNamed(TimerPage.pageConfig.name);
+                  },
+                  child: ParameterWidget(labelName: "Temp. wody", currentValue: sensorData.waterTemp, minAlarmValue: sensorData.waterTempMin, maxAlarmValue: sensorData.waterTempMax, unit: "'C",)),
               ParameterWidget(labelName: "Temo. powietrza", currentValue: sensorData.airTemp, minAlarmValue: sensorData.airTempMin, maxAlarmValue: sensorData.airTempMax, unit: "'C",),
               ParameterWidget(labelName: "pH", currentValue: sensorData.ph, minAlarmValue: sensorData.phMin, maxAlarmValue: sensorData.phMax),
               ParameterWidget(labelName: "TDS", currentValue: sensorData.tds, minAlarmValue: sensorData.tdsMin, maxAlarmValue: sensorData.tdsMax, unit: ' ppm',),

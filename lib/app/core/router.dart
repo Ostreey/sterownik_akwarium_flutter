@@ -2,11 +2,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sterownik_akwarium/app/pages/change_socket_name/change_socket_name.dart';
+import 'package:sterownik_akwarium/app/pages/edit_timer_page/edit_timer_page.dart';
 
 import '../pages/devices_page/devices.dart';
 import '../pages/home_page/home_page.dart';
 import '../pages/login/login.dart';
 import '../pages/parameters_page/parameters.dart';
+import '../pages/timer_page/timer_page.dart';
 import 'go_router_observer.dart';
 
 
@@ -55,7 +57,20 @@ final routes = GoRouter(
             socketNames: socketNames,
           );
         },
-      )
-
+      ),
+      GoRoute(
+        path: "/timer",
+        name: TimerPage.pageConfig.name,
+        builder: (context, state) {
+          return TimerPage();
+        },
+      ),
+      GoRoute(
+        path: "/edit_timer",
+        name: EditTimer.pageConfig.name,
+        builder: (context, state) {
+          return EditTimer();
+        },
+      ),
 
     ]);
