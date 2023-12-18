@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sterownik_akwarium/app/pages/change_socket_name/change_socket_name.dart';
 import 'package:sterownik_akwarium/app/pages/edit_timer_page/edit_timer_page.dart';
+import 'package:sterownik_akwarium/app/pages/parameters_edit/parameters_edit.dart';
 
 import '../pages/devices_page/devices.dart';
 import '../pages/home_page/home_page.dart';
@@ -70,6 +71,13 @@ final routes = GoRouter(
         name: EditTimer.pageConfig.name,
         builder: (context, state) {
           return EditTimer();
+        },
+      ),
+      GoRoute(
+        path: "/edit_parameters",
+        name: ParametersEditPage.pageConfig.name,
+        builder: (context, state) {
+          return ParametersEditPage();
         },
       ),
 

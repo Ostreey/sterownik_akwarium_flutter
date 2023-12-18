@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sterownik_akwarium/app/domain/models/sensor_model/sensor_model.dart';
+import 'package:sterownik_akwarium/app/pages/parameters_edit/parameters_edit.dart';
 import 'package:sterownik_akwarium/app/pages/widgets/gauge.dart';
 
 import '../../core/page_config.dart';
@@ -40,7 +41,7 @@ class Parameters extends ConsumerWidget {
             children: [
               GestureDetector(
                   onTap: () {
-                    context.pushNamed(TimerPage.pageConfig.name);
+                    context.pushNamed(ParametersEditPage.pageConfig.name);
                   },
                   child: ParameterWidget(labelName: "Temp. wody", currentValue: sensorData.waterTemp, minAlarmValue: sensorData.waterTempMin, maxAlarmValue: sensorData.waterTempMax, unit: "'C",)),
               ParameterWidget(labelName: "Temo. powietrza", currentValue: sensorData.airTemp, minAlarmValue: sensorData.airTempMin, maxAlarmValue: sensorData.airTempMax, unit: "'C",),

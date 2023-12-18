@@ -8,6 +8,8 @@ class DeviceStateModel with _$DeviceStateModel {
   const factory DeviceStateModel({
     @Default(false) bool state,
     @Default(0) int speed,
+    @Default("") String timerOn,
+    @Default("") String timerOff,
   }) = _DeviceStateModel;
 
   factory DeviceStateModel.fromJson(Map<String, dynamic> json) =>

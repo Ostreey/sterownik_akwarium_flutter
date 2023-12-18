@@ -58,7 +58,7 @@ class TimerPage extends StatelessWidget {
                       child: Container(
                         padding: EdgeInsets.all(15),
                         decoration: BoxDecoration(
-                          color: colorTheme.background,
+                          color: colorTheme.surface,
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(width: 1, color: colorTheme.outlineVariant),
                         ),

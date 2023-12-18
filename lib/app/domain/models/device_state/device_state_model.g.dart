@@ -11,6 +11,8 @@ _$DeviceStateModelImpl _$$DeviceStateModelImplFromJson(
     _$DeviceStateModelImpl(
       state: json['state'] as bool? ?? false,
       speed: json['speed'] as int? ?? 0,
+      timerOn: json['timerOn'] as String? ?? "",
+      timerOff: json['timerOff'] as String? ?? "",
     );
 
 Map<String, dynamic> _$$DeviceStateModelImplToJson(
@@ -18,4 +20,6 @@ Map<String, dynamic> _$$DeviceStateModelImplToJson(
     <String, dynamic>{
       'state': instance.state,
       'speed': instance.speed,
+      'timerOn': instance.timerOn,
+      'timerOff': instance.timerOff,
     };

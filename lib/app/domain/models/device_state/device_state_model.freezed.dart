@@ -22,6 +22,8 @@ DeviceStateModel _$DeviceStateModelFromJson(Map<String, dynamic> json) {
 mixin _$DeviceStateModel {
   bool get state => throw _privateConstructorUsedError;
   int get speed => throw _privateConstructorUsedError;
+  String get timerOn => throw _privateConstructorUsedError;
+  String get timerOff => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +37,7 @@ abstract class $DeviceStateModelCopyWith<$Res> {
           DeviceStateModel value, $Res Function(DeviceStateModel) then) =
       _$DeviceStateModelCopyWithImpl<$Res, DeviceStateModel>;
   @useResult
-  $Res call({bool state, int speed});
+  $Res call({bool state, int speed, String timerOn, String timerOff});
 }
 
 /// @nodoc
@@ -53,6 +55,8 @@ class _$DeviceStateModelCopyWithImpl<$Res, $Val extends DeviceStateModel>
   $Res call({
     Object? state = null,
     Object? speed = null,
+    Object? timerOn = null,
+    Object? timerOff = null,
   }) {
     return _then(_value.copyWith(
       state: null == state
@@ -63,6 +67,14 @@ class _$DeviceStateModelCopyWithImpl<$Res, $Val extends DeviceStateModel>
           ? _value.speed
           : speed // ignore: cast_nullable_to_non_nullable
               as int,
+      timerOn: null == timerOn
+          ? _value.timerOn
+          : timerOn // ignore: cast_nullable_to_non_nullable
+              as String,
+      timerOff: null == timerOff
+          ? _value.timerOff
+          : timerOff // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -75,7 +87,7 @@ abstract class _$$DeviceStateModelImplCopyWith<$Res>
       __$$DeviceStateModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool state, int speed});
+  $Res call({bool state, int speed, String timerOn, String timerOff});
 }
 
 /// @nodoc
@@ -91,6 +103,8 @@ class __$$DeviceStateModelImplCopyWithImpl<$Res>
   $Res call({
     Object? state = null,
     Object? speed = null,
+    Object? timerOn = null,
+    Object? timerOff = null,
   }) {
     return _then(_$DeviceStateModelImpl(
       state: null == state
@@ -101,6 +115,14 @@ class __$$DeviceStateModelImplCopyWithImpl<$Res>
           ? _value.speed
           : speed // ignore: cast_nullable_to_non_nullable
               as int,
+      timerOn: null == timerOn
+          ? _value.timerOn
+          : timerOn // ignore: cast_nullable_to_non_nullable
+              as String,
+      timerOff: null == timerOff
+          ? _value.timerOff
+          : timerOff // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -108,7 +130,11 @@ class __$$DeviceStateModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$DeviceStateModelImpl implements _DeviceStateModel {
-  const _$DeviceStateModelImpl({this.state = false, this.speed = 0});
+  const _$DeviceStateModelImpl(
+      {this.state = false,
+      this.speed = 0,
+      this.timerOn = "",
+      this.timerOff = ""});
 
   factory _$DeviceStateModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$DeviceStateModelImplFromJson(json);
@@ -119,10 +145,16 @@ class _$DeviceStateModelImpl implements _DeviceStateModel {
   @override
   @JsonKey()
   final int speed;
+  @override
+  @JsonKey()
+  final String timerOn;
+  @override
+  @JsonKey()
+  final String timerOff;
 
   @override
   String toString() {
-    return 'DeviceStateModel(state: $state, speed: $speed)';
+    return 'DeviceStateModel(state: $state, speed: $speed, timerOn: $timerOn, timerOff: $timerOff)';
   }
 
   @override
@@ -131,12 +163,15 @@ class _$DeviceStateModelImpl implements _DeviceStateModel {
         (other.runtimeType == runtimeType &&
             other is _$DeviceStateModelImpl &&
             (identical(other.state, state) || other.state == state) &&
-            (identical(other.speed, speed) || other.speed == speed));
+            (identical(other.speed, speed) || other.speed == speed) &&
+            (identical(other.timerOn, timerOn) || other.timerOn == timerOn) &&
+            (identical(other.timerOff, timerOff) ||
+                other.timerOff == timerOff));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, state, speed);
+  int get hashCode => Object.hash(runtimeType, state, speed, timerOn, timerOff);
 
   @JsonKey(ignore: true)
   @override
@@ -154,8 +189,11 @@ class _$DeviceStateModelImpl implements _DeviceStateModel {
 }
 
 abstract class _DeviceStateModel implements DeviceStateModel {
-  const factory _DeviceStateModel({final bool state, final int speed}) =
-      _$DeviceStateModelImpl;
+  const factory _DeviceStateModel(
+      {final bool state,
+      final int speed,
+      final String timerOn,
+      final String timerOff}) = _$DeviceStateModelImpl;
 
   factory _DeviceStateModel.fromJson(Map<String, dynamic> json) =
       _$DeviceStateModelImpl.fromJson;
@@ -164,6 +202,10 @@ abstract class _DeviceStateModel implements DeviceStateModel {
   bool get state;
   @override
   int get speed;
+  @override
+  String get timerOn;
+  @override
+  String get timerOff;
   @override
   @JsonKey(ignore: true)
   _$$DeviceStateModelImplCopyWith<_$DeviceStateModelImpl> get copyWith =>
