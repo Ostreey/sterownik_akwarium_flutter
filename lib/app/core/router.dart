@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sterownik_akwarium/app/domain/models/parameters_edit_page_model/parameters_edit_page_model.dart';
 import 'package:sterownik_akwarium/app/pages/change_socket_name/change_socket_name.dart';
 import 'package:sterownik_akwarium/app/pages/edit_timer_page/edit_timer_page.dart';
 import 'package:sterownik_akwarium/app/pages/parameters_edit/parameters_edit.dart';
@@ -53,7 +54,6 @@ final routes = GoRouter(
         name: ChangeSocketName.pageConfig.name,
         builder: (context, state) {
           final List<String>? socketNames = state.extra as List<String>?;
-
           return ChangeSocketName(
             socketNames: socketNames,
           );
@@ -77,7 +77,8 @@ final routes = GoRouter(
         path: "/edit_parameters",
         name: ParametersEditPage.pageConfig.name,
         builder: (context, state) {
-          return ParametersEditPage();
+          final ParametersEditPageModel data = state.extra as ParametersEditPageModel;
+          return ParametersEditPage(data: data);
         },
       ),
 

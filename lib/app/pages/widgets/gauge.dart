@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gauge_indicator/gauge_indicator.dart';
 
 class Gauge extends StatelessWidget {
-  const Gauge({Key? key, required this.currentValue, required this.minAlarmValue, required this.maxAlarmValue, required this.unit}) : super(key: key);
+  const Gauge({Key? key, required this.currentValue, required this.minAlarmValue, required this.maxAlarmValue, required this.unit, this.size}) : super(key: key);
 
   Color getValidValueColor(ColorScheme themeColor) {
     return themeColor.inversePrimary;
@@ -27,6 +27,7 @@ class Gauge extends StatelessWidget {
   final double minAlarmValue;
   final double maxAlarmValue;
   final String unit;
+  final double? size;
   @override
   Widget build(BuildContext context) {
     final themeColor = Theme.of(context).colorScheme;
@@ -37,7 +38,7 @@ class Gauge extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          width: 140,
+           width: size ?? 140,
           child: AnimatedRadialGauge(
             duration: const Duration(seconds: 1),
             curve: Curves.elasticOut,
@@ -58,7 +59,7 @@ class Gauge extends StatelessWidget {
                 height: 20,
                 position: const GaugePointerPosition(
                   anchor: GaugePointerAnchor.surface,
-                  offset: Offset(10, 10),
+                  offset: Offset(0, 11),
                 ),
               ),
               progressBar: const GaugeProgressBar.rounded(color: Colors.transparent),
@@ -93,7 +94,7 @@ class Gauge extends StatelessWidget {
           child: Center(
             child: Text(
               parseCurentValue(currentValue) + unit,
-              style: textTheme.titleLarge!.copyWith(color: themeColor.primary), // Adjust text style as needed
+              style: ((currentValue > minAlarmValue) && (currentValue < maxAlarmValue)) ? textTheme.titleLarge!.copyWith(color: themeColor.primary) : textTheme.titleLarge!.copyWith(color: themeColor.error),    // Adjust text style as needed
             ),
           ),
         ),
