@@ -1,8 +1,25 @@
-import 'dart:ui';
+import 'package:flutter/material.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:sterownik_akwarium/app/pages/parameters_page/mqtt_provider.dart';
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+part 'parameters_edit_provider.g.dart';
 
-final onSaveCallbackProvider = Provider<VoidCallback?>((ref) {
-  // Define a default callback logic or return null if no default behavior is desired
-  return null;
-});
+@riverpod
+class Publish extends _$Publish {
+  // 5. override the [build] method to return a [FutureOr]
+  @override
+  FutureOr<void> build() {
+    // 6. return a value (or do nothing if the return type is void)
+  }
+
+  Future<void> publish() async {
+    // 7. read the repository using ref
+    final mqttClient = ref.read(mqttClientProvider);
+    // 8. set the loading state
+    state = const AsyncLoading();
+    // 9. sign in and update the state (data or error)
+    state = await AsyncValue.guard(() => mqttClient.publish("dwa", "dwa"));
+    debugPrint("PUBLISH TEST: ${state}");
+  }
+}
+

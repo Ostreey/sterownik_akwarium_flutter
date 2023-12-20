@@ -96,10 +96,15 @@ class MyMqttClient {
     });
   }
 
-  void publish(String topic, String message) {
+  Future<void> publish(String topic, String message) async{
     final builder = MqttClientPayloadBuilder();
     builder.addString(message);
-    _client.publishMessage(topic, MqttQos.exactlyOnce, builder.payload!);
+    try{
+      var response = await _client.publishMessage(topic, MqttQos.exactlyOnce, builder.payload!);
+      debugPrint("Is successful? ${response}");
+    }catch(e){
+      debugPrint("Error: ${e}");
+    }
   }
 
   void disconnect() {

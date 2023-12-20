@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sterownik_akwarium/app/core/page_config.dart';
 import 'package:sterownik_akwarium/app/domain/models/parameters_edit_page_model/parameters_edit_page_model.dart';
+import 'package:sterownik_akwarium/app/pages/parameters_edit/parameters_edit_provider.dart';
 import 'package:sterownik_akwarium/app/pages/widgets/gauge.dart';
 
-class ParametersEditPage extends StatefulWidget {
+class ParametersEditPage extends ConsumerStatefulWidget {
   const ParametersEditPage({super.key, this.data});
 
   static const  pageConfig = PageConfig(
@@ -14,10 +16,10 @@ class ParametersEditPage extends StatefulWidget {
   final ParametersEditPageModel? data;
 
   @override
-  State<ParametersEditPage> createState() => _ParametersEditPageState();
+  _ParametersEditPageState createState() => _ParametersEditPageState();
 }
 
-class _ParametersEditPageState extends State<ParametersEditPage> {
+class _ParametersEditPageState extends ConsumerState<ParametersEditPage> {
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -110,7 +112,7 @@ class _ParametersEditPageState extends State<ParametersEditPage> {
                                 ElevatedButton(
                                     onPressed: (){
                                       if (_formKey.currentState!.validate()) {
-
+                                        ref.read(publishProvider.notifier).publish();
                                       }
                                     },
                                     child: Text("Zapisz")
