@@ -96,12 +96,12 @@ class MyMqttClient {
     });
   }
 
-  Future<void> publish(String topic, String message) async{
+  Future<void> publish(String topic, String minValue, String maxValue) async{
     final builder = MqttClientPayloadBuilder();
-    builder.addString(message);
+    builder.addString("{\"minValue\":$minValue,\"maxValue\":$maxValue}");
     try{
       var response = await _client.publishMessage(topic, MqttQos.exactlyOnce, builder.payload!);
-      debugPrint("Is successful? ${response}");
+      debugPrint("topic sent now: $topic");
     }catch(e){
       debugPrint("Error: ${e}");
     }

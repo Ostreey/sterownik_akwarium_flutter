@@ -8,7 +8,8 @@ import 'package:sterownik_akwarium/data/clients/mqtt.dart';
 
 final mqttUpdatesProvider = StreamProvider<SensorModel>((ref) {
   final mqttClient = ref.watch(mqttClientProvider);
-  mqttClient.connect().then((_) => mqttClient.subscribe('testTopic'));
+  final deviceNumber = "001";
+  mqttClient.connect().then((_) => mqttClient.subscribe(deviceNumber));
 
   mqttClient.updates.listen((sensorModel) {
 

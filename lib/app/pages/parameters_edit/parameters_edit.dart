@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sterownik_akwarium/app/core/page_config.dart';
 import 'package:sterownik_akwarium/app/domain/models/parameters_edit_page_model/parameters_edit_page_model.dart';
 import 'package:sterownik_akwarium/app/pages/parameters_edit/parameters_edit_provider.dart';
+import 'package:sterownik_akwarium/app/pages/widgets/custom_button.dart';
 import 'package:sterownik_akwarium/app/pages/widgets/gauge.dart';
 
 class ParametersEditPage extends ConsumerStatefulWidget {
@@ -15,16 +16,36 @@ class ParametersEditPage extends ConsumerStatefulWidget {
   );
   final ParametersEditPageModel? data;
 
+
   @override
   _ParametersEditPageState createState() => _ParametersEditPageState();
 }
 
 class _ParametersEditPageState extends ConsumerState<ParametersEditPage> {
   final _formKey = GlobalKey<FormState>();
+  final TextEditingController _minController = TextEditingController();
+  final TextEditingController _maxController = TextEditingController();
+   var minValueChanged;
+   var maxValueChanged;
   @override
   Widget build(BuildContext context) {
 
+    ref.listen(publishProvider, (previous, next) {
+      if(next is AsyncData){
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Zapisano'),
+              duration: Duration(seconds: 1),
+            )
+        );
+        setState(() {
+          minValueChanged = double.parse(_minController.text);
+          maxValueChanged = double.parse(_maxController.text);
+        });
+      }
+    });
 
+final isPublishing = ref.watch(publishProvider).isLoading;
     return Scaffold(
       appBar: AppBar(
         title:  Text(widget.data!.appBarTitle),
@@ -38,14 +59,14 @@ class _ParametersEditPageState extends ConsumerState<ParametersEditPage> {
                  Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        HisteresisTextWidget(value: "${widget.data!.minValue} ${widget.data!.unit}", labelName: 'Min',),
+                        HisteresisTextWidget(value: "${minValueChanged ?? widget.data!.minValue} ${widget.data!.unit}", labelName: 'Min',),
                         Gauge(
                             size: 200,
                             currentValue: widget.data!.currentValue,
-                            minAlarmValue: widget.data!.minValue,
-                            maxAlarmValue: widget.data!.maxValue,
+                            minAlarmValue: minValueChanged ?? widget.data!.minValue,
+                            maxAlarmValue: maxValueChanged ?? widget.data!.maxValue,
                             unit: widget.data!.unit),
-                        HisteresisTextWidget(value: "${widget.data!.maxValue} ${widget.data!.unit}", labelName: 'Max',),
+                        HisteresisTextWidget(value: "${maxValueChanged ?? widget.data!.maxValue} ${widget.data!.unit}", labelName: 'Max',),
                       ],
                     ),
                   SizedBox(
@@ -60,6 +81,7 @@ class _ParametersEditPageState extends ConsumerState<ParametersEditPage> {
                               children: [
                                 Expanded(
                                   child: TextFormField(
+                                    controller: _minController,
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return 'Musisz wpisać wartość';
@@ -83,6 +105,7 @@ class _ParametersEditPageState extends ConsumerState<ParametersEditPage> {
                                 SizedBox(width: 15,),
                                 Expanded(
                                   child: TextFormField(
+                                    controller: _maxController,
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return 'Musisz wpisać wartość';
@@ -109,14 +132,12 @@ class _ParametersEditPageState extends ConsumerState<ParametersEditPage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                ElevatedButton(
-                                    onPressed: (){
-                                      if (_formKey.currentState!.validate()) {
-                                        ref.read(publishProvider.notifier).publish();
-                                      }
-                                    },
-                                    child: Text("Zapisz")
-                                ),
+                               CustomButton(text: "Zapisz",isLoading: isPublishing,  onPressed: (){
+                                 if (_formKey.currentState!.validate()) {
+                                   ref.read(publishProvider.notifier).publish(widget.data!.endpoint, _minController.text, _maxController.text);
+                                 }
+                               },
+                               ),
                               ],
                             ),
                           ],

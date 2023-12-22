@@ -12,13 +12,13 @@ class Publish extends _$Publish {
     // 6. return a value (or do nothing if the return type is void)
   }
 
-  Future<void> publish() async {
+  Future<void> publish(String endpoint, String minValue, String maxValue) async {
     // 7. read the repository using ref
     final mqttClient = ref.read(mqttClientProvider);
     // 8. set the loading state
     state = const AsyncLoading();
     // 9. sign in and update the state (data or error)
-    state = await AsyncValue.guard(() => mqttClient.publish("dwa", "dwa"));
+    state = await AsyncValue.guard(() => mqttClient.publish(endpoint, minValue, maxValue));
     debugPrint("PUBLISH TEST: ${state}");
   }
 }

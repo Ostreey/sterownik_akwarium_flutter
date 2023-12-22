@@ -27,6 +27,7 @@ class Parameters extends ConsumerWidget {
     SensorModel sensorData = SensorModel();
     final sensorDataAsyncValue = ref.watch(mqttUpdatesProvider);
     sensorDataAsyncValue.whenData((value) => sensorData = value);
+    const String deviceNumber = "001";
 
     return SafeArea(
       child: SingleChildScrollView(
@@ -43,7 +44,7 @@ class Parameters extends ConsumerWidget {
                   onTap: () {
                     final model = ParametersEditPageModel(
                         appBarTitle: "Temperatura wody",
-                        endpoint: "",
+                        endpoint: "$deviceNumber/water_temp",
                         minValue: sensorData.waterTempMin,
                         maxValue: sensorData.waterTempMax,
                         currentValue: sensorData.waterTemp,
@@ -62,7 +63,7 @@ class Parameters extends ConsumerWidget {
                 onTap: () {
                   final model = ParametersEditPageModel(
                       appBarTitle: "Temperatura powietrza",
-                      endpoint: "",
+                      endpoint: "$deviceNumber/air_temp",
                       minValue: sensorData.airTempMin,
                       maxValue: sensorData.airTempMax,
                       currentValue: sensorData.airTemp,
@@ -82,7 +83,7 @@ class Parameters extends ConsumerWidget {
                   onTap: () {
                     final model = ParametersEditPageModel(
                         appBarTitle: "pH",
-                        endpoint: "",
+                        endpoint: "$deviceNumber/pH",
                         minValue: sensorData.phMin,
                         maxValue: sensorData.phMax,
                         currentValue: sensorData.ph,
@@ -101,7 +102,7 @@ class Parameters extends ConsumerWidget {
                   onTap: () {
                     final model = ParametersEditPageModel(
                         appBarTitle: "TDS",
-                        endpoint: "",
+                        endpoint: "$deviceNumber/tds",
                         minValue: sensorData.tdsMin,
                         maxValue: sensorData.tdsMax,
                         currentValue: sensorData.tds,
@@ -120,7 +121,7 @@ class Parameters extends ConsumerWidget {
                   onTap: () {
                     final model = ParametersEditPageModel(
                         appBarTitle: "Co2",
-                        endpoint: "",
+                        endpoint: "$deviceNumber/co2",
                         minValue: sensorData.co2Min,
                         maxValue: sensorData.co2Max,
                         currentValue: sensorData.co2,
@@ -139,7 +140,7 @@ class Parameters extends ConsumerWidget {
                   onTap: () {
                     final model = ParametersEditPageModel(
                         appBarTitle: "Przepływomierz",
-                        endpoint: "",
+                        endpoint: "$deviceNumber/water_flow",
                         minValue: sensorData.waterFlowMin,
                         maxValue: sensorData.waterFlowMax,
                         currentValue: sensorData.waterFlow,
