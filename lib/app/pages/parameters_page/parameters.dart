@@ -3,13 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sterownik_akwarium/app/domain/models/parameters_edit_page_model/parameters_edit_page_model.dart';
 import 'package:sterownik_akwarium/app/domain/models/sensor_model/sensor_model.dart';
-import 'package:sterownik_akwarium/app/pages/parameters_edit/parameters_edit.dart';
+import 'package:sterownik_akwarium/app/pages/air_temperature_edit_page/air_temp_edit_page.dart';
 import 'package:sterownik_akwarium/app/pages/parameters_page/widgets/gauge_container.dart';
-import 'package:sterownik_akwarium/app/pages/widgets/gauge.dart';
+import 'package:sterownik_akwarium/app/pages/ph_edit_page/ph_edit_page.dart';
+import 'package:sterownik_akwarium/app/pages/water_temp_edit_page/water_temp_edit_page.dart';
 
 import '../../core/page_config.dart';
-import '../timer_page/timer_page.dart';
-import '../widgets/label.dart';
 import 'mqtt_provider.dart';
 
 class Parameters extends ConsumerWidget {
@@ -32,7 +31,7 @@ class Parameters extends ConsumerWidget {
     return SafeArea(
       child: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: size.width / 20),
+          padding: EdgeInsets.all(size.width / 20),
           child: GridView.count(
             shrinkWrap: true,
             crossAxisCount: 2,
@@ -49,7 +48,7 @@ class Parameters extends ConsumerWidget {
                         maxValue: sensorData.waterTempMax,
                         currentValue: sensorData.waterTemp,
                         unit: "'C");
-                    context.pushNamed(ParametersEditPage.pageConfig.name,
+                    context.pushNamed(WaterTempEditPage.pageConfig.name,
                         extra: model);
                   },
                   child: GaugeContainer(
@@ -67,8 +66,9 @@ class Parameters extends ConsumerWidget {
                       minValue: sensorData.airTempMin,
                       maxValue: sensorData.airTempMax,
                       currentValue: sensorData.airTemp,
+                      frequency: sensorData.airTempFreq,
                       unit: "'C");
-                  context.pushNamed(ParametersEditPage.pageConfig.name,
+                  context.pushNamed(AirTempEditPage.pageConfig.name,
                       extra: model);
                 },
                 child: GaugeContainer(
@@ -84,18 +84,18 @@ class Parameters extends ConsumerWidget {
                     final model = ParametersEditPageModel(
                         appBarTitle: "pH",
                         endpoint: "$deviceNumber/pH",
-                        minValue: sensorData.phMin,
-                        maxValue: sensorData.phMax,
+                        minValue: sensorData.phSet,
+                        maxValue: sensorData.phHisteresis,
                         currentValue: sensorData.ph,
                         unit: "");
-                    context.pushNamed(ParametersEditPage.pageConfig.name,
+                    context.pushNamed(PhEditPage.pageConfig.name,
                         extra: model);
                   },
                   child: GaugeContainer(
                     labelName: "pH",
                     currentValue: sensorData.ph,
-                    minAlarmValue: sensorData.phMin,
-                    maxAlarmValue: sensorData.phMax,
+                    minAlarmValue: (sensorData.phSet - sensorData.phHisteresis),
+                    maxAlarmValue: (sensorData.phSet + sensorData.phHisteresis),
                     unit: "",
                   )),
               GestureDetector(
@@ -103,18 +103,18 @@ class Parameters extends ConsumerWidget {
                     final model = ParametersEditPageModel(
                         appBarTitle: "TDS",
                         endpoint: "$deviceNumber/tds",
-                        minValue: sensorData.tdsMin,
-                        maxValue: sensorData.tdsMax,
+                        minValue: sensorData.tdsSet,
+                        maxValue: sensorData.tdsHisteresis,
                         currentValue: sensorData.tds,
                         unit: "");
-                    context.pushNamed(ParametersEditPage.pageConfig.name,
+                    context.pushNamed(PhEditPage.pageConfig.name,
                         extra: model);
                   },
                   child: GaugeContainer(
                     labelName: "TDS",
                     currentValue: sensorData.tds,
-                    minAlarmValue: sensorData.tdsMin,
-                    maxAlarmValue: sensorData.tdsMax,
+                    minAlarmValue: (sensorData.tdsSet - sensorData.tdsHisteresis),
+                    maxAlarmValue: (sensorData.tdsSet + sensorData.tdsHisteresis),
                     unit: "",
                   )),
               GestureDetector(
@@ -126,7 +126,7 @@ class Parameters extends ConsumerWidget {
                         maxValue: sensorData.co2Max,
                         currentValue: sensorData.co2,
                         unit: "");
-                    context.pushNamed(ParametersEditPage.pageConfig.name,
+                    context.pushNamed(WaterTempEditPage.pageConfig.name,
                         extra: model);
                   },
                   child: GaugeContainer(
@@ -145,7 +145,7 @@ class Parameters extends ConsumerWidget {
                         maxValue: sensorData.waterFlowMax,
                         currentValue: sensorData.waterFlow,
                         unit: "L/H");
-                    context.pushNamed(ParametersEditPage.pageConfig.name,
+                    context.pushNamed(WaterTempEditPage.pageConfig.name,
                         extra: model);
                   },
                   child: GaugeContainer(

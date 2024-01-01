@@ -10,7 +10,8 @@ class ParametersEditPageModel with _$ParametersEditPageModel {
     required double minValue,
     required double maxValue,
     required double currentValue,
-    required String unit
+    required String unit,
+    @Default(-1) int frequency,
 
   }) = _ParametersEditPageModel;
 

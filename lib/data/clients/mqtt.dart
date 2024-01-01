@@ -87,6 +87,7 @@ class MyMqttClient {
         final jsonData = json.decode(payload) as Map<String, dynamic>;
         debugPrint("MQTTDATA:  $jsonData");
         final sensorModel = SensorModel.fromJson(jsonData);
+
         _mqttUpdatesController.add(sensorModel); // Emit SensorModel instance
       } catch (e, stackTrace) {
         print('Error parsing JSON: $e');
@@ -96,12 +97,11 @@ class MyMqttClient {
     });
   }
 
-  Future<void> publish(String topic, String minValue, String maxValue) async{
-    final builder = MqttClientPayloadBuilder();
-    builder.addString("{\"minValue\":$minValue,\"maxValue\":$maxValue}");
+  Future<void> publish(String topic, MqttClientPayloadBuilder data) async{
     try{
-      var response = await _client.publishMessage(topic, MqttQos.exactlyOnce, builder.payload!);
+      var response = await _client.publishMessage(topic, MqttQos.exactlyOnce, data.payload!);
       debugPrint("topic sent now: $topic");
+
     }catch(e){
       debugPrint("Error: ${e}");
     }

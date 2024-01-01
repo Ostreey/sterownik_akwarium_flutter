@@ -27,6 +27,7 @@ mixin _$ParametersEditPageModel {
   double get maxValue => throw _privateConstructorUsedError;
   double get currentValue => throw _privateConstructorUsedError;
   String get unit => throw _privateConstructorUsedError;
+  int get frequency => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -46,7 +47,8 @@ abstract class $ParametersEditPageModelCopyWith<$Res> {
       double minValue,
       double maxValue,
       double currentValue,
-      String unit});
+      String unit,
+      int frequency});
 }
 
 /// @nodoc
@@ -69,6 +71,7 @@ class _$ParametersEditPageModelCopyWithImpl<$Res,
     Object? maxValue = null,
     Object? currentValue = null,
     Object? unit = null,
+    Object? frequency = null,
   }) {
     return _then(_value.copyWith(
       appBarTitle: null == appBarTitle
@@ -95,6 +98,10 @@ class _$ParametersEditPageModelCopyWithImpl<$Res,
           ? _value.unit
           : unit // ignore: cast_nullable_to_non_nullable
               as String,
+      frequency: null == frequency
+          ? _value.frequency
+          : frequency // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -114,7 +121,8 @@ abstract class _$$ParametersEditPageModelImplCopyWith<$Res>
       double minValue,
       double maxValue,
       double currentValue,
-      String unit});
+      String unit,
+      int frequency});
 }
 
 /// @nodoc
@@ -136,6 +144,7 @@ class __$$ParametersEditPageModelImplCopyWithImpl<$Res>
     Object? maxValue = null,
     Object? currentValue = null,
     Object? unit = null,
+    Object? frequency = null,
   }) {
     return _then(_$ParametersEditPageModelImpl(
       appBarTitle: null == appBarTitle
@@ -162,6 +171,10 @@ class __$$ParametersEditPageModelImplCopyWithImpl<$Res>
           ? _value.unit
           : unit // ignore: cast_nullable_to_non_nullable
               as String,
+      frequency: null == frequency
+          ? _value.frequency
+          : frequency // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -175,7 +188,8 @@ class _$ParametersEditPageModelImpl implements _ParametersEditPageModel {
       required this.minValue,
       required this.maxValue,
       required this.currentValue,
-      required this.unit});
+      required this.unit,
+      this.frequency = -1});
 
   factory _$ParametersEditPageModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$ParametersEditPageModelImplFromJson(json);
@@ -192,10 +206,13 @@ class _$ParametersEditPageModelImpl implements _ParametersEditPageModel {
   final double currentValue;
   @override
   final String unit;
+  @override
+  @JsonKey()
+  final int frequency;
 
   @override
   String toString() {
-    return 'ParametersEditPageModel(appBarTitle: $appBarTitle, endpoint: $endpoint, minValue: $minValue, maxValue: $maxValue, currentValue: $currentValue, unit: $unit)';
+    return 'ParametersEditPageModel(appBarTitle: $appBarTitle, endpoint: $endpoint, minValue: $minValue, maxValue: $maxValue, currentValue: $currentValue, unit: $unit, frequency: $frequency)';
   }
 
   @override
@@ -213,13 +230,15 @@ class _$ParametersEditPageModelImpl implements _ParametersEditPageModel {
                 other.maxValue == maxValue) &&
             (identical(other.currentValue, currentValue) ||
                 other.currentValue == currentValue) &&
-            (identical(other.unit, unit) || other.unit == unit));
+            (identical(other.unit, unit) || other.unit == unit) &&
+            (identical(other.frequency, frequency) ||
+                other.frequency == frequency));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, appBarTitle, endpoint, minValue,
-      maxValue, currentValue, unit);
+      maxValue, currentValue, unit, frequency);
 
   @JsonKey(ignore: true)
   @override
@@ -243,7 +262,8 @@ abstract class _ParametersEditPageModel implements ParametersEditPageModel {
       required final double minValue,
       required final double maxValue,
       required final double currentValue,
-      required final String unit}) = _$ParametersEditPageModelImpl;
+      required final String unit,
+      final int frequency}) = _$ParametersEditPageModelImpl;
 
   factory _ParametersEditPageModel.fromJson(Map<String, dynamic> json) =
       _$ParametersEditPageModelImpl.fromJson;
@@ -260,6 +280,8 @@ abstract class _ParametersEditPageModel implements ParametersEditPageModel {
   double get currentValue;
   @override
   String get unit;
+  @override
+  int get frequency;
   @override
   @JsonKey(ignore: true)
   _$$ParametersEditPageModelImplCopyWith<_$ParametersEditPageModelImpl>

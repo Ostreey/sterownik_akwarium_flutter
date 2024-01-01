@@ -2,34 +2,44 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sterownik_akwarium/app/core/page_config.dart';
 import 'package:sterownik_akwarium/app/domain/models/parameters_edit_page_model/parameters_edit_page_model.dart';
-import 'package:sterownik_akwarium/app/pages/parameters_edit/parameters_edit_provider.dart';
+import 'package:sterownik_akwarium/app/pages/water_temp_edit_page/water_temp_edit_provider.dart';
 import 'package:sterownik_akwarium/app/pages/widgets/custom_button.dart';
 import 'package:sterownik_akwarium/app/pages/widgets/gauge.dart';
 
-class ParametersEditPage extends ConsumerStatefulWidget {
-  const ParametersEditPage({super.key, this.data});
+class WaterTempEditPage extends ConsumerStatefulWidget {
+  const WaterTempEditPage({super.key, this.data});
 
   static const  pageConfig = PageConfig(
     icon: Icons.timer_rounded,
-    name: 'edit_parameters',
-    child: ParametersEditPage(),
+    name: 'water_temp_edit',
+    child: WaterTempEditPage(),
   );
   final ParametersEditPageModel? data;
 
 
   @override
-  _ParametersEditPageState createState() => _ParametersEditPageState();
+  _WaterTempEditPageState createState() => _WaterTempEditPageState();
 }
 
-class _ParametersEditPageState extends ConsumerState<ParametersEditPage> {
+class _WaterTempEditPageState extends ConsumerState<WaterTempEditPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _minController = TextEditingController();
   final TextEditingController _maxController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _minController.text = widget.data!.minValue.toString();
+    _maxController.text = widget.data!.maxValue.toString();
+  }
+
    var minValueChanged;
    var maxValueChanged;
+  var  frequencyValueChanged;
+
+
   @override
   Widget build(BuildContext context) {
-
     ref.listen(publishProvider, (previous, next) {
       if(next is AsyncData){
         ScaffoldMessenger.of(context).showSnackBar(
@@ -134,7 +144,8 @@ final isPublishing = ref.watch(publishProvider).isLoading;
                               children: [
                                CustomButton(text: "Zapisz",isLoading: isPublishing,  onPressed: (){
                                  if (_formKey.currentState!.validate()) {
-                                   ref.read(publishProvider.notifier).publish(widget.data!.endpoint, _minController.text, _maxController.text);
+                                 ref.read(publishProvider.notifier).publish(widget.data!.endpoint, _minController.text, _maxController.text );
+
                                  }
                                },
                                ),

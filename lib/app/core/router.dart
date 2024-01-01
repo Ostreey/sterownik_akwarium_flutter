@@ -2,9 +2,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sterownik_akwarium/app/domain/models/parameters_edit_page_model/parameters_edit_page_model.dart';
+import 'package:sterownik_akwarium/app/pages/air_temperature_edit_page/air_temp_edit_page.dart';
 import 'package:sterownik_akwarium/app/pages/change_socket_name/change_socket_name.dart';
 import 'package:sterownik_akwarium/app/pages/edit_timer_page/edit_timer_page.dart';
-import 'package:sterownik_akwarium/app/pages/parameters_edit/parameters_edit.dart';
+import 'package:sterownik_akwarium/app/pages/ph_edit_page/ph_edit_page.dart';
+import 'package:sterownik_akwarium/app/pages/splashscreen_page/splashscreen_page.dart';
+import 'package:sterownik_akwarium/app/pages/water_temp_edit_page/water_temp_edit_page.dart';
 
 import '../pages/devices_page/devices.dart';
 import '../pages/home_page/home_page.dart';
@@ -27,6 +30,13 @@ final routes = GoRouter(
     initialLocation: '/login',
     observers: [GoRouterObserver()],
     routes: [
+      GoRoute(
+        path: "/splash_screen",
+        name: SplashScreen.pageConfig.name,
+        builder: (context, state) {
+          return SplashScreen();
+        },
+      ),
         GoRoute(
             path: '/login',
             name: Login.pageConfig.name,
@@ -74,11 +84,27 @@ final routes = GoRouter(
         },
       ),
       GoRoute(
-        path: "/edit_parameters",
-        name: ParametersEditPage.pageConfig.name,
+        path: "/water_temp_edit",
+        name: WaterTempEditPage.pageConfig.name,
         builder: (context, state) {
           final ParametersEditPageModel data = state.extra as ParametersEditPageModel;
-          return ParametersEditPage(data: data);
+          return WaterTempEditPage(data: data);
+        },
+      ),
+      GoRoute(
+        path: "/air_temp_edit",
+        name: AirTempEditPage.pageConfig.name,
+        builder: (context, state) {
+          final ParametersEditPageModel data = state.extra as ParametersEditPageModel;
+          return AirTempEditPage(data: data);
+        },
+      ),
+      GoRoute(
+        path: "/ph_edit",
+        name: PhEditPage.pageConfig.name,
+        builder: (context, state) {
+          final ParametersEditPageModel data = state.extra as ParametersEditPageModel;
+          return PhEditPage(data: data);
         },
       ),
 

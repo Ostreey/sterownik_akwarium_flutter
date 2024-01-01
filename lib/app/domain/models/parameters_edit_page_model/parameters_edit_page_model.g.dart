@@ -15,6 +15,7 @@ _$ParametersEditPageModelImpl _$$ParametersEditPageModelImplFromJson(
       maxValue: (json['maxValue'] as num).toDouble(),
       currentValue: (json['currentValue'] as num).toDouble(),
       unit: json['unit'] as String,
+      frequency: json['frequency'] as int? ?? -1,
     );
 
 Map<String, dynamic> _$$ParametersEditPageModelImplToJson(
@@ -26,4 +27,5 @@ Map<String, dynamic> _$$ParametersEditPageModelImplToJson(
       'maxValue': instance.maxValue,
       'currentValue': instance.currentValue,
       'unit': instance.unit,
+      'frequency': instance.frequency,
     };

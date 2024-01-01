@@ -6,9 +6,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sterownik_akwarium/app/core/page_config.dart';
 import 'package:sterownik_akwarium/app/pages/alarms_page/alarms.dart';
+import 'package:sterownik_akwarium/app/pages/edit_timer_page/edit_timer_page.dart';
 
 import '../devices_page/devices.dart';
 import '../parameters_page/parameters.dart';
+import '../timer_page/timer_page.dart';
 
 class HomePage extends ConsumerStatefulWidget {
    HomePage({
@@ -43,8 +45,86 @@ class _HomePageState extends ConsumerState<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("parameter"),
+        title: Row(
+          children: [
+            Text("Podłączony"),
+            Spacer(),
+            Icon(Icons.wifi, color: Colors.green,),
+          ],
+        ),
       ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+
+              child: Column(
+                children: [
+                  Text(
+                    "Sterownik akwarium",
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  Spacer(),
+                  ClipOval(child: Image.asset('assets/logo.png', width: 80, height: 80, )),
+                ],
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.heat_pump_outlined), // Choose an appropriate icon
+              title: Text("Pompa1"),
+              onTap: () {
+                context.pushNamed(TimerPage.pageConfig.name);
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.water_drop), // Choose an appropriate icon
+              title: Text("Cyrkulacja1"),
+              onTap: () {
+                context.pushNamed(TimerPage.pageConfig.name);
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.lightbulb), // Choose an appropriate icon
+              title: Text("LED"),
+              onTap: () {
+                context.pushNamed(TimerPage.pageConfig.name);
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.electrical_services), // Choose an appropriate icon
+              title: Text("Gniazdo 1"),
+              onTap: () {
+                context.pushNamed(TimerPage.pageConfig.name);
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.electrical_services), // Choose an appropriate icon
+              title: Text("Gniazdo 2"),
+              onTap: () {
+                context.pushNamed(TimerPage.pageConfig.name);
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.electrical_services), // Choose an appropriate icon
+              title: Text("Gniazdo 3"),
+              onTap: () {
+                context.pushNamed(TimerPage.pageConfig.name);
+              },
+            ),
+            Divider(),
+            ListTile(
+              leading: Icon(Icons.login_outlined), // Choose an appropriate icon
+              title: Text("Wyloguj"),
+              onTap: () {
+                // Handle tap
+              },
+            ),
+            // Add more ListTile widgets for other drawer items
+          ],
+        ),
+      ),
+
       body: SafeArea(
           child: AdaptiveLayout(
 
