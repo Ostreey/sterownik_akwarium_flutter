@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:mqtt_client/mqtt_client.dart';
@@ -85,7 +86,7 @@ class MyMqttClient {
 
       try {
         final jsonData = json.decode(payload) as Map<String, dynamic>;
-        debugPrint("MQTTDATA:  $jsonData");
+        log("MQTTDATA:  $jsonData");
         final sensorModel = SensorModel.fromJson(jsonData);
 
         _mqttUpdatesController.add(sensorModel); // Emit SensorModel instance

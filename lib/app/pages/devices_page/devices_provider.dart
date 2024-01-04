@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sterownik_akwarium/app/domain/models/device_state/device_state_model.dart';
 import 'package:sterownik_akwarium/app/domain/models/devices_model/devices_model.dart';
 
 

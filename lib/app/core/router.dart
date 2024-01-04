@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sterownik_akwarium/app/domain/models/parameters_edit_page_model/parameters_edit_page_model.dart';
+import 'package:sterownik_akwarium/app/domain/models/timer_page_model/timer_page_model.dart';
 import 'package:sterownik_akwarium/app/pages/air_temperature_edit_page/air_temp_edit_page.dart';
 import 'package:sterownik_akwarium/app/pages/change_socket_name/change_socket_name.dart';
 import 'package:sterownik_akwarium/app/pages/edit_timer_page/edit_timer_page.dart';
@@ -73,7 +74,8 @@ final routes = GoRouter(
         path: "/timer",
         name: TimerPage.pageConfig.name,
         builder: (context, state) {
-          return TimerPage();
+          final TimerPageModel model = state.extra as TimerPageModel;
+          return TimerPage(data: model);
         },
       ),
       GoRoute(

@@ -9,22 +9,22 @@ part of 'devices_model.dart';
 _$DevicesModelImpl _$$DevicesModelImplFromJson(Map<String, dynamic> json) =>
     _$DevicesModelImpl(
       pompa1: json['pompa1'] == null
-          ? const DeviceStateModel()
-          : DeviceStateModel.fromJson(json['pompa1'] as Map<String, dynamic>),
+          ? const TimerDeviceModel()
+          : TimerDeviceModel.fromJson(json['pompa1'] as Map<String, dynamic>),
       pompa2: json['pompa2'] == null
-          ? const DeviceStateModel()
-          : DeviceStateModel.fromJson(json['pompa2'] as Map<String, dynamic>),
+          ? const TimerDeviceModel()
+          : TimerDeviceModel.fromJson(json['pompa2'] as Map<String, dynamic>),
       circulation1: json['circulation1'] == null
-          ? const DeviceStateModel()
-          : DeviceStateModel.fromJson(
+          ? const TimerDeviceModel()
+          : TimerDeviceModel.fromJson(
               json['circulation1'] as Map<String, dynamic>),
       circulation2: json['circulation2'] == null
-          ? const DeviceStateModel()
-          : DeviceStateModel.fromJson(
+          ? const TimerDeviceModel()
+          : TimerDeviceModel.fromJson(
               json['circulation2'] as Map<String, dynamic>),
       led: json['led'] == null
-          ? const DeviceStateModel()
-          : DeviceStateModel.fromJson(json['led'] as Map<String, dynamic>),
+          ? const TimerDeviceModel()
+          : TimerDeviceModel.fromJson(json['led'] as Map<String, dynamic>),
       socket1: json['socket1'] as bool? ?? false,
       socket2: json['socket2'] as bool? ?? false,
       socket3: json['socket3'] as bool? ?? false,

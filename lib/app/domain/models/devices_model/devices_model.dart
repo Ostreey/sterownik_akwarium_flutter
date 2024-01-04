@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:sterownik_akwarium/app/domain/models/timer_device_model/timer_device_model.dart';
 
-import '../device_state/device_state_model.dart';
+
 
 part 'devices_model.freezed.dart';
 part 'devices_model.g.dart';
@@ -8,11 +9,11 @@ part 'devices_model.g.dart';
 @freezed
 class DevicesModel with _$DevicesModel {
   const factory DevicesModel({
-    @Default(DeviceStateModel()) DeviceStateModel pompa1,
-    @Default(DeviceStateModel()) DeviceStateModel pompa2,
-    @Default(DeviceStateModel()) DeviceStateModel circulation1,
-    @Default(DeviceStateModel()) DeviceStateModel circulation2,
-    @Default(DeviceStateModel()) DeviceStateModel led,
+    @Default(TimerDeviceModel()) TimerDeviceModel pompa1,
+    @Default(TimerDeviceModel()) TimerDeviceModel pompa2,
+    @Default(TimerDeviceModel()) TimerDeviceModel circulation1,
+    @Default(TimerDeviceModel()) TimerDeviceModel circulation2,
+    @Default(TimerDeviceModel()) TimerDeviceModel led,
     @Default(false) bool socket1,
     @Default(false) bool socket2,
     @Default(false) bool socket3,

@@ -1,21 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sterownik_akwarium/app/core/page_config.dart';
+import 'package:sterownik_akwarium/app/domain/models/timer_device_model/timer_device_model.dart';
+import 'package:sterownik_akwarium/app/domain/models/timer_page_model/timer_page_model.dart';
 import 'package:sterownik_akwarium/app/pages/edit_timer_page/edit_timer_page.dart';
 import 'package:sterownik_akwarium/app/pages/widgets/custom_day_picker.dart';
 import 'package:sterownik_akwarium/app/pages/widgets/custom_time_picker.dart';
 
 class TimerPage extends StatelessWidget {
-  const TimerPage({Key? key}) : super(key: key);
+  const TimerPage({super.key, this.data});
 
   static final  pageConfig = PageConfig(
     icon: Icons.timer_rounded,
     name: 'timer',
     child: TimerPage(),
   );
+  final TimerPageModel? data;
 
   @override
   Widget build(BuildContext context) {
+    String formTime(Time time) {
+        return "${time.h} : ${time.m} : ${time.s}";
+    }
     final state = true;
     final colorTheme = Theme.of(context).colorScheme;
     final  textTheme = Theme.of(context).textTheme;
@@ -23,7 +29,7 @@ class TimerPage extends StatelessWidget {
           appBar: AppBar(
             title:  Row(
               children: [
-                Text("LED"),
+                Text(data!.appBarTitle),
                 SizedBox(width: 9,),
                 Icon(state? Icons.check : Icons.cancel_outlined,
                   color: state ? Colors.green : Colors.red,
@@ -69,11 +75,11 @@ class TimerPage extends StatelessWidget {
                             SizedBox(height: 12,),
                             Text("Włącz", style: textTheme.titleLarge!.copyWith(color: colorTheme.onSecondaryContainer),),
                             SizedBox(height: 8,),
-                            Text("15 : 45 : 32", style: textTheme.displayMedium!.copyWith(color: colorTheme.primary),),
+                            Text(formTime(data!.timerDeviceModel.timer.on), style: textTheme.displayMedium!.copyWith(color: colorTheme.primary),),
                             SizedBox(height: 12,),
                             Text("Wyłącz", style: textTheme.titleLarge!.copyWith(color: colorTheme.onSecondaryContainer),),
                             SizedBox(height: 8,),
-                            Text("15 : 48 : 32", style: textTheme.displayMedium!.copyWith(color: colorTheme.primary),),
+                            Text(formTime(data!.timerDeviceModel.timer.off), style: textTheme.displayMedium!.copyWith(color: colorTheme.primary),),
                             SizedBox(height: 20,),
                             Row(
                            children: [

@@ -20,11 +20,11 @@ DevicesModel _$DevicesModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$DevicesModel {
-  DeviceStateModel get pompa1 => throw _privateConstructorUsedError;
-  DeviceStateModel get pompa2 => throw _privateConstructorUsedError;
-  DeviceStateModel get circulation1 => throw _privateConstructorUsedError;
-  DeviceStateModel get circulation2 => throw _privateConstructorUsedError;
-  DeviceStateModel get led => throw _privateConstructorUsedError;
+  TimerDeviceModel get pompa1 => throw _privateConstructorUsedError;
+  TimerDeviceModel get pompa2 => throw _privateConstructorUsedError;
+  TimerDeviceModel get circulation1 => throw _privateConstructorUsedError;
+  TimerDeviceModel get circulation2 => throw _privateConstructorUsedError;
+  TimerDeviceModel get led => throw _privateConstructorUsedError;
   bool get socket1 => throw _privateConstructorUsedError;
   bool get socket2 => throw _privateConstructorUsedError;
   bool get socket3 => throw _privateConstructorUsedError;
@@ -46,11 +46,11 @@ abstract class $DevicesModelCopyWith<$Res> {
       _$DevicesModelCopyWithImpl<$Res, DevicesModel>;
   @useResult
   $Res call(
-      {DeviceStateModel pompa1,
-      DeviceStateModel pompa2,
-      DeviceStateModel circulation1,
-      DeviceStateModel circulation2,
-      DeviceStateModel led,
+      {TimerDeviceModel pompa1,
+      TimerDeviceModel pompa2,
+      TimerDeviceModel circulation1,
+      TimerDeviceModel circulation2,
+      TimerDeviceModel led,
       bool socket1,
       bool socket2,
       bool socket3,
@@ -59,11 +59,11 @@ abstract class $DevicesModelCopyWith<$Res> {
       bool socket6,
       bool socket7});
 
-  $DeviceStateModelCopyWith<$Res> get pompa1;
-  $DeviceStateModelCopyWith<$Res> get pompa2;
-  $DeviceStateModelCopyWith<$Res> get circulation1;
-  $DeviceStateModelCopyWith<$Res> get circulation2;
-  $DeviceStateModelCopyWith<$Res> get led;
+  $TimerDeviceModelCopyWith<$Res> get pompa1;
+  $TimerDeviceModelCopyWith<$Res> get pompa2;
+  $TimerDeviceModelCopyWith<$Res> get circulation1;
+  $TimerDeviceModelCopyWith<$Res> get circulation2;
+  $TimerDeviceModelCopyWith<$Res> get led;
 }
 
 /// @nodoc
@@ -96,23 +96,23 @@ class _$DevicesModelCopyWithImpl<$Res, $Val extends DevicesModel>
       pompa1: null == pompa1
           ? _value.pompa1
           : pompa1 // ignore: cast_nullable_to_non_nullable
-              as DeviceStateModel,
+              as TimerDeviceModel,
       pompa2: null == pompa2
           ? _value.pompa2
           : pompa2 // ignore: cast_nullable_to_non_nullable
-              as DeviceStateModel,
+              as TimerDeviceModel,
       circulation1: null == circulation1
           ? _value.circulation1
           : circulation1 // ignore: cast_nullable_to_non_nullable
-              as DeviceStateModel,
+              as TimerDeviceModel,
       circulation2: null == circulation2
           ? _value.circulation2
           : circulation2 // ignore: cast_nullable_to_non_nullable
-              as DeviceStateModel,
+              as TimerDeviceModel,
       led: null == led
           ? _value.led
           : led // ignore: cast_nullable_to_non_nullable
-              as DeviceStateModel,
+              as TimerDeviceModel,
       socket1: null == socket1
           ? _value.socket1
           : socket1 // ignore: cast_nullable_to_non_nullable
@@ -146,40 +146,40 @@ class _$DevicesModelCopyWithImpl<$Res, $Val extends DevicesModel>
 
   @override
   @pragma('vm:prefer-inline')
-  $DeviceStateModelCopyWith<$Res> get pompa1 {
-    return $DeviceStateModelCopyWith<$Res>(_value.pompa1, (value) {
+  $TimerDeviceModelCopyWith<$Res> get pompa1 {
+    return $TimerDeviceModelCopyWith<$Res>(_value.pompa1, (value) {
       return _then(_value.copyWith(pompa1: value) as $Val);
     });
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $DeviceStateModelCopyWith<$Res> get pompa2 {
-    return $DeviceStateModelCopyWith<$Res>(_value.pompa2, (value) {
+  $TimerDeviceModelCopyWith<$Res> get pompa2 {
+    return $TimerDeviceModelCopyWith<$Res>(_value.pompa2, (value) {
       return _then(_value.copyWith(pompa2: value) as $Val);
     });
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $DeviceStateModelCopyWith<$Res> get circulation1 {
-    return $DeviceStateModelCopyWith<$Res>(_value.circulation1, (value) {
+  $TimerDeviceModelCopyWith<$Res> get circulation1 {
+    return $TimerDeviceModelCopyWith<$Res>(_value.circulation1, (value) {
       return _then(_value.copyWith(circulation1: value) as $Val);
     });
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $DeviceStateModelCopyWith<$Res> get circulation2 {
-    return $DeviceStateModelCopyWith<$Res>(_value.circulation2, (value) {
+  $TimerDeviceModelCopyWith<$Res> get circulation2 {
+    return $TimerDeviceModelCopyWith<$Res>(_value.circulation2, (value) {
       return _then(_value.copyWith(circulation2: value) as $Val);
     });
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $DeviceStateModelCopyWith<$Res> get led {
-    return $DeviceStateModelCopyWith<$Res>(_value.led, (value) {
+  $TimerDeviceModelCopyWith<$Res> get led {
+    return $TimerDeviceModelCopyWith<$Res>(_value.led, (value) {
       return _then(_value.copyWith(led: value) as $Val);
     });
   }
@@ -194,11 +194,11 @@ abstract class _$$DevicesModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {DeviceStateModel pompa1,
-      DeviceStateModel pompa2,
-      DeviceStateModel circulation1,
-      DeviceStateModel circulation2,
-      DeviceStateModel led,
+      {TimerDeviceModel pompa1,
+      TimerDeviceModel pompa2,
+      TimerDeviceModel circulation1,
+      TimerDeviceModel circulation2,
+      TimerDeviceModel led,
       bool socket1,
       bool socket2,
       bool socket3,
@@ -208,15 +208,15 @@ abstract class _$$DevicesModelImplCopyWith<$Res>
       bool socket7});
 
   @override
-  $DeviceStateModelCopyWith<$Res> get pompa1;
+  $TimerDeviceModelCopyWith<$Res> get pompa1;
   @override
-  $DeviceStateModelCopyWith<$Res> get pompa2;
+  $TimerDeviceModelCopyWith<$Res> get pompa2;
   @override
-  $DeviceStateModelCopyWith<$Res> get circulation1;
+  $TimerDeviceModelCopyWith<$Res> get circulation1;
   @override
-  $DeviceStateModelCopyWith<$Res> get circulation2;
+  $TimerDeviceModelCopyWith<$Res> get circulation2;
   @override
-  $DeviceStateModelCopyWith<$Res> get led;
+  $TimerDeviceModelCopyWith<$Res> get led;
 }
 
 /// @nodoc
@@ -247,23 +247,23 @@ class __$$DevicesModelImplCopyWithImpl<$Res>
       pompa1: null == pompa1
           ? _value.pompa1
           : pompa1 // ignore: cast_nullable_to_non_nullable
-              as DeviceStateModel,
+              as TimerDeviceModel,
       pompa2: null == pompa2
           ? _value.pompa2
           : pompa2 // ignore: cast_nullable_to_non_nullable
-              as DeviceStateModel,
+              as TimerDeviceModel,
       circulation1: null == circulation1
           ? _value.circulation1
           : circulation1 // ignore: cast_nullable_to_non_nullable
-              as DeviceStateModel,
+              as TimerDeviceModel,
       circulation2: null == circulation2
           ? _value.circulation2
           : circulation2 // ignore: cast_nullable_to_non_nullable
-              as DeviceStateModel,
+              as TimerDeviceModel,
       led: null == led
           ? _value.led
           : led // ignore: cast_nullable_to_non_nullable
-              as DeviceStateModel,
+              as TimerDeviceModel,
       socket1: null == socket1
           ? _value.socket1
           : socket1 // ignore: cast_nullable_to_non_nullable
@@ -300,11 +300,11 @@ class __$$DevicesModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$DevicesModelImpl implements _DevicesModel {
   const _$DevicesModelImpl(
-      {this.pompa1 = const DeviceStateModel(),
-      this.pompa2 = const DeviceStateModel(),
-      this.circulation1 = const DeviceStateModel(),
-      this.circulation2 = const DeviceStateModel(),
-      this.led = const DeviceStateModel(),
+      {this.pompa1 = const TimerDeviceModel(),
+      this.pompa2 = const TimerDeviceModel(),
+      this.circulation1 = const TimerDeviceModel(),
+      this.circulation2 = const TimerDeviceModel(),
+      this.led = const TimerDeviceModel(),
       this.socket1 = false,
       this.socket2 = false,
       this.socket3 = false,
@@ -318,19 +318,19 @@ class _$DevicesModelImpl implements _DevicesModel {
 
   @override
   @JsonKey()
-  final DeviceStateModel pompa1;
+  final TimerDeviceModel pompa1;
   @override
   @JsonKey()
-  final DeviceStateModel pompa2;
+  final TimerDeviceModel pompa2;
   @override
   @JsonKey()
-  final DeviceStateModel circulation1;
+  final TimerDeviceModel circulation1;
   @override
   @JsonKey()
-  final DeviceStateModel circulation2;
+  final TimerDeviceModel circulation2;
   @override
   @JsonKey()
-  final DeviceStateModel led;
+  final TimerDeviceModel led;
   @override
   @JsonKey()
   final bool socket1;
@@ -412,11 +412,11 @@ class _$DevicesModelImpl implements _DevicesModel {
 
 abstract class _DevicesModel implements DevicesModel {
   const factory _DevicesModel(
-      {final DeviceStateModel pompa1,
-      final DeviceStateModel pompa2,
-      final DeviceStateModel circulation1,
-      final DeviceStateModel circulation2,
-      final DeviceStateModel led,
+      {final TimerDeviceModel pompa1,
+      final TimerDeviceModel pompa2,
+      final TimerDeviceModel circulation1,
+      final TimerDeviceModel circulation2,
+      final TimerDeviceModel led,
       final bool socket1,
       final bool socket2,
       final bool socket3,
@@ -429,15 +429,15 @@ abstract class _DevicesModel implements DevicesModel {
       _$DevicesModelImpl.fromJson;
 
   @override
-  DeviceStateModel get pompa1;
+  TimerDeviceModel get pompa1;
   @override
-  DeviceStateModel get pompa2;
+  TimerDeviceModel get pompa2;
   @override
-  DeviceStateModel get circulation1;
+  TimerDeviceModel get circulation1;
   @override
-  DeviceStateModel get circulation2;
+  TimerDeviceModel get circulation2;
   @override
-  DeviceStateModel get led;
+  TimerDeviceModel get led;
   @override
   bool get socket1;
   @override
