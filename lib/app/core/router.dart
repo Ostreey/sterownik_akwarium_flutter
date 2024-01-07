@@ -80,9 +80,10 @@ final routes = GoRouter(
       ),
       GoRoute(
         path: "/edit_timer",
-        name: EditTimer.pageConfig.name,
+        name: EditTimerPage.pageConfig.name,
         builder: (context, state) {
-          return EditTimer();
+          final TimerPageModel model = state.extra as TimerPageModel;
+          return EditTimerPage(data: model);
         },
       ),
       GoRoute(

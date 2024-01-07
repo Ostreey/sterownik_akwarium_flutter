@@ -41,8 +41,8 @@ mixin _$SensorModel {
   double get waterFlowMax => throw _privateConstructorUsedError;
   TimerDeviceModel get pompa1 => throw _privateConstructorUsedError;
   TimerDeviceModel get pompa2 => throw _privateConstructorUsedError;
-  TimerDeviceModel get circulation1 => throw _privateConstructorUsedError;
-  TimerDeviceModel get circulation2 => throw _privateConstructorUsedError;
+  TimerDeviceModel get circul1 => throw _privateConstructorUsedError;
+  TimerDeviceModel get circul2 => throw _privateConstructorUsedError;
   TimerDeviceModel get led => throw _privateConstructorUsedError;
   TimerDeviceModel get soc1 => throw _privateConstructorUsedError;
   TimerDeviceModel get soc2 => throw _privateConstructorUsedError;
@@ -86,8 +86,8 @@ abstract class $SensorModelCopyWith<$Res> {
       double waterFlowMax,
       TimerDeviceModel pompa1,
       TimerDeviceModel pompa2,
-      TimerDeviceModel circulation1,
-      TimerDeviceModel circulation2,
+      TimerDeviceModel circul1,
+      TimerDeviceModel circul2,
       TimerDeviceModel led,
       TimerDeviceModel soc1,
       TimerDeviceModel soc2,
@@ -99,8 +99,8 @@ abstract class $SensorModelCopyWith<$Res> {
 
   $TimerDeviceModelCopyWith<$Res> get pompa1;
   $TimerDeviceModelCopyWith<$Res> get pompa2;
-  $TimerDeviceModelCopyWith<$Res> get circulation1;
-  $TimerDeviceModelCopyWith<$Res> get circulation2;
+  $TimerDeviceModelCopyWith<$Res> get circul1;
+  $TimerDeviceModelCopyWith<$Res> get circul2;
   $TimerDeviceModelCopyWith<$Res> get led;
   $TimerDeviceModelCopyWith<$Res> get soc1;
   $TimerDeviceModelCopyWith<$Res> get soc2;
@@ -145,8 +145,8 @@ class _$SensorModelCopyWithImpl<$Res, $Val extends SensorModel>
     Object? waterFlowMax = null,
     Object? pompa1 = null,
     Object? pompa2 = null,
-    Object? circulation1 = null,
-    Object? circulation2 = null,
+    Object? circul1 = null,
+    Object? circul2 = null,
     Object? led = null,
     Object? soc1 = null,
     Object? soc2 = null,
@@ -241,13 +241,13 @@ class _$SensorModelCopyWithImpl<$Res, $Val extends SensorModel>
           ? _value.pompa2
           : pompa2 // ignore: cast_nullable_to_non_nullable
               as TimerDeviceModel,
-      circulation1: null == circulation1
-          ? _value.circulation1
-          : circulation1 // ignore: cast_nullable_to_non_nullable
+      circul1: null == circul1
+          ? _value.circul1
+          : circul1 // ignore: cast_nullable_to_non_nullable
               as TimerDeviceModel,
-      circulation2: null == circulation2
-          ? _value.circulation2
-          : circulation2 // ignore: cast_nullable_to_non_nullable
+      circul2: null == circul2
+          ? _value.circul2
+          : circul2 // ignore: cast_nullable_to_non_nullable
               as TimerDeviceModel,
       led: null == led
           ? _value.led
@@ -302,17 +302,17 @@ class _$SensorModelCopyWithImpl<$Res, $Val extends SensorModel>
 
   @override
   @pragma('vm:prefer-inline')
-  $TimerDeviceModelCopyWith<$Res> get circulation1 {
-    return $TimerDeviceModelCopyWith<$Res>(_value.circulation1, (value) {
-      return _then(_value.copyWith(circulation1: value) as $Val);
+  $TimerDeviceModelCopyWith<$Res> get circul1 {
+    return $TimerDeviceModelCopyWith<$Res>(_value.circul1, (value) {
+      return _then(_value.copyWith(circul1: value) as $Val);
     });
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $TimerDeviceModelCopyWith<$Res> get circulation2 {
-    return $TimerDeviceModelCopyWith<$Res>(_value.circulation2, (value) {
-      return _then(_value.copyWith(circulation2: value) as $Val);
+  $TimerDeviceModelCopyWith<$Res> get circul2 {
+    return $TimerDeviceModelCopyWith<$Res>(_value.circul2, (value) {
+      return _then(_value.copyWith(circul2: value) as $Val);
     });
   }
 
@@ -411,8 +411,8 @@ abstract class _$$SensorModelImplCopyWith<$Res>
       double waterFlowMax,
       TimerDeviceModel pompa1,
       TimerDeviceModel pompa2,
-      TimerDeviceModel circulation1,
-      TimerDeviceModel circulation2,
+      TimerDeviceModel circul1,
+      TimerDeviceModel circul2,
       TimerDeviceModel led,
       TimerDeviceModel soc1,
       TimerDeviceModel soc2,
@@ -427,9 +427,9 @@ abstract class _$$SensorModelImplCopyWith<$Res>
   @override
   $TimerDeviceModelCopyWith<$Res> get pompa2;
   @override
-  $TimerDeviceModelCopyWith<$Res> get circulation1;
+  $TimerDeviceModelCopyWith<$Res> get circul1;
   @override
-  $TimerDeviceModelCopyWith<$Res> get circulation2;
+  $TimerDeviceModelCopyWith<$Res> get circul2;
   @override
   $TimerDeviceModelCopyWith<$Res> get led;
   @override
@@ -480,8 +480,8 @@ class __$$SensorModelImplCopyWithImpl<$Res>
     Object? waterFlowMax = null,
     Object? pompa1 = null,
     Object? pompa2 = null,
-    Object? circulation1 = null,
-    Object? circulation2 = null,
+    Object? circul1 = null,
+    Object? circul2 = null,
     Object? led = null,
     Object? soc1 = null,
     Object? soc2 = null,
@@ -576,13 +576,13 @@ class __$$SensorModelImplCopyWithImpl<$Res>
           ? _value.pompa2
           : pompa2 // ignore: cast_nullable_to_non_nullable
               as TimerDeviceModel,
-      circulation1: null == circulation1
-          ? _value.circulation1
-          : circulation1 // ignore: cast_nullable_to_non_nullable
+      circul1: null == circul1
+          ? _value.circul1
+          : circul1 // ignore: cast_nullable_to_non_nullable
               as TimerDeviceModel,
-      circulation2: null == circulation2
-          ? _value.circulation2
-          : circulation2 // ignore: cast_nullable_to_non_nullable
+      circul2: null == circul2
+          ? _value.circul2
+          : circul2 // ignore: cast_nullable_to_non_nullable
               as TimerDeviceModel,
       led: null == led
           ? _value.led
@@ -645,8 +645,8 @@ class _$SensorModelImpl implements _SensorModel {
       this.waterFlowMax = 0.0,
       this.pompa1 = const TimerDeviceModel(),
       this.pompa2 = const TimerDeviceModel(),
-      this.circulation1 = const TimerDeviceModel(),
-      this.circulation2 = const TimerDeviceModel(),
+      this.circul1 = const TimerDeviceModel(),
+      this.circul2 = const TimerDeviceModel(),
       this.led = const TimerDeviceModel(),
       this.soc1 = const TimerDeviceModel(),
       this.soc2 = const TimerDeviceModel(),
@@ -724,10 +724,10 @@ class _$SensorModelImpl implements _SensorModel {
   final TimerDeviceModel pompa2;
   @override
   @JsonKey()
-  final TimerDeviceModel circulation1;
+  final TimerDeviceModel circul1;
   @override
   @JsonKey()
-  final TimerDeviceModel circulation2;
+  final TimerDeviceModel circul2;
   @override
   @JsonKey()
   final TimerDeviceModel led;
@@ -755,7 +755,7 @@ class _$SensorModelImpl implements _SensorModel {
 
   @override
   String toString() {
-    return 'SensorModel(waterTemp: $waterTemp, waterTempMin: $waterTempMin, waterTempMax: $waterTempMax, airTemp: $airTemp, airTempMin: $airTempMin, airTempMax: $airTempMax, airTempFreq: $airTempFreq, ph: $ph, phSet: $phSet, phHisteresis: $phHisteresis, tds: $tds, tdsSet: $tdsSet, tdsHisteresis: $tdsHisteresis, co2: $co2, co2Min: $co2Min, co2Max: $co2Max, waterFlow: $waterFlow, waterFlowMin: $waterFlowMin, waterFlowMax: $waterFlowMax, pompa1: $pompa1, pompa2: $pompa2, circulation1: $circulation1, circulation2: $circulation2, led: $led, soc1: $soc1, soc2: $soc2, soc3: $soc3, soc4: $soc4, soc5: $soc5, soc6: $soc6, soc7: $soc7)';
+    return 'SensorModel(waterTemp: $waterTemp, waterTempMin: $waterTempMin, waterTempMax: $waterTempMax, airTemp: $airTemp, airTempMin: $airTempMin, airTempMax: $airTempMax, airTempFreq: $airTempFreq, ph: $ph, phSet: $phSet, phHisteresis: $phHisteresis, tds: $tds, tdsSet: $tdsSet, tdsHisteresis: $tdsHisteresis, co2: $co2, co2Min: $co2Min, co2Max: $co2Max, waterFlow: $waterFlow, waterFlowMin: $waterFlowMin, waterFlowMax: $waterFlowMax, pompa1: $pompa1, pompa2: $pompa2, circul1: $circul1, circul2: $circul2, led: $led, soc1: $soc1, soc2: $soc2, soc3: $soc3, soc4: $soc4, soc5: $soc5, soc6: $soc6, soc7: $soc7)';
   }
 
   @override
@@ -795,10 +795,8 @@ class _$SensorModelImpl implements _SensorModel {
                 other.waterFlowMax == waterFlowMax) &&
             (identical(other.pompa1, pompa1) || other.pompa1 == pompa1) &&
             (identical(other.pompa2, pompa2) || other.pompa2 == pompa2) &&
-            (identical(other.circulation1, circulation1) ||
-                other.circulation1 == circulation1) &&
-            (identical(other.circulation2, circulation2) ||
-                other.circulation2 == circulation2) &&
+            (identical(other.circul1, circul1) || other.circul1 == circul1) &&
+            (identical(other.circul2, circul2) || other.circul2 == circul2) &&
             (identical(other.led, led) || other.led == led) &&
             (identical(other.soc1, soc1) || other.soc1 == soc1) &&
             (identical(other.soc2, soc2) || other.soc2 == soc2) &&
@@ -834,8 +832,8 @@ class _$SensorModelImpl implements _SensorModel {
         waterFlowMax,
         pompa1,
         pompa2,
-        circulation1,
-        circulation2,
+        circul1,
+        circul2,
         led,
         soc1,
         soc2,
@@ -883,8 +881,8 @@ abstract class _SensorModel implements SensorModel {
       final double waterFlowMax,
       final TimerDeviceModel pompa1,
       final TimerDeviceModel pompa2,
-      final TimerDeviceModel circulation1,
-      final TimerDeviceModel circulation2,
+      final TimerDeviceModel circul1,
+      final TimerDeviceModel circul2,
       final TimerDeviceModel led,
       final TimerDeviceModel soc1,
       final TimerDeviceModel soc2,
@@ -940,9 +938,9 @@ abstract class _SensorModel implements SensorModel {
   @override
   TimerDeviceModel get pompa2;
   @override
-  TimerDeviceModel get circulation1;
+  TimerDeviceModel get circul1;
   @override
-  TimerDeviceModel get circulation2;
+  TimerDeviceModel get circul2;
   @override
   TimerDeviceModel get led;
   @override

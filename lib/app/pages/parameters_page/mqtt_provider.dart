@@ -14,8 +14,9 @@ final mqttUpdatesProvider = StreamProvider<SensorModel>((ref) {
   mqttClient.updates.listen((sensorModel) {
 
     ref.read(devicesProvider.notifier).updateDevices(
-        DevicesModel(circulation1: sensorModel.circulation1,
-          circulation2: sensorModel.circulation2,
+        DevicesModel(
+          circulation1: sensorModel.circul1,
+          circulation2: sensorModel.circul2,
           pompa1: sensorModel.pompa1,
           pompa2: sensorModel.pompa2,
           socket1: sensorModel.soc1.state,

@@ -33,14 +33,12 @@ _$SensorModelImpl _$$SensorModelImplFromJson(Map<String, dynamic> json) =>
       pompa2: json['pompa2'] == null
           ? const TimerDeviceModel()
           : TimerDeviceModel.fromJson(json['pompa2'] as Map<String, dynamic>),
-      circulation1: json['circulation1'] == null
+      circul1: json['circul1'] == null
           ? const TimerDeviceModel()
-          : TimerDeviceModel.fromJson(
-              json['circulation1'] as Map<String, dynamic>),
-      circulation2: json['circulation2'] == null
+          : TimerDeviceModel.fromJson(json['circul1'] as Map<String, dynamic>),
+      circul2: json['circul2'] == null
           ? const TimerDeviceModel()
-          : TimerDeviceModel.fromJson(
-              json['circulation2'] as Map<String, dynamic>),
+          : TimerDeviceModel.fromJson(json['circul2'] as Map<String, dynamic>),
       led: json['led'] == null
           ? const TimerDeviceModel()
           : TimerDeviceModel.fromJson(json['led'] as Map<String, dynamic>),
@@ -90,8 +88,8 @@ Map<String, dynamic> _$$SensorModelImplToJson(_$SensorModelImpl instance) =>
       'waterFlowMax': instance.waterFlowMax,
       'pompa1': instance.pompa1,
       'pompa2': instance.pompa2,
-      'circulation1': instance.circulation1,
-      'circulation2': instance.circulation2,
+      'circul1': instance.circul1,
+      'circul2': instance.circul2,
       'led': instance.led,
       'soc1': instance.soc1,
       'soc2': instance.soc2,

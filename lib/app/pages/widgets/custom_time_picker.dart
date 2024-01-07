@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:sterownik_akwarium/app/domain/models/timer_device_model/timer_device_model.dart';
 
 class CustomTimerPicker extends StatefulWidget {
+  const CustomTimerPicker(
+      {super.key, required this.timerData, required this.timeChanged});
+
   @override
   _CustomTimerPickerState createState() => _CustomTimerPickerState();
+
+  final Time timerData;
+  final Function(Time) timeChanged;
 }
 
 class _CustomTimerPickerState extends State<CustomTimerPicker> {
-  int _hour = DateTime.now().hour;
-  int _minute = DateTime.now().minute;
-  int _second = DateTime.now().second;
+  late int _hour;
+
+  late int _minute;
+
+  late int _second;
+
   late FixedExtentScrollController _hourController;
   late FixedExtentScrollController _minuteController;
   late FixedExtentScrollController _secondController;
@@ -16,6 +26,9 @@ class _CustomTimerPickerState extends State<CustomTimerPicker> {
   @override
   void initState() {
     super.initState();
+    _hour = widget.timerData.h;
+    _minute = widget.timerData.m;
+    _second = widget.timerData.s;
     _hourController = FixedExtentScrollController(initialItem: _hour);
     _minuteController = FixedExtentScrollController(initialItem: _minute);
     _secondController = FixedExtentScrollController(initialItem: _second);
@@ -34,16 +47,29 @@ class _CustomTimerPickerState extends State<CustomTimerPicker> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        _buildPicker(_hourController, 0, 23, (newValue) => setState(() => _hour = newValue)),
+        _buildPicker(_hourController, 0, 23,
+            (newValue) => setState(() {
+              _hour = newValue;
+              widget.timeChanged(Time(h: _hour, m: _minute, s: _second));
+            })),
         Text(':', style: TextStyle(fontSize: 32)),
-        _buildPicker(_minuteController, 0, 59, (newValue) => setState(() => _minute = newValue)),
+        _buildPicker(_minuteController, 0, 59,
+            (newValue) => setState(() {
+              _minute = newValue;
+              widget.timeChanged(Time(h: _hour, m: _minute, s: _second));
+            })),
         Text(':', style: TextStyle(fontSize: 32)),
-        _buildPicker(_secondController, 0, 59, (newValue) => setState(() => _second = newValue)),
+        _buildPicker(_secondController, 0, 59,
+            (newValue) => setState(() {
+              _second = newValue;
+              widget.timeChanged(Time(h: _hour, m: _minute, s: _second));
+            })),
       ],
     );
   }
 
-  Widget _buildPicker(FixedExtentScrollController controller, int minValue, int maxValue, ValueChanged<int> onChanged) {
+  Widget _buildPicker(FixedExtentScrollController controller, int minValue,
+      int maxValue, ValueChanged<int> onChanged) {
     return Container(
       height: MediaQuery.of(context).size.height * 0.15,
       width: MediaQuery.of(context).size.width * 0.2,
@@ -65,8 +91,10 @@ class _CustomTimerPickerState extends State<CustomTimerPicker> {
               child: Text(
                 '${minValue + index}'.padLeft(2, '0'),
                 style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                  color: isSelected ? theme.colorScheme.primary : theme.colorScheme.outline,
-                ),
+                      color: isSelected
+                          ? theme.colorScheme.primary
+                          : theme.colorScheme.outline,
+                    ),
               ),
             );
           },
