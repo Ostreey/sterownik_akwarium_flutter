@@ -11,8 +11,10 @@ class MyMqttClient {
   late MqttServerClient _client;
 
   final StreamController<SensorModel> _mqttUpdatesController = StreamController<SensorModel>.broadcast();
+  final StreamController<bool> _espStatusController = StreamController<bool>.broadcast();
 
   Stream<SensorModel> get updates => _mqttUpdatesController.stream;
+  Stream<bool> get espStatus => _espStatusController.stream;
 
   final String mqttServer;
   final int mqttPort;
@@ -29,6 +31,9 @@ class MyMqttClient {
   }) {
     _client = MqttServerClient.withPort(mqttServer, 'flutter_client', mqttPort);
     _initializeClient();
+  }
+  bool isConnected() {
+    return _client.connectionStatus!.state == MqttConnectionState.connected;
   }
 
   void _initializeClient() {
@@ -70,6 +75,7 @@ class MyMqttClient {
 
     if (_client.connectionStatus?.state == MqttConnectionState.connected) {
       print('MQTT Client Connected');
+
     } else {
       print('MQTT Client Connection Failed - status is ${_client.connectionStatus}');
       _client.disconnect();
@@ -77,19 +83,30 @@ class MyMqttClient {
     }
   }
 
+
   void subscribe(String topic) {
     _client.subscribe(topic, MqttQos.atLeastOnce);
-
+    String statusTopic = topic + "/status";
+    _client.subscribe(statusTopic, MqttQos.atLeastOnce);
     _client.updates!.listen((List<MqttReceivedMessage<MqttMessage?>>? c) {
       final MqttPublishMessage recMess = c![0].payload as MqttPublishMessage;
+      final String receivedTopic = c[0].topic;
       final String payload = MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
 
-      try {
-        final jsonData = json.decode(payload) as Map<String, dynamic>;
-        log("MQTTDATA:  $jsonData");
-        final sensorModel = SensorModel.fromJson(jsonData);
+      print('Received message: $payload from topic: $topic'); // For debugging
 
-        _mqttUpdatesController.add(sensorModel); // Emit SensorModel instance
+      try {
+        if (receivedTopic == statusTopic) {
+
+          print("Status Update: $payload");
+          _espStatusController.add(payload == "connected" ? true : false);
+        } else {
+          final jsonData = json.decode(payload) as Map<String, dynamic>;
+          log("MQTTDATA:  $jsonData");
+          final sensorModel = SensorModel.fromJson(jsonData);
+
+          _mqttUpdatesController.add(sensorModel); // Emit SensorModel instance
+        }
       } catch (e, stackTrace) {
         print('Error parsing JSON: $e');
         print(stackTrace);

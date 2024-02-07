@@ -26,137 +26,176 @@ class Parameters extends ConsumerWidget {
     SensorModel sensorData = SensorModel();
     final sensorDataAsyncValue = ref.watch(mqttUpdatesProvider);
     sensorDataAsyncValue.whenData((value) => sensorData = value);
+    final espStatus = ref.watch(mqttStatusProvider);
     const String deviceNumber = "001";
 
     return SafeArea(
       child: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.all(size.width / 20),
-          child: GridView.count(
-            shrinkWrap: true,
-            crossAxisCount: 2,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 20.0,
-            childAspectRatio: 1.3,
-            children: [
-              GestureDetector(
-                  onTap: () {
-                    final model = ParametersEditPageModel(
-                        appBarTitle: "Temperatura wody",
-                        endpoint: "$deviceNumber/water_temp",
-                        minValue: sensorData.waterTempMin,
-                        maxValue: sensorData.waterTempMax,
-                        currentValue: sensorData.waterTemp,
-                        unit: "'C");
-                    context.pushNamed(WaterTempEditPage.pageConfig.name,
-                        extra: model);
-                  },
-                  child: GaugeContainer(
-                    labelName: "Temperatura wody",
-                    currentValue: sensorData.waterTemp,
-                    minAlarmValue: sensorData.waterTempMin,
-                    maxAlarmValue: sensorData.waterTempMax,
-                    unit: "'C",
-                  )),
-              GestureDetector(
-                onTap: () {
-                  final model = ParametersEditPageModel(
-                      appBarTitle: "Temperatura powietrza",
-                      endpoint: "$deviceNumber/air_temp",
-                      minValue: sensorData.airTempMin,
-                      maxValue: sensorData.airTempMax,
-                      currentValue: sensorData.airTemp,
-                      frequency: sensorData.airTempFreq,
-                      unit: "'C");
-                  context.pushNamed(AirTempEditPage.pageConfig.name,
-                      extra: model);
-                },
-                child: GaugeContainer(
-                  labelName: "Temp powietrza",
-                  currentValue: sensorData.airTemp,
-                  minAlarmValue: sensorData.airTempMin,
-                  maxAlarmValue: sensorData.airTempMax,
-                  unit: "'C",
+          child: espStatus.when(
+              data: (value) {
+                if (value) {
+                  return GridView.count(
+                    shrinkWrap: true,
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 20.0,
+                    childAspectRatio: 1.3,
+                    children: [
+                      GestureDetector(
+                          onTap: () {
+                            final model = ParametersEditPageModel(
+                                appBarTitle: "Temperatura wody",
+                                endpoint: "$deviceNumber/water_temp",
+                                minValue: sensorData.waterTempMin,
+                                maxValue: sensorData.waterTempMax,
+                                currentValue: sensorData.waterTemp,
+                                unit: "'C");
+                            context.pushNamed(WaterTempEditPage.pageConfig.name,
+                                extra: model);
+                          },
+                          child: GaugeContainer(
+                            labelName: "Temperatura wody",
+                            currentValue: sensorData.waterTemp,
+                            minAlarmValue: sensorData.waterTempMin,
+                            maxAlarmValue: sensorData.waterTempMax,
+                            unit: "'C",
+                          )),
+                      GestureDetector(
+                        onTap: () {
+                          final model = ParametersEditPageModel(
+                              appBarTitle: "Temperatura powietrza",
+                              endpoint: "$deviceNumber/air_temp",
+                              minValue: sensorData.airTempMin,
+                              maxValue: sensorData.airTempMax,
+                              currentValue: sensorData.airTemp,
+                              frequency: sensorData.airTempFreq,
+                              unit: "'C");
+                          context.pushNamed(AirTempEditPage.pageConfig.name,
+                              extra: model);
+                        },
+                        child: GaugeContainer(
+                          labelName: "Temp powietrza",
+                          currentValue: sensorData.airTemp,
+                          minAlarmValue: sensorData.airTempMin,
+                          maxAlarmValue: sensorData.airTempMax,
+                          unit: "'C",
+                        ),
+                      ),
+                      GestureDetector(
+                          onTap: () {
+                            final model = ParametersEditPageModel(
+                                appBarTitle: "pH",
+                                endpoint: "$deviceNumber/pH",
+                                minValue: sensorData.phSet,
+                                maxValue: sensorData.phHisteresis,
+                                currentValue: sensorData.ph,
+                                unit: "");
+                            context.pushNamed(PhEditPage.pageConfig.name,
+                                extra: model);
+                          },
+                          child: GaugeContainer(
+                            labelName: "pH",
+                            currentValue: sensorData.ph,
+                            minAlarmValue:
+                                (sensorData.phSet - sensorData.phHisteresis),
+                            maxAlarmValue:
+                                (sensorData.phSet + sensorData.phHisteresis),
+                            unit: "",
+                          )),
+                      GestureDetector(
+                          onTap: () {
+                            final model = ParametersEditPageModel(
+                                appBarTitle: "TDS",
+                                endpoint: "$deviceNumber/tds",
+                                minValue: sensorData.tdsSet,
+                                maxValue: sensorData.tdsHisteresis,
+                                currentValue: sensorData.tds,
+                                unit: "");
+                            context.pushNamed(PhEditPage.pageConfig.name,
+                                extra: model);
+                          },
+                          child: GaugeContainer(
+                            labelName: "TDS",
+                            currentValue: sensorData.tds,
+                            minAlarmValue:
+                                (sensorData.tdsSet - sensorData.tdsHisteresis),
+                            maxAlarmValue:
+                                (sensorData.tdsSet + sensorData.tdsHisteresis),
+                            unit: "",
+                          )),
+                      GestureDetector(
+                          onTap: () {
+                            final model = ParametersEditPageModel(
+                                appBarTitle: "Co2",
+                                endpoint: "$deviceNumber/co2",
+                                minValue: sensorData.co2Min,
+                                maxValue: sensorData.co2Max,
+                                currentValue: sensorData.co2,
+                                unit: "");
+                            context.pushNamed(WaterTempEditPage.pageConfig.name,
+                                extra: model);
+                          },
+                          child: GaugeContainer(
+                            labelName: "Co2",
+                            currentValue: sensorData.co2,
+                            minAlarmValue: sensorData.co2Min,
+                            maxAlarmValue: sensorData.co2Max,
+                            unit: "",
+                          )),
+                      GestureDetector(
+                          onTap: () {
+                            final model = ParametersEditPageModel(
+                                appBarTitle: "Przepływomierz",
+                                endpoint: "$deviceNumber/water_flow",
+                                minValue: sensorData.waterFlowMin,
+                                maxValue: sensorData.waterFlowMax,
+                                currentValue: sensorData.waterFlow,
+                                unit: "L/H");
+                            context.pushNamed(WaterTempEditPage.pageConfig.name,
+                                extra: model);
+                          },
+                          child: GaugeContainer(
+                            labelName: "Przepływomierz",
+                            currentValue: sensorData.waterFlow,
+                            minAlarmValue: sensorData.waterFlowMin,
+                            maxAlarmValue: sensorData.waterFlowMax,
+                            unit: "",
+                          )),
+                    ],
+                  );
+                } else {
+                  return    Column(
+
+                    children: [
+                      SizedBox(height: size.height / 4),
+                      Container(
+                        padding: EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.errorContainer,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Text(
+                          "Sterownik nie jest podłączony do serwera",
+                          style: Theme.of(context).textTheme.headline5,
+                        ),
+                      ),
+                    ],
+                  );
+                }
+              },
+              loading: () => Center(
+                child: Column(
+                  children: [
+                    SizedBox(height: size.height / 4),
+                    CircularProgressIndicator(),
+                  ],
                 ),
               ),
-              GestureDetector(
-                  onTap: () {
-                    final model = ParametersEditPageModel(
-                        appBarTitle: "pH",
-                        endpoint: "$deviceNumber/pH",
-                        minValue: sensorData.phSet,
-                        maxValue: sensorData.phHisteresis,
-                        currentValue: sensorData.ph,
-                        unit: "");
-                    context.pushNamed(PhEditPage.pageConfig.name,
-                        extra: model);
-                  },
-                  child: GaugeContainer(
-                    labelName: "pH",
-                    currentValue: sensorData.ph,
-                    minAlarmValue: (sensorData.phSet - sensorData.phHisteresis),
-                    maxAlarmValue: (sensorData.phSet + sensorData.phHisteresis),
-                    unit: "",
+              error: (error, stackTrace) => Center(
+                    child: Text("Błąd połączenia z urządzeniem"),
                   )),
-              GestureDetector(
-                  onTap: () {
-                    final model = ParametersEditPageModel(
-                        appBarTitle: "TDS",
-                        endpoint: "$deviceNumber/tds",
-                        minValue: sensorData.tdsSet,
-                        maxValue: sensorData.tdsHisteresis,
-                        currentValue: sensorData.tds,
-                        unit: "");
-                    context.pushNamed(PhEditPage.pageConfig.name,
-                        extra: model);
-                  },
-                  child: GaugeContainer(
-                    labelName: "TDS",
-                    currentValue: sensorData.tds,
-                    minAlarmValue: (sensorData.tdsSet - sensorData.tdsHisteresis),
-                    maxAlarmValue: (sensorData.tdsSet + sensorData.tdsHisteresis),
-                    unit: "",
-                  )),
-              GestureDetector(
-                  onTap: () {
-                    final model = ParametersEditPageModel(
-                        appBarTitle: "Co2",
-                        endpoint: "$deviceNumber/co2",
-                        minValue: sensorData.co2Min,
-                        maxValue: sensorData.co2Max,
-                        currentValue: sensorData.co2,
-                        unit: "");
-                    context.pushNamed(WaterTempEditPage.pageConfig.name,
-                        extra: model);
-                  },
-                  child: GaugeContainer(
-                    labelName: "Co2",
-                    currentValue: sensorData.co2,
-                    minAlarmValue: sensorData.co2Min,
-                    maxAlarmValue: sensorData.co2Max,
-                    unit: "",
-                  )),
-              GestureDetector(
-                  onTap: () {
-                    final model = ParametersEditPageModel(
-                        appBarTitle: "Przepływomierz",
-                        endpoint: "$deviceNumber/water_flow",
-                        minValue: sensorData.waterFlowMin,
-                        maxValue: sensorData.waterFlowMax,
-                        currentValue: sensorData.waterFlow,
-                        unit: "L/H");
-                    context.pushNamed(WaterTempEditPage.pageConfig.name,
-                        extra: model);
-                  },
-                  child: GaugeContainer(
-                    labelName: "Przepływomierz",
-                    currentValue: sensorData.waterFlow,
-                    minAlarmValue: sensorData.waterFlowMin,
-                    maxAlarmValue: sensorData.waterFlowMax,
-                    unit: "",
-                  )),
-            ],
-          ),
         ),
       ),
     );

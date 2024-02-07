@@ -51,6 +51,8 @@ dependencies:
   shared_preferences: ^2.2.2
   mqtt_client: ^10.0.0
   freezed: ^2.4.5
+  firebase_messaging: ^14.7.10
+  firebase_core: ^2.24.2
 
 
 
