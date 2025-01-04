@@ -1,7 +1,7 @@
 class MqttConstants{
   static const user = "dawid1";
   static const password = "Madagaskar1";
-  static const server = "test-s0ukmu.a01.euc1.aws.hivemq.cloud";
+  static const server = "a27b63f941da4011b531115dcaa0aad3.s1.eu.hivemq.cloud";
   static const port = 8883;
   static const certificate = '''
 -----BEGIN CERTIFICATE-----

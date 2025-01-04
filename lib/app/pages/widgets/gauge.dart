@@ -3,7 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:gauge_indicator/gauge_indicator.dart';
 
 class Gauge extends StatelessWidget {
-  const Gauge({Key? key, required this.currentValue, required this.minAlarmValue, required this.maxAlarmValue, required this.unit, this.size}) : super(key: key);
+  const Gauge({
+    Key? key,
+    required this.currentValue,
+    required double minAlarmValue,
+    required double maxAlarmValue,
+    required this.unit,
+    this.size,
+  })  : minAlarmValue = minAlarmValue < 0 ? 0 : minAlarmValue,
+        maxAlarmValue = maxAlarmValue < 0 ? 0 : maxAlarmValue,
+        super(key: key);
 
   Color getValidValueColor(ColorScheme themeColor) {
     return themeColor.inversePrimary;
