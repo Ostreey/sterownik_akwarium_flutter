@@ -213,7 +213,7 @@ class _ParametersState extends ConsumerState<Parameters> with WidgetsBindingObse
                         ),
                         child: Text(
                           "Sterownik nie jest podłączony do serwera",
-                          style: Theme.of(context).textTheme.headline5,
+                          style: Theme.of(context).textTheme.headlineSmall,
                         ),
                       ),
                     ],

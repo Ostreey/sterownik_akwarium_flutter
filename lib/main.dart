@@ -9,8 +9,14 @@ import 'firebase_options.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  await FirebaseApi().initNotifications();
+
+  if (Firebase.apps.isEmpty) {
+    await Firebase.initializeApp(
+      name: 'sterownik_akwarium',
+      options: DefaultFirebaseOptions.currentPlatform);
+  }
+
+  //await FirebaseApi().initNotifications();
   runApp(const ProviderScope(
     child: MyApp(),
   ));

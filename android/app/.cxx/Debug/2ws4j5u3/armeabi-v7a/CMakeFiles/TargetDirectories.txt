@@ -1,0 +1,2 @@
+C:/Users/dostrowski3/Documents/sterownik_akwarium_flutter/android/app/.cxx/Debug/2ws4j5u3/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/dostrowski3/Documents/sterownik_akwarium_flutter/android/app/.cxx/Debug/2ws4j5u3/armeabi-v7a/CMakeFiles/rebuild_cache.dir
