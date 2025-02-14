@@ -129,7 +129,7 @@ final isPublishing = ref.watch(publishProvider).isLoading;
                                       return null;
                                     },
                                     decoration: InputDecoration(
-                                      labelText: 'Włącz przy',
+                                      labelText: 'Wyłącz przy',
                                       hintText: 'Wpisz wartość',
                                       border: OutlineInputBorder(),
                                     ),

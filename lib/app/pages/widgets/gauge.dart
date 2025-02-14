@@ -11,7 +11,7 @@ class Gauge extends StatelessWidget {
     required this.unit,
     this.size,
   })  : minAlarmValue = minAlarmValue < 0 ? 0 : minAlarmValue,
-        maxAlarmValue = maxAlarmValue < 0 ? 0 : maxAlarmValue,
+        maxAlarmValue = maxAlarmValue < 0 ? 100 : maxAlarmValue,
         super(key: key);
 
   Color getValidValueColor(ColorScheme themeColor) {

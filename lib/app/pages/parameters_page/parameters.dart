@@ -11,7 +11,8 @@ import 'package:sterownik_akwarium/app/pages/water_temp_edit_page/water_temp_edi
 import '../../core/page_config.dart';
 import 'mqtt_provider.dart';
 
-class Parameters extends ConsumerWidget {
+
+class Parameters extends ConsumerStatefulWidget {
   const Parameters({Key? key}) : super(key: key);
 
   static final PageConfig pageConfig = PageConfig(
@@ -21,7 +22,42 @@ class Parameters extends ConsumerWidget {
   );
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<Parameters> createState() => _ParametersState();
+}
+
+class _ParametersState extends ConsumerState<Parameters> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  /// This method acts like `onResume()` in Android
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      final mqttClient = ref.read(mqttClientProvider);
+      if (!mqttClient.isConnected()) {
+        mqttClient.connect().then((_) {
+          final deviceNumber = ref.read(deviceNumberProvider);
+          
+          mqttClient.subscribe(deviceNumber);
+        });
+      }
+    } else if (state == AppLifecycleState.paused) {
+      final mqttClient = ref.read(mqttClientProvider);
+      mqttClient.disconnect();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     SensorModel sensorData = SensorModel();
     final sensorDataAsyncValue = ref.watch(mqttUpdatesProvider);

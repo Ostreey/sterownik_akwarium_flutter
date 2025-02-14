@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "137569014332",
+    "project_id": "sterownik-akwarium",
+    "storage_bucket": "sterownik-akwarium.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:137569014332:android:b4c1f5a6c090fe4367e939",
+        "android_client_info": {
+          "package_name": "com.example.sterownik_akwarium"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBttYWvmsTcz93OhekgoHZfa46DwJp8Lzc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
