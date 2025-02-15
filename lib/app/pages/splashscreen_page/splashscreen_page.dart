@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sterownik_akwarium/app/core/page_config.dart';
-import 'package:sterownik_akwarium/app/pages/login/login.dart';
+import 'package:sterownik_akwarium/app/pages/login/login_page.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -22,8 +22,8 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   _navigateToHome() async {
-    await Future.delayed(Duration(seconds: 3)); // Splash screen duration
-    context.goNamed(Login.pageConfig.name) ;// Replace with your home route
+    await Future.delayed(Duration(seconds: 3)); 
+    context.goNamed(LoginPage.pageConfig.name) ;
   }
 
   @override
