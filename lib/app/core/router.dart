@@ -6,7 +6,7 @@ import 'package:sterownik_akwarium/app/domain/models/timer_page_model/timer_page
 import 'package:sterownik_akwarium/app/pages/air_temperature_edit_page/air_temp_edit_page.dart';
 import 'package:sterownik_akwarium/app/pages/change_socket_name/change_socket_name.dart';
 import 'package:sterownik_akwarium/app/pages/edit_timer_page/edit_timer_page.dart';
-import 'package:sterownik_akwarium/app/pages/login/login_page.dart';
+import 'package:sterownik_akwarium/app/pages/login_page/login_page.dart';
 import 'package:sterownik_akwarium/app/pages/ph_edit_page/ph_edit_page.dart';
 import 'package:sterownik_akwarium/app/pages/register_page/register_page.dart';
 import 'package:sterownik_akwarium/app/pages/splashscreen_page/splashscreen_page.dart';
