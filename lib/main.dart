@@ -3,17 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sterownik_akwarium/app/core/color_schemes.g.dart';
 import 'package:sterownik_akwarium/firebase_api.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'app/core/router.dart';
 import 'firebase_options.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   if (Firebase.apps.isEmpty) {
     await Firebase.initializeApp(
       name: 'sterownik_akwarium',
-      options: DefaultFirebaseOptions.currentPlatform);
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
   }
 
   //await FirebaseApi().initNotifications();
@@ -22,15 +24,13 @@ void main() async{
   ));
 }
 
-
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp.router(
-      title: 'Flutter Demo',
+      title: 'Sterownik Akwarium',
       themeMode: ThemeMode.dark,
       theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
       darkTheme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),

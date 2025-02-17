@@ -4,11 +4,14 @@ import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sterownik_akwarium/app/core/page_config.dart';
+import 'package:sterownik_akwarium/app/core/providers.dart';
 import 'package:sterownik_akwarium/app/domain/models/sensor_model/sensor_model.dart';
 import 'package:sterownik_akwarium/app/domain/models/timer_page_model/timer_page_model.dart';
 import 'package:sterownik_akwarium/app/pages/alarms_page/alarms.dart';
 import 'package:sterownik_akwarium/app/pages/edit_timer_page/edit_timer_page.dart';
+import 'package:sterownik_akwarium/app/pages/login_page/login_page.dart';
 import 'package:sterownik_akwarium/app/pages/parameters_page/mqtt_provider.dart';
+import 'package:sterownik_akwarium/app/pages/widgets/snackbar.dart';
 
 import '../devices_page/devices.dart';
 import '../parameters_page/parameters.dart';
@@ -45,7 +48,16 @@ class _HomePageState extends ConsumerState<HomePage> {
   Widget build(BuildContext context) {
     SensorModel sensorData = SensorModel();
     final sensorDataAsyncValue = ref.watch(mqttUpdatesProvider);
+    final homePageViewmodel = ref.watch(homePageViewmodelProvider);
     sensorDataAsyncValue.whenData((value) => sensorData = value);
+
+    ref.listen(homePageViewmodelProvider, (previous, next) {
+      if (next is AsyncError) {
+        Snackbar.show(context, next.error.toString());
+      } else if (next is AsyncData) {
+        context.goNamed(LoginPage.pageConfig.name);
+      }
+    });
 
     return Scaffold(
       appBar: AppBar(
@@ -204,7 +216,7 @@ class _HomePageState extends ConsumerState<HomePage> {
             ),
             ListTile(
               leading: Icon(Icons.electrical_services),
-              // Choose an appropriate icon
+         
               title: Text("Gniazdo 6"),
               onTap: () {
                 final model = TimerPageModel(
@@ -216,7 +228,7 @@ class _HomePageState extends ConsumerState<HomePage> {
             ),
             ListTile(
               leading: Icon(Icons.electrical_services),
-              // Choose an appropriate icon
+         
               title: Text("Gniazdo 7"),
               onTap: () {
                 final model = TimerPageModel(
@@ -231,10 +243,9 @@ class _HomePageState extends ConsumerState<HomePage> {
               leading: Icon(Icons.login_outlined), // Choose an appropriate icon
               title: Text("Wyloguj"),
               onTap: () {
-                // Handle tap
+                ref.read(homePageViewmodelProvider.notifier).logout();
               },
             ),
-            // Add more ListTile widgets for other drawer items
           ],
         ),
       ),

@@ -1,6 +1,8 @@
-
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+
+import 'package:sterownik_akwarium/app/core/providers.dart';
 import 'package:sterownik_akwarium/app/domain/models/parameters_edit_page_model/parameters_edit_page_model.dart';
 import 'package:sterownik_akwarium/app/domain/models/timer_page_model/timer_page_model.dart';
 import 'package:sterownik_akwarium/app/pages/air_temperature_edit_page/air_temp_edit_page.dart';
@@ -19,48 +21,39 @@ import '../pages/timer_page/timer_page.dart';
 import 'go_router_observer.dart';
 
 
+
+
 final GlobalKey<NavigatorState> _rootNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'root');
 
 final GlobalKey<NavigatorState> _shellNavigatorKey =
 GlobalKey<NavigatorState>(debugLabel: 'shellRoot');
 
-const String _basePath = "/home";
+
 
 final routes = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: '/login_page',
+    initialLocation: '/',
     observers: [GoRouterObserver()],
     routes: [
       GoRoute(
-        path: "/splash_screen",
-        name: SplashScreen.pageConfig.name,
+        path: '/',
+        builder: (context, state) => const SplashScreenPage(),
+      ),
+      GoRoute(
+        path: '/login',
+        name: LoginPage.pageConfig.name,
+        builder: (context, state) => const LoginPage(),
+      ),
+      GoRoute(
+        path: '/home/:tab',
+        name: HomePage.pageConfig.name,
         builder: (context, state) {
-          return SplashScreen();
+          final tab = state.pathParameters['tab'] ?? Parameters.pageConfig.name;
+          return HomePage(tab: tab);
         },
       ),
-        GoRoute(
-            path: '/login_page',
-            name: LoginPage.pageConfig.name,
-            builder: (context, state) {
-                return LoginPage(); // Return the widget/page for the '/login' route
-            },
-        ),
-
-      ShellRoute(
-        navigatorKey: _shellNavigatorKey,
-          builder: (context, state, child) => child,
-          routes: [
-            GoRoute(path: '${HomePage.pageConfig.name}/:tab',
-            name: HomePage.pageConfig.name,
-            builder: (context, state) =>  HomePage(
-              key: state.pageKey,
-              tab: state.pathParameters['tab']!,
-            ),
-            )
-          ]
-      ),
-
+    
       GoRoute(
         path: "/change_socket_name",
         name: ChangeSocketName.pageConfig.name,
