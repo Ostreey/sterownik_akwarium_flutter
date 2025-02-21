@@ -13,7 +13,8 @@ class Publish extends _$Publish {
     // 6. return a value (or do nothing if the return type is void)
   }
 
-  Future<void> publish(String endpoint, String minValue, String maxValue, [String frequency = "0"]) async {
+  Future<void> publish(String endpoint, String minValue, String maxValue,
+      [String frequency = "0"]) async {
     // 7. read the repository using ref
     final mqttClient = ref.read(mqttClientProvider);
     // 8. set the loading state
@@ -21,9 +22,9 @@ class Publish extends _$Publish {
     // 9. sign in and update the state (data or error)
 
     final data = MqttClientPayloadBuilder();
-    data.addString("{\"minValue\":$minValue,\"maxValue\":$maxValue, \"freq\":$frequency}");
-    state = await AsyncValue.guard(() => mqttClient.publish(endpoint,data));
-    debugPrint("PUBLISH TEST: ${state}");
+    data.addString(
+        "{\"minValue\":$minValue,\"maxValue\":$maxValue, \"freq\":$frequency}");
+    state = await AsyncValue.guard(() => mqttClient.publish(endpoint, data));
+    debugPrint("PUBLISH TEST: $state");
   }
 }
-

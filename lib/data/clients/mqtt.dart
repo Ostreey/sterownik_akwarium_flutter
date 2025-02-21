@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
@@ -10,8 +11,10 @@ import 'package:sterownik_akwarium/app/domain/models/sensor_model/sensor_model.d
 class MyMqttClient {
   late MqttServerClient _client;
 
-  final StreamController<SensorModel> _mqttUpdatesController = StreamController<SensorModel>.broadcast();
-  final StreamController<bool> _espStatusController = StreamController<bool>.broadcast();
+  final StreamController<SensorModel> _mqttUpdatesController =
+      StreamController<SensorModel>.broadcast();
+  final StreamController<bool> _espStatusController =
+      StreamController<bool>.broadcast();
 
   Stream<SensorModel> get updates => _mqttUpdatesController.stream;
   Stream<bool> get espStatus => _espStatusController.stream;
@@ -56,7 +59,6 @@ class MyMqttClient {
   }
 
   Future<void> connect() async {
-
     final connMessage = MqttConnectMessage()
         .withWillTopic('willtopic')
         .withWillMessage('Will message')
@@ -75,29 +77,27 @@ class MyMqttClient {
 
     if (_client.connectionStatus?.state == MqttConnectionState.connected) {
       print('MQTT Client Connected');
-
     } else {
-      print('MQTT Client Connection Failed - status is ${_client.connectionStatus}');
+      print(
+          'MQTT Client Connection Failed - status is ${_client.connectionStatus}');
       _client.disconnect();
-
     }
   }
 
-
   void subscribe(String topic) {
     _client.subscribe(topic, MqttQos.atLeastOnce);
-    String statusTopic = topic + "/status";
+    String statusTopic = "$topic/status";
     _client.subscribe(statusTopic, MqttQos.atLeastOnce);
     _client.updates!.listen((List<MqttReceivedMessage<MqttMessage?>>? c) {
       final MqttPublishMessage recMess = c![0].payload as MqttPublishMessage;
       final String receivedTopic = c[0].topic;
-      final String payload = MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
+      final String payload =
+          MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
 
       print('Received message: $payload from topic: $topic'); // For debugging
 
       try {
         if (receivedTopic == statusTopic) {
-
           print("Status Update: $payload");
           _espStatusController.add(payload == "connected" ? true : false);
         } else {
@@ -115,21 +115,19 @@ class MyMqttClient {
     });
   }
 
-  Future<void> publish(String topic, MqttClientPayloadBuilder data) async{
-    try{
-      var response = await _client.publishMessage(topic, MqttQos.exactlyOnce, data.payload!);
+  Future<void> publish(String topic, MqttClientPayloadBuilder data) async {
+    try {
+      var response =
+          _client.publishMessage(topic, MqttQos.exactlyOnce, data.payload!);
       debugPrint("topic sent now: $topic");
-
-    }catch(e){
-      debugPrint("Error: ${e}");
+    } catch (e) {
+      debugPrint("Error: $e");
     }
   }
 
   void disconnect() {
     _client.disconnect();
   }
-
-
 
   void onConnected() {
     print('MQTT Client Connected');

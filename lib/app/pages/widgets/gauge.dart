@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:gauge_indicator/gauge_indicator.dart';
 
@@ -28,7 +27,9 @@ class Gauge extends StatelessWidget {
 
   String parseCurentValue(double value) {
     String parsedValue;
-    value  > 100 ? parsedValue = value.toStringAsFixed(0) : parsedValue = value.toString();
+    value > 100
+        ? parsedValue = value.toStringAsFixed(0)
+        : parsedValue = value.toString();
     return parsedValue;
   }
 
@@ -46,8 +47,8 @@ class Gauge extends StatelessWidget {
     final double maxRange = maxAlarmValue * 1.1;
     return Stack(
       children: [
-        Container(
-           width: size ?? 140,
+        SizedBox(
+          width: size ?? 140,
           child: AnimatedRadialGauge(
             duration: const Duration(seconds: 1),
             curve: Curves.elasticOut,
@@ -71,7 +72,8 @@ class Gauge extends StatelessWidget {
                   offset: Offset(0, 11),
                 ),
               ),
-              progressBar: const GaugeProgressBar.rounded(color: Colors.transparent),
+              progressBar:
+                  const GaugeProgressBar.rounded(color: Colors.transparent),
               segments: [
                 GaugeSegment(
                   from: minRange,
@@ -95,7 +97,6 @@ class Gauge extends StatelessWidget {
             ),
           ),
         ),
-
         Positioned(
           bottom: 0,
           left: 0,
@@ -103,7 +104,11 @@ class Gauge extends StatelessWidget {
           child: Center(
             child: Text(
               parseCurentValue(currentValue) + unit,
-              style: ((currentValue > minAlarmValue) && (currentValue < maxAlarmValue)) ? textTheme.titleLarge!.copyWith(color: themeColor.primary) : textTheme.titleLarge!.copyWith(color: themeColor.error),    // Adjust text style as needed
+              style: ((currentValue > minAlarmValue) &&
+                      (currentValue < maxAlarmValue))
+                  ? textTheme.titleLarge!.copyWith(color: themeColor.primary)
+                  : textTheme.titleLarge!.copyWith(
+                      color: themeColor.error), // Adjust text style as needed
             ),
           ),
         ),

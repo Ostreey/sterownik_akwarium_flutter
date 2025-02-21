@@ -10,13 +10,12 @@ import 'package:sterownik_akwarium/app/pages/widgets/gauge.dart';
 class PhEditPage extends ConsumerStatefulWidget {
   const PhEditPage({super.key, this.data});
 
-  static const  pageConfig = PageConfig(
+  static const pageConfig = PageConfig(
     icon: Icons.timer_rounded,
     name: 'ph_edit',
     child: PhEditPage(),
   );
   final ParametersEditPageModel? data;
-
 
   @override
   _PhEditPageState createState() => _PhEditPageState();
@@ -37,7 +36,7 @@ class _PhEditPageState extends ConsumerState<PhEditPage> {
   var setValueChanged;
   var histeresisMaxValueChanged;
   var histeresisMinValueChanged;
- late double phSetValue;
+  late double phSetValue;
   late double phHisteresisMax;
   late double phHisteresisMin;
   @override
@@ -47,20 +46,20 @@ class _PhEditPageState extends ConsumerState<PhEditPage> {
     phHisteresisMax = widget.data!.minValue + widget.data!.maxValue;
 
     ref.listen(phEditProvider, (previous, next) {
-      if(next is AsyncData){
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Zapisano'),
-              duration: Duration(seconds: 1),
-            )
-        );
+      if (next is AsyncData) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Zapisano'),
+          duration: Duration(seconds: 1),
+        ));
         setState(() {
           setValueChanged = double.parse(_setValueController.text);
           var newHisteresis = double.parse(_histeresisController.text);
           double newHisteresisMin = setValueChanged - newHisteresis;
-          histeresisMinValueChanged = double.parse(newHisteresisMin.toStringAsFixed(1));
+          histeresisMinValueChanged =
+              double.parse(newHisteresisMin.toStringAsFixed(1));
           double newHisteresisMax = setValueChanged + newHisteresis;
-          histeresisMaxValueChanged = double.parse(newHisteresisMax.toStringAsFixed(1));
+          histeresisMaxValueChanged =
+              double.parse(newHisteresisMax.toStringAsFixed(1));
         });
       }
     });
@@ -68,34 +67,42 @@ class _PhEditPageState extends ConsumerState<PhEditPage> {
     final isPublishing = ref.watch(publishProvider).isLoading;
     return Scaffold(
       appBar: AppBar(
-        title:  Text(widget.data!.appBarTitle),
+        title: Text(widget.data!.appBarTitle),
       ),
       body: SafeArea(
-        child:  Padding(
-            padding: EdgeInsets.all(20),
+        child: Padding(
+            padding: const EdgeInsets.all(20),
             child: Column(
-
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    HisteresisTextWidget(value: "${histeresisMinValueChanged ?? phHisteresisMin.toStringAsFixed(1)} ${widget.data!.unit}", labelName: 'Min',),
+                    HisteresisTextWidget(
+                      value:
+                          "${histeresisMinValueChanged ?? phHisteresisMin.toStringAsFixed(1)} ${widget.data!.unit}",
+                      labelName: 'Min',
+                    ),
                     Gauge(
                         size: 200,
                         currentValue: widget.data!.currentValue,
-                        minAlarmValue: histeresisMinValueChanged ?? phHisteresisMin,
-                        maxAlarmValue: histeresisMaxValueChanged ?? phHisteresisMax,
+                        minAlarmValue:
+                            histeresisMinValueChanged ?? phHisteresisMin,
+                        maxAlarmValue:
+                            histeresisMaxValueChanged ?? phHisteresisMax,
                         unit: widget.data!.unit),
-                    HisteresisTextWidget(value: "${histeresisMaxValueChanged ?? phHisteresisMax.toStringAsFixed(1)} ${widget.data!.unit}", labelName: 'Max',),
+                    HisteresisTextWidget(
+                      value:
+                          "${histeresisMaxValueChanged ?? phHisteresisMax.toStringAsFixed(1)} ${widget.data!.unit}",
+                      labelName: 'Max',
+                    ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 45,
                 ),
                 Form(
                   key: _formKey, // Associate the form key with the Form widget
-                  child:
-                  Column(
+                  child: Column(
                     children: [
                       Row(
                         children: [
@@ -105,16 +112,14 @@ class _PhEditPageState extends ConsumerState<PhEditPage> {
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Musisz wpisać wartość';
-                                }
-                                else if(double.tryParse(value)! < 0){
+                                } else if (double.tryParse(value)! < 0) {
                                   return 'Wartość musi być dodatnia';
-                                }
-                                else if(double.tryParse(value)! > 1000){
+                                } else if (double.tryParse(value)! > 1000) {
                                   return 'Wartość zbyt duża';
                                 }
                                 return null;
                               },
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 labelText: 'Wartość zadana',
                                 hintText: 'Wpisz wartość',
                                 border: OutlineInputBorder(),
@@ -122,23 +127,23 @@ class _PhEditPageState extends ConsumerState<PhEditPage> {
                               // Add further customizations like validators here
                             ),
                           ),
-                          SizedBox(width: 15,),
+                          const SizedBox(
+                            width: 15,
+                          ),
                           Expanded(
                             child: TextFormField(
                               controller: _histeresisController,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Musisz wpisać wartość';
-                                }
-                                else if(double.tryParse(value)! < 0){
+                                } else if (double.tryParse(value)! < 0) {
                                   return 'Wartość musi być dodatnia';
-                                }
-                                else if(double.tryParse(value)! > 1000){
+                                } else if (double.tryParse(value)! > 1000) {
                                   return 'Wartość zbyt duża';
                                 }
                                 return null;
                               },
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 labelText: 'Histereza',
                                 hintText: 'Wpisz wartość',
                                 border: OutlineInputBorder(),
@@ -148,27 +153,31 @@ class _PhEditPageState extends ConsumerState<PhEditPage> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 15,),
+                      const SizedBox(
+                        height: 15,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          CustomButton(text: "Zapisz",isLoading: isPublishing,  onPressed: (){
-                            if (_formKey.currentState!.validate()) {
-                              ref.read(phEditProvider.notifier).publish(widget.data!.endpoint, _setValueController.text, _histeresisController.text );
-
-                            }
-                          },
+                          CustomButton(
+                            text: "Zapisz",
+                            isLoading: isPublishing,
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                ref.read(phEditProvider.notifier).publish(
+                                    widget.data!.endpoint,
+                                    _setValueController.text,
+                                    _histeresisController.text);
+                              }
+                            },
                           ),
                         ],
                       ),
                     ],
                   ),
-
                 ),
-
               ],
             )),
-
       ),
     );
   }
@@ -176,7 +185,9 @@ class _PhEditPageState extends ConsumerState<PhEditPage> {
 
 class HisteresisTextWidget extends StatelessWidget {
   const HisteresisTextWidget({
-    super.key, required this.value, required this.labelName,
+    super.key,
+    required this.value,
+    required this.labelName,
   });
   final String labelName;
   final String value;
@@ -188,7 +199,8 @@ class HisteresisTextWidget extends StatelessWidget {
     return Column(
       children: [
         Text(labelName),
-        Text(value,style: textTheme.bodyLarge!.copyWith(color: colorTheme.primary)),
+        Text(value,
+            style: textTheme.bodyLarge!.copyWith(color: colorTheme.primary)),
       ],
     );
   }

@@ -1,11 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:http/http.dart' as ref;
-import 'package:sterownik_akwarium/app/core/providers.dart';
 import 'package:sterownik_akwarium/domain/usecases/logout_usecase.dart';
 
 class HomePageViewmodel extends StateNotifier<AsyncValue<void>> {
-  
-
   final LogoutUseCase _logoutUseCase;
 
   HomePageViewmodel(this._logoutUseCase) : super(const AsyncData(null));
@@ -19,5 +15,3 @@ class HomePageViewmodel extends StateNotifier<AsyncValue<void>> {
     );
   }
 }
-
-

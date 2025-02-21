@@ -1,12 +1,13 @@
-
-
 import 'package:flutter/material.dart';
 
 import '../../widgets/circular_icon.dart';
 
 class DeviceStateShortWidget extends StatelessWidget {
   const DeviceStateShortWidget({
-    super.key, required this.value, required this.state, required this.labelName,
+    super.key,
+    required this.value,
+    required this.state,
+    required this.labelName,
   });
 
   final String value;
@@ -15,23 +16,32 @@ class DeviceStateShortWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorTheme = Theme.of(context).colorScheme;
-    final  textTheme = Theme.of(context).textTheme;
+    final textTheme = Theme.of(context).textTheme;
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
       decoration: BoxDecoration(
-        color: colorTheme.background,
+        color: colorTheme.surface,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(width: 1, color: colorTheme.outlineVariant),
       ),
       child: Row(
         children: [
-          CircularIcon(labelName:labelName,),
-          SizedBox(width: 9,),
-          Text(value, style: textTheme.titleLarge!.copyWith(color: colorTheme.primary)),
-          SizedBox(width: 9,),
-          Icon(state? Icons.check : Icons.cancel_outlined,
+          CircularIcon(
+            labelName: labelName,
+          ),
+          const SizedBox(
+            width: 9,
+          ),
+          Text(value,
+              style: textTheme.titleLarge!.copyWith(color: colorTheme.primary)),
+          const SizedBox(
+            width: 9,
+          ),
+          Icon(
+            state ? Icons.check : Icons.cancel_outlined,
             color: state ? Colors.green : Colors.red,
-            size: 35,)
+            size: 35,
+          )
         ],
       ),
     );

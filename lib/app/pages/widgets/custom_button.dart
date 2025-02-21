@@ -18,10 +18,16 @@ class CustomButton extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20.0))),
         onPressed: () => onPressed(),
         child: isLoading ?? false
-            ?  SizedBox(
-            width: 20,
-            height: 20,
-            child: CircularProgressIndicator(color: Colors.white))
-            : Text(text, style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Colors.white),));
+            ? const SizedBox(
+                width: 20,
+                height: 20,
+                child: CircularProgressIndicator(color: Colors.white))
+            : Text(
+                text,
+                style: Theme.of(context)
+                    .textTheme
+                    .labelLarge!
+                    .copyWith(color: Colors.white),
+              ));
   }
 }

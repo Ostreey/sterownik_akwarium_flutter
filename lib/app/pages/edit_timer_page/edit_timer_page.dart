@@ -26,7 +26,7 @@ class EditTimerPage extends ConsumerStatefulWidget {
 
 class _EditTimerPageState extends ConsumerState<EditTimerPage> {
   List<bool> selectedDays = List.generate(7, (_) => false);
-  Timer timer = Timer();
+  Timer timer = const Timer();
 
   void _updateSelectedDays(List<bool> selections) {
     setState(() {
@@ -52,16 +52,16 @@ class _EditTimerPageState extends ConsumerState<EditTimerPage> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.all(15),
+            padding: const EdgeInsets.all(15),
             child: Column(
               children: [
                 Material(
                   elevation: 2,
                   borderRadius: BorderRadius.circular(12),
                   child: Container(
-                    padding: EdgeInsets.all(15),
+                    padding: const EdgeInsets.all(15),
                     decoration: BoxDecoration(
-                      color: colorTheme.background,
+                      color: colorTheme.surface,
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(
                           width: 1, color: colorTheme.outlineVariant),
@@ -73,7 +73,7 @@ class _EditTimerPageState extends ConsumerState<EditTimerPage> {
                             weekdays: timer.week,
                             isEditable: true,
                             onDaysChanged: _updateSelectedDays),
-                        SizedBox(
+                        const SizedBox(
                           height: 8,
                         ),
                         Text(
@@ -81,20 +81,20 @@ class _EditTimerPageState extends ConsumerState<EditTimerPage> {
                           style: textTheme.titleLarge!
                               .copyWith(color: colorTheme.onSecondaryContainer),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 8,
                         ),
                         CustomTimerPicker(
                           timerData: timer.on,
                           timeChanged: (time) {
-                          setState(() {
-                            timer = timer.copyWith(
-                              on: time,
-                            );
-                          });
+                            setState(() {
+                              timer = timer.copyWith(
+                                on: time,
+                              );
+                            });
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 12,
                         ),
                         Text(
@@ -102,7 +102,7 @@ class _EditTimerPageState extends ConsumerState<EditTimerPage> {
                           style: textTheme.titleLarge!
                               .copyWith(color: colorTheme.onSecondaryContainer),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 8,
                         ),
                         CustomTimerPicker(
@@ -115,7 +115,7 @@ class _EditTimerPageState extends ConsumerState<EditTimerPage> {
                             });
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 25,
                         ),
                         Row(
@@ -124,11 +124,9 @@ class _EditTimerPageState extends ConsumerState<EditTimerPage> {
                               "Czas pracy",
                               style: textTheme.titleLarge,
                             ),
-                            SizedBox(width: 20),
+                            const SizedBox(width: 20),
                             Text(
-                              getTimeDifference(
-                                  timer.on,
-                                  timer.off),
+                              getTimeDifference(timer.on, timer.off),
                               style: textTheme.titleLarge!
                                   .copyWith(color: colorTheme.primary),
                             ),
@@ -138,7 +136,7 @@ class _EditTimerPageState extends ConsumerState<EditTimerPage> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Row(
@@ -147,13 +145,15 @@ class _EditTimerPageState extends ConsumerState<EditTimerPage> {
                     CustomButton(
                         text: "Ustaw",
                         onPressed: () {
-                          debugPrint("Hour: ${timer.on.h}, Minute: ${timer.on.m}, Second: ${timer.on.s}, Week: ${timer.week}, hourOff: ${timer.off.h}, minuteOff: ${timer.off.m}, secondOff: ${timer.off.s}");
+                          debugPrint(
+                              "Hour: ${timer.on.h}, Minute: ${timer.on.m}, Second: ${timer.on.s}, Week: ${timer.week}, hourOff: ${timer.off.h}, minuteOff: ${timer.off.m}, secondOff: ${timer.off.s}");
                           if (widget.data!.timerDeviceModel.timer != timer) {
                             ref
                                 .read(editTimerProvider.notifier)
                                 .publishViaMqtt(timer, widget.data!.endpoint);
                           } else {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
                               content: Text('Nie wprowadzono żadnych zmian'),
                               duration: Duration(seconds: 3),
                             ));

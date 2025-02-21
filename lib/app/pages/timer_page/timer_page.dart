@@ -10,7 +10,7 @@ import 'package:sterownik_akwarium/app/pages/widgets/custom_day_picker.dart';
 class TimerPage extends StatelessWidget {
   const TimerPage({super.key, this.data});
 
-  static final pageConfig = PageConfig(
+  static const pageConfig = PageConfig(
     icon: Icons.timer_rounded,
     name: 'timer',
     child: TimerPage(),
@@ -23,7 +23,7 @@ class TimerPage extends StatelessWidget {
       return "${time.h} : ${time.m} : ${time.s}";
     }
 
-    final state = true;
+    const state = true;
     final colorTheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
@@ -31,7 +31,7 @@ class TimerPage extends StatelessWidget {
           title: Row(
             children: [
               Text(data!.appBarTitle),
-              SizedBox(
+              const SizedBox(
                 width: 9,
               ),
               Icon(
@@ -45,7 +45,7 @@ class TimerPage extends StatelessWidget {
         body: SafeArea(
           child: SingleChildScrollView(
             child: Padding(
-              padding: EdgeInsets.all(15),
+              padding: const EdgeInsets.all(15),
               child: Column(
                 children: [
                   Row(
@@ -54,7 +54,7 @@ class TimerPage extends StatelessWidget {
                         "Timer",
                         style: textTheme.titleLarge,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 6,
                       ),
                       Icon(
@@ -62,10 +62,11 @@ class TimerPage extends StatelessWidget {
                         size: 30,
                         color: colorTheme.primary,
                       ),
-                      Spacer(),
+                      const Spacer(),
                       GestureDetector(
                           onTap: () {
-                            context.pushNamed(EditTimerPage.pageConfig.name, extra: data);
+                            context.pushNamed(EditTimerPage.pageConfig.name,
+                                extra: data);
                           },
                           child: Icon(
                             Icons.edit,
@@ -74,14 +75,14 @@ class TimerPage extends StatelessWidget {
                           )),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Material(
                     elevation: 2,
                     borderRadius: BorderRadius.circular(12),
                     child: Container(
-                      padding: EdgeInsets.all(15),
+                      padding: const EdgeInsets.all(15),
                       decoration: BoxDecoration(
                         color: colorTheme.surface,
                         borderRadius: BorderRadius.circular(12),
@@ -94,7 +95,7 @@ class TimerPage extends StatelessWidget {
                           CustomDayPicker(
                               weekdays: data!.timerDeviceModel.timer.week,
                               isEditable: false),
-                          SizedBox(
+                          const SizedBox(
                             height: 12,
                           ),
                           Text(
@@ -102,7 +103,7 @@ class TimerPage extends StatelessWidget {
                             style: textTheme.titleLarge!.copyWith(
                                 color: colorTheme.onSecondaryContainer),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 8,
                           ),
                           Text(
@@ -110,7 +111,7 @@ class TimerPage extends StatelessWidget {
                             style: textTheme.displayMedium!
                                 .copyWith(color: colorTheme.primary),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 12,
                           ),
                           Text(
@@ -118,7 +119,7 @@ class TimerPage extends StatelessWidget {
                             style: textTheme.titleLarge!.copyWith(
                                 color: colorTheme.onSecondaryContainer),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 8,
                           ),
                           Text(
@@ -126,7 +127,7 @@ class TimerPage extends StatelessWidget {
                             style: textTheme.displayMedium!
                                 .copyWith(color: colorTheme.primary),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           Row(
@@ -135,9 +136,11 @@ class TimerPage extends StatelessWidget {
                                 "Czas pracy",
                                 style: textTheme.titleLarge,
                               ),
-                              SizedBox(width: 20),
+                              const SizedBox(width: 20),
                               Text(
-                                getTimeDifference(data!.timerDeviceModel.timer.on, data!.timerDeviceModel.timer.off),
+                                getTimeDifference(
+                                    data!.timerDeviceModel.timer.on,
+                                    data!.timerDeviceModel.timer.off),
                                 style: textTheme.titleLarge!
                                     .copyWith(color: colorTheme.primary),
                               ),

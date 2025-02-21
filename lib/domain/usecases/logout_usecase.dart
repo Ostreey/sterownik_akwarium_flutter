@@ -1,5 +1,5 @@
 import 'package:sterownik_akwarium/app/core/result.dart';
-import 'package:sterownik_akwarium/data/repositories/auth_repository.dart';
+import 'package:sterownik_akwarium/data/repositories/auth_repository/auth_repository.dart';
 
 class LogoutUseCase {
   final AuthRepository _authRepository;
@@ -9,4 +9,4 @@ class LogoutUseCase {
   Future<Result<void>> execute() async {
     return _authRepository.logout();
   }
-} 
+}

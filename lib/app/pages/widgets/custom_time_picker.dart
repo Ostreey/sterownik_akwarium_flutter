@@ -47,30 +47,39 @@ class _CustomTimerPickerState extends State<CustomTimerPicker> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        _buildPicker(_hourController, 0, 23,
+        _buildPicker(
+            _hourController,
+            0,
+            23,
             (newValue) => setState(() {
-              _hour = newValue;
-              widget.timeChanged(Time(h: _hour, m: _minute, s: _second));
-            })),
-        Text(':', style: TextStyle(fontSize: 32)),
-        _buildPicker(_minuteController, 0, 59,
+                  _hour = newValue;
+                  widget.timeChanged(Time(h: _hour, m: _minute, s: _second));
+                })),
+        const Text(':', style: TextStyle(fontSize: 32)),
+        _buildPicker(
+            _minuteController,
+            0,
+            59,
             (newValue) => setState(() {
-              _minute = newValue;
-              widget.timeChanged(Time(h: _hour, m: _minute, s: _second));
-            })),
-        Text(':', style: TextStyle(fontSize: 32)),
-        _buildPicker(_secondController, 0, 59,
+                  _minute = newValue;
+                  widget.timeChanged(Time(h: _hour, m: _minute, s: _second));
+                })),
+        const Text(':', style: TextStyle(fontSize: 32)),
+        _buildPicker(
+            _secondController,
+            0,
+            59,
             (newValue) => setState(() {
-              _second = newValue;
-              widget.timeChanged(Time(h: _hour, m: _minute, s: _second));
-            })),
+                  _second = newValue;
+                  widget.timeChanged(Time(h: _hour, m: _minute, s: _second));
+                })),
       ],
     );
   }
 
   Widget _buildPicker(FixedExtentScrollController controller, int minValue,
       int maxValue, ValueChanged<int> onChanged) {
-    return Container(
+    return SizedBox(
       height: MediaQuery.of(context).size.height * 0.15,
       width: MediaQuery.of(context).size.width * 0.2,
       child: ListWheelScrollView.useDelegate(
@@ -82,7 +91,7 @@ class _CustomTimerPickerState extends State<CustomTimerPicker> {
         diameterRatio: 1.5,
         offAxisFraction: -0.1,
         onSelectedItemChanged: onChanged,
-        physics: FixedExtentScrollPhysics(),
+        physics: const FixedExtentScrollPhysics(),
         childDelegate: ListWheelChildBuilderDelegate(
           builder: (context, index) {
             final theme = Theme.of(context);

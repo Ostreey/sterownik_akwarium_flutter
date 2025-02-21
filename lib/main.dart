@@ -1,9 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sterownik_akwarium/app/core/color_schemes.g.dart';
-import 'package:sterownik_akwarium/firebase_api.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 import 'app/core/router.dart';
 import 'firebase_options.dart';
@@ -17,6 +16,17 @@ void main() async {
       options: DefaultFirebaseOptions.currentPlatform,
     );
   }
+
+  // Initialize Firestore with settings
+  FirebaseFirestore.instance.settings = const Settings(
+    persistenceEnabled: true, // Enable offline persistence
+    cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED, // Optional: Set cache size
+  );
+
+  // // Optional: Enable Firestore logging in debug mode
+  // if (kDebugMode) {
+  //   FirebaseFirestore.instance.setLoggingEnabled(true);
+  // }
 
   //await FirebaseApi().initNotifications();
   runApp(const ProviderScope(

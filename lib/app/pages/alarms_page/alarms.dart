@@ -6,13 +6,13 @@ import '../../core/page_config.dart';
 class Alarms extends ConsumerWidget {
   const Alarms({super.key});
 
-  static final PageConfig pageConfig = PageConfig(
+  static const PageConfig pageConfig = PageConfig(
     icon: Icons.alarm,
     name: 'Alarmy',
     child: Alarms(),
   );
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Text("ALARMS");
+    return const Text("ALARMS");
   }
 }

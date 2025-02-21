@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,7 +7,6 @@ import 'package:sterownik_akwarium/app/core/providers.dart';
 import 'package:sterownik_akwarium/app/domain/models/sensor_model/sensor_model.dart';
 import 'package:sterownik_akwarium/app/domain/models/timer_page_model/timer_page_model.dart';
 import 'package:sterownik_akwarium/app/pages/alarms_page/alarms.dart';
-import 'package:sterownik_akwarium/app/pages/edit_timer_page/edit_timer_page.dart';
 import 'package:sterownik_akwarium/app/pages/login_page/login_page.dart';
 import 'package:sterownik_akwarium/app/pages/parameters_page/mqtt_provider.dart';
 import 'package:sterownik_akwarium/app/pages/widgets/snackbar.dart';
@@ -46,7 +44,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   static const String deviceNumber = "001";
   @override
   Widget build(BuildContext context) {
-    SensorModel sensorData = SensorModel();
+    SensorModel sensorData = const SensorModel();
     final sensorDataAsyncValue = ref.watch(mqttUpdatesProvider);
     final homePageViewmodel = ref.watch(homePageViewmodelProvider);
     sensorDataAsyncValue.whenData((value) => sensorData = value);
@@ -61,7 +59,7 @@ class _HomePageState extends ConsumerState<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Row(
+        title: const Row(
           children: [
             Text("Podłączony"),
             Spacer(),
@@ -83,7 +81,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                     "Sterownik akwarium",
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
-                  Spacer(),
+                  const Spacer(),
                   ClipOval(
                       child: Image.asset(
                     'assets/logo.png',
@@ -94,9 +92,9 @@ class _HomePageState extends ConsumerState<HomePage> {
               ),
             ),
             ListTile(
-              leading: Icon(Icons.heat_pump_outlined),
+              leading: const Icon(Icons.heat_pump_outlined),
               // Choose an appropriate icon
-              title: Text("Pompa 1"),
+              title: const Text("Pompa 1"),
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "Pompa 1",
@@ -106,9 +104,9 @@ class _HomePageState extends ConsumerState<HomePage> {
               },
             ),
             ListTile(
-              leading: Icon(Icons.heat_pump_outlined),
+              leading: const Icon(Icons.heat_pump_outlined),
               // Choose an appropriate icon
-              title: Text("Pompa 2"),
+              title: const Text("Pompa 2"),
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "Pompa 2",
@@ -118,9 +116,9 @@ class _HomePageState extends ConsumerState<HomePage> {
               },
             ),
             ListTile(
-              leading: Icon(Icons.water_drop),
+              leading: const Icon(Icons.water_drop),
               // Choose an appropriate icon
-              title: Text("Cyrkulacja 1"),
+              title: const Text("Cyrkulacja 1"),
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "Cyrkulacja 1",
@@ -129,11 +127,10 @@ class _HomePageState extends ConsumerState<HomePage> {
                 context.pushNamed(TimerPage.pageConfig.name, extra: model);
               },
             ),
-
             ListTile(
-              leading: Icon(Icons.water_drop),
+              leading: const Icon(Icons.water_drop),
               // Choose an appropriate icon
-              title: Text("Cyrkulacja 2"),
+              title: const Text("Cyrkulacja 2"),
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "Cyrkulacja 2",
@@ -143,9 +140,9 @@ class _HomePageState extends ConsumerState<HomePage> {
               },
             ),
             ListTile(
-              leading: Icon(Icons.lightbulb),
+              leading: const Icon(Icons.lightbulb),
               // Choose an appropriate icon
-              title: Text("LED"),
+              title: const Text("LED"),
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "LED",
@@ -155,9 +152,9 @@ class _HomePageState extends ConsumerState<HomePage> {
               },
             ),
             ListTile(
-              leading: Icon(Icons.electrical_services),
+              leading: const Icon(Icons.electrical_services),
               // Choose an appropriate icon
-              title: Text("Gniazdo 1"),
+              title: const Text("Gniazdo 1"),
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "Gniazdo 1",
@@ -167,9 +164,9 @@ class _HomePageState extends ConsumerState<HomePage> {
               },
             ),
             ListTile(
-              leading: Icon(Icons.electrical_services),
+              leading: const Icon(Icons.electrical_services),
               // Choose an appropriate icon
-              title: Text("Gniazdo 2"),
+              title: const Text("Gniazdo 2"),
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "Gniazdo 2",
@@ -179,9 +176,9 @@ class _HomePageState extends ConsumerState<HomePage> {
               },
             ),
             ListTile(
-              leading: Icon(Icons.electrical_services),
+              leading: const Icon(Icons.electrical_services),
               // Choose an appropriate icon
-              title: Text("Gniazdo 3"),
+              title: const Text("Gniazdo 3"),
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "Gniazdo 3",
@@ -191,9 +188,9 @@ class _HomePageState extends ConsumerState<HomePage> {
               },
             ),
             ListTile(
-              leading: Icon(Icons.electrical_services),
+              leading: const Icon(Icons.electrical_services),
               // Choose an appropriate icon
-              title: Text("Gniazdo 4"),
+              title: const Text("Gniazdo 4"),
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "Gniazdo 4",
@@ -203,9 +200,9 @@ class _HomePageState extends ConsumerState<HomePage> {
               },
             ),
             ListTile(
-              leading: Icon(Icons.electrical_services),
+              leading: const Icon(Icons.electrical_services),
               // Choose an appropriate icon
-              title: Text("Gniazdo 5"),
+              title: const Text("Gniazdo 5"),
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "Gniazdo 5",
@@ -215,9 +212,8 @@ class _HomePageState extends ConsumerState<HomePage> {
               },
             ),
             ListTile(
-              leading: Icon(Icons.electrical_services),
-         
-              title: Text("Gniazdo 6"),
+              leading: const Icon(Icons.electrical_services),
+              title: const Text("Gniazdo 6"),
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "Gniazdo 6",
@@ -227,9 +223,8 @@ class _HomePageState extends ConsumerState<HomePage> {
               },
             ),
             ListTile(
-              leading: Icon(Icons.electrical_services),
-         
-              title: Text("Gniazdo 7"),
+              leading: const Icon(Icons.electrical_services),
+              title: const Text("Gniazdo 7"),
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "Gniazdo 7",
@@ -238,10 +233,11 @@ class _HomePageState extends ConsumerState<HomePage> {
                 context.pushNamed(TimerPage.pageConfig.name, extra: model);
               },
             ),
-            Divider(),
+            const Divider(),
             ListTile(
-              leading: Icon(Icons.login_outlined), // Choose an appropriate icon
-              title: Text("Wyloguj"),
+              leading: const Icon(
+                  Icons.login_outlined), // Choose an appropriate icon
+              title: const Text("Wyloguj"),
               onTap: () {
                 ref.read(homePageViewmodelProvider.notifier).logout();
               },
@@ -260,7 +256,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                     onPressed: () {
                       context.pushNamed("/setup_page");
                     },
-                    icon: Icon(Icons.settings)),
+                    icon: const Icon(Icons.settings)),
                 onDestinationSelected: (index) =>
                     _tapOnNavigationDestination(context, index),
                 selectedIndex: widget.index,

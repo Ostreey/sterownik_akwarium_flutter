@@ -11,11 +11,10 @@ import 'package:sterownik_akwarium/app/pages/water_temp_edit_page/water_temp_edi
 import '../../core/page_config.dart';
 import 'mqtt_provider.dart';
 
-
 class Parameters extends ConsumerStatefulWidget {
   const Parameters({Key? key}) : super(key: key);
 
-  static final PageConfig pageConfig = PageConfig(
+  static const PageConfig pageConfig = PageConfig(
     icon: Icons.bar_chart,
     name: 'Parametry',
     child: Parameters(),
@@ -25,7 +24,8 @@ class Parameters extends ConsumerStatefulWidget {
   ConsumerState<Parameters> createState() => _ParametersState();
 }
 
-class _ParametersState extends ConsumerState<Parameters> with WidgetsBindingObserver {
+class _ParametersState extends ConsumerState<Parameters>
+    with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
@@ -46,7 +46,7 @@ class _ParametersState extends ConsumerState<Parameters> with WidgetsBindingObse
       if (!mqttClient.isConnected()) {
         mqttClient.connect().then((_) {
           final deviceNumber = ref.read(deviceNumberProvider);
-          
+
           mqttClient.subscribe(deviceNumber);
         });
       }
@@ -59,7 +59,7 @@ class _ParametersState extends ConsumerState<Parameters> with WidgetsBindingObse
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    SensorModel sensorData = SensorModel();
+    SensorModel sensorData = const SensorModel();
     final sensorDataAsyncValue = ref.watch(mqttUpdatesProvider);
     sensorDataAsyncValue.whenData((value) => sensorData = value);
     final espStatus = ref.watch(mqttStatusProvider);
@@ -202,11 +202,11 @@ class _ParametersState extends ConsumerState<Parameters> with WidgetsBindingObse
                     ],
                   );
                 } else {
-                  return    Column(
+                  return Column(
                     children: [
                       SizedBox(height: size.height / 4),
                       Container(
-                        padding: EdgeInsets.all(20),
+                        padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
                           color: Theme.of(context).colorScheme.errorContainer,
                           borderRadius: BorderRadius.circular(10),
@@ -221,14 +221,14 @@ class _ParametersState extends ConsumerState<Parameters> with WidgetsBindingObse
                 }
               },
               loading: () => Center(
-                child: Column(
-                  children: [
-                    SizedBox(height: size.height / 4),
-                    CircularProgressIndicator(),
-                  ],
-                ),
-              ),
-              error: (error, stackTrace) => Center(
+                    child: Column(
+                      children: [
+                        SizedBox(height: size.height / 4),
+                        const CircularProgressIndicator(),
+                      ],
+                    ),
+                  ),
+              error: (error, stackTrace) => const Center(
                     child: Text("Błąd połączenia z urządzeniem"),
                   )),
         ),

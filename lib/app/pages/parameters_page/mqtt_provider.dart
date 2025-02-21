@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sterownik_akwarium/app/core/mqttData.dart';
 import 'package:sterownik_akwarium/app/domain/models/devices_model/devices_model.dart';
@@ -6,26 +5,22 @@ import 'package:sterownik_akwarium/app/domain/models/sensor_model/sensor_model.d
 import 'package:sterownik_akwarium/app/pages/devices_page/devices_provider.dart';
 import 'package:sterownik_akwarium/data/clients/mqtt.dart';
 
-
 final StateProvider<String> deviceNumberProvider = StateProvider<String>((ref) {
   return "001";
 });
 
 final mqttUpdatesProvider = StreamProvider<SensorModel>((ref) {
   final mqttClient = ref.watch(mqttClientProvider);
-  final deviceNumber = "001";
+  const deviceNumber = "001";
   mqttClient.connect().then((_) => mqttClient.subscribe(deviceNumber));
 
   mqttClient.updates.listen((sensorModel) {
-
-    ref.read(devicesProvider.notifier).updateDevices(
-        DevicesModel(
+    ref.read(devicesProvider.notifier).updateDevices(DevicesModel(
           circulation1: sensorModel.circul1,
           circulation2: sensorModel.circul2,
           pompa1: sensorModel.pompa1,
           pompa2: sensorModel.pompa2,
           socket1: sensorModel.soc1.state,
-
           socket2: sensorModel.soc2.state,
           socket3: sensorModel.soc3.state,
           socket4: sensorModel.soc4.state,
@@ -33,7 +28,7 @@ final mqttUpdatesProvider = StreamProvider<SensorModel>((ref) {
           socket6: sensorModel.soc6.state,
           socket7: sensorModel.soc7.state,
           led: sensorModel.led,
-    ));
+        ));
   });
 
   return mqttClient.updates;
@@ -53,7 +48,3 @@ final mqttClientProvider = Provider<MyMqttClient>((ref) {
     certificate: MqttConstants.certificate,
   );
 });
-
-
-
-

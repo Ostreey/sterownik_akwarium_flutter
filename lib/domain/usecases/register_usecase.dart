@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:sterownik_akwarium/data/repositories/auth_repository.dart';
 import 'package:sterownik_akwarium/app/core/result.dart';
+import 'package:sterownik_akwarium/data/repositories/auth_repository/auth_repository.dart';
 
 class RegisterUseCase {
   final AuthRepository _authRepository;
@@ -18,4 +18,4 @@ class RegisterUseCase {
     final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
     return emailRegex.hasMatch(email);
   }
-} 
+}

@@ -1,7 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sterownik_akwarium/app/pages/widgets/custom_button.dart';
+
 import '../../core/page_config.dart';
 import 'register_view_model_provider.dart';
 
@@ -10,7 +11,7 @@ final authProvider = Provider<FirebaseAuth>((ref) => FirebaseAuth.instance);
 class RegisterPage extends ConsumerWidget {
   const RegisterPage({Key? key}) : super(key: key);
 
-  static final pageConfig = PageConfig(
+  static const pageConfig = PageConfig(
     icon: Icons.app_registration,
     name: "register",
     child: RegisterPage(),
@@ -68,7 +69,8 @@ class RegisterPage extends ConsumerWidget {
     );
   }
 
-  Widget _buildRegisterForm(BuildContext context, RegisterViewModel registerViewModel) {
+  Widget _buildRegisterForm(
+      BuildContext context, RegisterViewModel registerViewModel) {
     return SizedBox(
       width: MediaQuery.of(context).size.width / 1.5,
       child: Form(

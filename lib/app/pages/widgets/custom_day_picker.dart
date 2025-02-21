@@ -1,35 +1,37 @@
 import 'package:flutter/material.dart';
 
 class CustomDayPicker extends StatefulWidget {
-  const CustomDayPicker({super.key, required this.weekdays, required this.isEditable, this.onDaysChanged});
+  const CustomDayPicker(
+      {super.key,
+      required this.weekdays,
+      required this.isEditable,
+      this.onDaysChanged});
 
   @override
   _CustomDayPickerState createState() => _CustomDayPickerState();
   final int weekdays;
   final bool isEditable;
   final Function(List<bool>)? onDaysChanged; // Callback to pass selections
-
 }
 
 class _CustomDayPickerState extends State<CustomDayPicker> {
-  List<bool> _selections = List.generate(7, (_) => false);
+  final List<bool> _selections = List.generate(7, (_) => false);
 
   @override
   void initState() {
     getBoolDays();
     super.initState();
   }
+
   void getBoolDays() {
     for (int i = 0; i < 7; i++) {
       _selections[i] = (widget.weekdays & (1 << i)) != 0;
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
-
-    void _onChipSelected(bool selected, int index) {
+    void onChipSelected(bool selected, int index) {
       setState(() {
         _selections[index] = selected;
         widget.onDaysChanged?.call(_selections);
@@ -41,12 +43,13 @@ class _CustomDayPickerState extends State<CustomDayPicker> {
     return Container(
       alignment: Alignment.center, // Centers the Wrap widget horizontally
       child: Wrap(
-        alignment: WrapAlignment.center, // Centers the FilterChip widgets within the Wrap widget
+        alignment: WrapAlignment
+            .center, // Centers the FilterChip widgets within the Wrap widget
         spacing: 8.0, // Spacing between the chips
         runSpacing: 4.0, // Spacing between the lines of chips
         children: List<Widget>.generate(
           7,
-              (int index) {
+          (int index) {
             String day = '';
             switch (index) {
               case 0:
@@ -72,19 +75,22 @@ class _CustomDayPickerState extends State<CustomDayPicker> {
                 break;
             }
             return FilterChip(
-
               selectedColor: colorTheme.primary,
               checkmarkColor: Colors.white,
               backgroundColor: colorTheme.primaryContainer,
               labelStyle: textTheme.labelLarge!.copyWith(
-                color: _selections[index] ? Colors.white : colorTheme.onSecondaryContainer,
+                color: _selections[index]
+                    ? Colors.white
+                    : colorTheme.onSecondaryContainer,
               ),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0),
               ),
               label: Text(day),
               selected: _selections[index],
-              onSelected: widget.isEditable ? (bool selected) => _onChipSelected(selected, index) : null,
+              onSelected: widget.isEditable
+                  ? (bool selected) => onChipSelected(selected, index)
+                  : null,
             );
           },
         ),

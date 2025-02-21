@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:sterownik_akwarium/app/pages/widgets/gauge.dart';
 import 'package:sterownik_akwarium/app/pages/widgets/label.dart';
@@ -25,9 +24,9 @@ class GaugeContainer extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return Container(
       width: size.width * 0.45,
-      padding: EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
-        color: theme.background,
+        color: theme.surface,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(width: 1, color: theme.outlineVariant),
       ),
@@ -35,7 +34,7 @@ class GaugeContainer extends StatelessWidget {
         children: [
           Label(label: labelName),
           Container(
-              margin: EdgeInsets.symmetric(vertical: 15),
+              margin: const EdgeInsets.symmetric(vertical: 15),
               child: Gauge(
                   currentValue: currentValue,
                   minAlarmValue: minAlarmValue,

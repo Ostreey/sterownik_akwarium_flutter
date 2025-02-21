@@ -9,13 +9,12 @@ import 'package:sterownik_akwarium/app/pages/widgets/gauge.dart';
 class WaterTempEditPage extends ConsumerStatefulWidget {
   const WaterTempEditPage({super.key, this.data});
 
-  static const  pageConfig = PageConfig(
+  static const pageConfig = PageConfig(
     icon: Icons.timer_rounded,
     name: 'water_temp_edit',
     child: WaterTempEditPage(),
   );
   final ParametersEditPageModel? data;
-
 
   @override
   _WaterTempEditPageState createState() => _WaterTempEditPageState();
@@ -33,21 +32,18 @@ class _WaterTempEditPageState extends ConsumerState<WaterTempEditPage> {
     _maxController.text = widget.data!.maxValue.toString();
   }
 
-   var minValueChanged;
-   var maxValueChanged;
-  var  frequencyValueChanged;
-
+  var minValueChanged;
+  var maxValueChanged;
+  var frequencyValueChanged;
 
   @override
   Widget build(BuildContext context) {
     ref.listen(publishProvider, (previous, next) {
-      if(next is AsyncData){
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Zapisano'),
-              duration: Duration(seconds: 1),
-            )
-        );
+      if (next is AsyncData) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Zapisano'),
+          duration: Duration(seconds: 1),
+        ));
         setState(() {
           minValueChanged = double.parse(_minController.text);
           maxValueChanged = double.parse(_maxController.text);
@@ -55,110 +51,118 @@ class _WaterTempEditPageState extends ConsumerState<WaterTempEditPage> {
       }
     });
 
-final isPublishing = ref.watch(publishProvider).isLoading;
+    final isPublishing = ref.watch(publishProvider).isLoading;
     return Scaffold(
       appBar: AppBar(
-        title:  Text(widget.data!.appBarTitle),
+        title: Text(widget.data!.appBarTitle),
       ),
       body: SafeArea(
-        child:  Padding(
-              padding: EdgeInsets.all(20),
-              child: Column(
-
-                children: [
-                 Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        HisteresisTextWidget(value: "${minValueChanged ?? widget.data!.minValue} ${widget.data!.unit}", labelName: 'Min',),
-                        Gauge(
-                            size: 200,
-                            currentValue: widget.data!.currentValue,
-                            minAlarmValue: minValueChanged ?? widget.data!.minValue,
-                            maxAlarmValue: maxValueChanged ?? widget.data!.maxValue,
-                            unit: widget.data!.unit),
-                        HisteresisTextWidget(value: "${maxValueChanged ?? widget.data!.maxValue} ${widget.data!.unit}", labelName: 'Max',),
-                      ],
+        child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    HisteresisTextWidget(
+                      value:
+                          "${minValueChanged ?? widget.data!.minValue} ${widget.data!.unit}",
+                      labelName: 'Min',
                     ),
-                  SizedBox(
-                    height: 45,
-                  ),
-                  Form(
-                    key: _formKey, // Associate the form key with the Form widget
-                    child:
-                        Column(
-                          children: [
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: TextFormField(
-                                    controller: _minController,
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Musisz wpisać wartość';
-                                      }
-                                      else if(double.tryParse(value)! < 0){
-                                        return 'Wartość musi być dodatnia';
-                                      }
-                                      else if(double.tryParse(value)! > 50){
-                                        return 'Wartość zbyt duża';
-                                      }
-                                      return null;
-                                    },
-                                    decoration: InputDecoration(
-                                      labelText: 'Włącz przy',
-                                      hintText: 'Wpisz wartość',
-                                      border: OutlineInputBorder(),
-                                    ),
-                                    // Add further customizations like validators here
-                                  ),
-                                ),
-                                SizedBox(width: 15,),
-                                Expanded(
-                                  child: TextFormField(
-                                    controller: _maxController,
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Musisz wpisać wartość';
-                                      }
-                                      else if(double.tryParse(value)! < 0){
-                                        return 'Wartość musi być dodatnia';
-                                      }
-                                      else if(double.tryParse(value)! > 50){
-                                        return 'Wartość zbyt duża';
-                                      }
-                                      return null;
-                                    },
-                                    decoration: InputDecoration(
-                                      labelText: 'Wyłącz przy',
-                                      hintText: 'Wpisz wartość',
-                                      border: OutlineInputBorder(),
-                                    ),
-                                    // Add further customizations like validators here
-                                  ),
-                                ),
-                              ],
+                    Gauge(
+                        size: 200,
+                        currentValue: widget.data!.currentValue,
+                        minAlarmValue: minValueChanged ?? widget.data!.minValue,
+                        maxAlarmValue: maxValueChanged ?? widget.data!.maxValue,
+                        unit: widget.data!.unit),
+                    HisteresisTextWidget(
+                      value:
+                          "${maxValueChanged ?? widget.data!.maxValue} ${widget.data!.unit}",
+                      labelName: 'Max',
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 45,
+                ),
+                Form(
+                  key: _formKey, // Associate the form key with the Form widget
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: TextFormField(
+                              controller: _minController,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Musisz wpisać wartość';
+                                } else if (double.tryParse(value)! < 0) {
+                                  return 'Wartość musi być dodatnia';
+                                } else if (double.tryParse(value)! > 50) {
+                                  return 'Wartość zbyt duża';
+                                }
+                                return null;
+                              },
+                              decoration: const InputDecoration(
+                                labelText: 'Włącz przy',
+                                hintText: 'Wpisz wartość',
+                                border: OutlineInputBorder(),
+                              ),
+                              // Add further customizations like validators here
                             ),
-                            SizedBox(height: 15,),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                               CustomButton(text: "Zapisz",isLoading: isPublishing,  onPressed: (){
-                                 if (_formKey.currentState!.validate()) {
-                                 ref.read(publishProvider.notifier).publish(widget.data!.endpoint, _minController.text, _maxController.text );
-
-                                 }
-                               },
-                               ),
-                              ],
+                          ),
+                          const SizedBox(
+                            width: 15,
+                          ),
+                          Expanded(
+                            child: TextFormField(
+                              controller: _maxController,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Musisz wpisać wartość';
+                                } else if (double.tryParse(value)! < 0) {
+                                  return 'Wartość musi być dodatnia';
+                                } else if (double.tryParse(value)! > 50) {
+                                  return 'Wartość zbyt duża';
+                                }
+                                return null;
+                              },
+                              decoration: const InputDecoration(
+                                labelText: 'Wyłącz przy',
+                                hintText: 'Wpisz wartość',
+                                border: OutlineInputBorder(),
+                              ),
+                              // Add further customizations like validators here
                             ),
-                          ],
-                        ),
-
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          CustomButton(
+                            text: "Zapisz",
+                            isLoading: isPublishing,
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                ref.read(publishProvider.notifier).publish(
+                                    widget.data!.endpoint,
+                                    _minController.text,
+                                    _maxController.text);
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-
-                ],
-              )),
-
+                ),
+              ],
+            )),
       ),
     );
   }
@@ -166,7 +170,9 @@ final isPublishing = ref.watch(publishProvider).isLoading;
 
 class HisteresisTextWidget extends StatelessWidget {
   const HisteresisTextWidget({
-    super.key, required this.value, required this.labelName,
+    super.key,
+    required this.value,
+    required this.labelName,
   });
   final String labelName;
   final String value;
@@ -178,7 +184,8 @@ class HisteresisTextWidget extends StatelessWidget {
     return Column(
       children: [
         Text(labelName),
-        Text(value,style: textTheme.bodyLarge!.copyWith(color: colorTheme.primary)),
+        Text(value,
+            style: textTheme.bodyLarge!.copyWith(color: colorTheme.primary)),
       ],
     );
   }

@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:sterownik_akwarium/data/repositories/auth_repository.dart';
 import 'package:sterownik_akwarium/app/core/result.dart';
+import 'package:sterownik_akwarium/data/repositories/auth_repository/auth_repository.dart';
 
 class LoginUseCase {
   final AuthRepository _authRepository;
@@ -8,7 +8,6 @@ class LoginUseCase {
   LoginUseCase(this._authRepository);
 
   Future<Result<User?>> execute(String email, String password) async {
-    
     if (!_isValidEmail(email)) {
       return Result.failure('Nieprawidłowy format adresu email');
     }
@@ -19,4 +18,4 @@ class LoginUseCase {
     final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
     return emailRegex.hasMatch(email);
   }
-} 
+}

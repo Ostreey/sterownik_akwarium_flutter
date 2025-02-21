@@ -11,13 +11,12 @@ import '../water_temp_edit_page/water_temp_edit_provider.dart';
 class AirTempEditPage extends ConsumerStatefulWidget {
   const AirTempEditPage({super.key, this.data});
 
-  static const  pageConfig = PageConfig(
+  static const pageConfig = PageConfig(
     icon: Icons.timer_rounded,
     name: 'edit_parameters_air_temp',
     child: AirTempEditPage(),
   );
   final ParametersEditPageModel? data;
-
 
   @override
   _AirTempEditPageState createState() => _AirTempEditPageState();
@@ -40,17 +39,14 @@ class _AirTempEditPageState extends ConsumerState<AirTempEditPage> {
   var minValueChanged;
   var maxValueChanged;
 
-
   @override
   Widget build(BuildContext context) {
     ref.listen(publishProvider, (previous, next) {
-      if(next is AsyncData){
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Zapisano'),
-              duration: Duration(seconds: 1),
-            )
-        );
+      if (next is AsyncData) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Zapisano'),
+          duration: Duration(seconds: 1),
+        ));
         setState(() {
           minValueChanged = double.parse(_minController.text);
           maxValueChanged = double.parse(_maxController.text);
@@ -61,34 +57,40 @@ class _AirTempEditPageState extends ConsumerState<AirTempEditPage> {
     final isPublishing = ref.watch(publishProvider).isLoading;
     return Scaffold(
       appBar: AppBar(
-        title:  Text(widget.data!.appBarTitle),
+        title: Text(widget.data!.appBarTitle),
       ),
       body: SafeArea(
-        child:  Padding(
-            padding: EdgeInsets.all(20),
+        child: Padding(
+            padding: const EdgeInsets.all(20),
             child: Column(
-
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    HisteresisTextWidget(value: "${minValueChanged ?? widget.data!.minValue} ${widget.data!.unit}", labelName: 'Min',),
+                    HisteresisTextWidget(
+                      value:
+                          "${minValueChanged ?? widget.data!.minValue} ${widget.data!.unit}",
+                      labelName: 'Min',
+                    ),
                     Gauge(
                         size: 200,
                         currentValue: widget.data!.currentValue,
                         minAlarmValue: minValueChanged ?? widget.data!.minValue,
                         maxAlarmValue: maxValueChanged ?? widget.data!.maxValue,
                         unit: widget.data!.unit),
-                    HisteresisTextWidget(value: "${maxValueChanged ?? widget.data!.maxValue} ${widget.data!.unit}", labelName: 'Max',),
+                    HisteresisTextWidget(
+                      value:
+                          "${maxValueChanged ?? widget.data!.maxValue} ${widget.data!.unit}",
+                      labelName: 'Max',
+                    ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 45,
                 ),
                 Form(
                   key: _formKey, // Associate the form key with the Form widget
-                  child:
-                  Column(
+                  child: Column(
                     children: [
                       Row(
                         children: [
@@ -98,16 +100,14 @@ class _AirTempEditPageState extends ConsumerState<AirTempEditPage> {
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Musisz wpisać wartość';
-                                }
-                                else if(double.tryParse(value)! < 0){
+                                } else if (double.tryParse(value)! < 0) {
                                   return 'Wartość musi być dodatnia';
-                                }
-                                else if(double.tryParse(value)! > 50){
+                                } else if (double.tryParse(value)! > 50) {
                                   return 'Wartość zbyt duża';
                                 }
                                 return null;
                               },
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 labelText: 'Wyłącz przy',
                                 hintText: 'Wpisz wartość',
                                 border: OutlineInputBorder(),
@@ -115,23 +115,23 @@ class _AirTempEditPageState extends ConsumerState<AirTempEditPage> {
                               // Add further customizations like validators here
                             ),
                           ),
-                          SizedBox(width: 15,),
+                          const SizedBox(
+                            width: 15,
+                          ),
                           Expanded(
                             child: TextFormField(
                               controller: _maxController,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Musisz wpisać wartość';
-                                }
-                                else if(double.tryParse(value)! < 0){
+                                } else if (double.tryParse(value)! < 0) {
                                   return 'Wartość musi być dodatnia';
-                                }
-                                else if(double.tryParse(value)! > 50){
+                                } else if (double.tryParse(value)! > 50) {
                                   return 'Wartość zbyt duża';
                                 }
                                 return null;
                               },
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 labelText: 'Włącz przy',
                                 hintText: 'Wpisz wartość',
                                 border: OutlineInputBorder(),
@@ -141,55 +141,58 @@ class _AirTempEditPageState extends ConsumerState<AirTempEditPage> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 15,),
+                      const SizedBox(
+                        height: 15,
+                      ),
                       SizedBox(
-                          width: 200,
-                          child: TextFormField(
-                            controller: _frequencyController,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Musisz wpisać wartość';
-                              }
-                              else if(double.tryParse(value)! < 0){
-                                return 'Wartość musi być dodatnia';
-                              }
-                              else if(double.tryParse(value)! > 100){
-                                return 'Wartość zbyt duża';
-                              }
-                              return null;
-                            },
-                            decoration: InputDecoration(
-                              labelText: 'Częstotliwość %',
-                              hintText: 'Wpisz wartość',
-                              border: OutlineInputBorder(),
-                            ),
-                            // Add further customizations like validators here
+                        width: 200,
+                        child: TextFormField(
+                          controller: _frequencyController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Musisz wpisać wartość';
+                            } else if (double.tryParse(value)! < 0) {
+                              return 'Wartość musi być dodatnia';
+                            } else if (double.tryParse(value)! > 100) {
+                              return 'Wartość zbyt duża';
+                            }
+                            return null;
+                          },
+                          decoration: const InputDecoration(
+                            labelText: 'Częstotliwość %',
+                            hintText: 'Wpisz wartość',
+                            border: OutlineInputBorder(),
                           ),
+                          // Add further customizations like validators here
                         ),
-
-                      SizedBox(height: 15,),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          CustomButton(text: "Zapisz",isLoading: isPublishing,  onPressed: (){
-                            if (_formKey.currentState!.validate()) {
-                                ref.read(publishProvider.notifier).publish(widget.data!.endpoint, _minController.text, _maxController.text, _frequencyController.text);
-                            }
-                          },
+                          CustomButton(
+                            text: "Zapisz",
+                            isLoading: isPublishing,
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                ref.read(publishProvider.notifier).publish(
+                                    widget.data!.endpoint,
+                                    _minController.text,
+                                    _maxController.text,
+                                    _frequencyController.text);
+                              }
+                            },
                           ),
                         ],
                       ),
                     ],
                   ),
-
                 ),
-
               ],
             )),
-
       ),
     );
   }
 }
-
-

@@ -11,8 +11,7 @@ part 'edit_timer_provider.g.dart';
 @riverpod
 class EditTimer extends _$EditTimer {
   @override
-  FutureOr<void> build() {
-  }
+  FutureOr<void> build() {}
 
   Future<void> publishViaMqtt(Timer timerData, String endpoint) async {
     final mqttClient = ref.read(mqttClientProvider);
@@ -21,8 +20,7 @@ class EditTimer extends _$EditTimer {
     final data = MqttClientPayloadBuilder();
     final jsonData = timerData.toJson();
     data.addString(jsonEncode(jsonData));
-    state = await AsyncValue.guard(() => mqttClient.publish(endpoint,data));
-    debugPrint("PUBLISH TEST: ${state}");
+    state = await AsyncValue.guard(() => mqttClient.publish(endpoint, data));
+    debugPrint("PUBLISH TEST: $state");
   }
 }
-
