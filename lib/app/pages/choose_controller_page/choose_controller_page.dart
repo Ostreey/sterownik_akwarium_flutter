@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sterownik_akwarium/app/pages/parameters_page/parameters.dart';
 import 'package:sterownik_akwarium/app/pages/widgets/custom_button.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/page_config.dart';
+import '../../pages/home_page/home_page.dart';
 import 'add_controller_provider.dart';
 import 'choose_controller_view_model_provider.dart';
-
 
 class ChooseControllerPage extends ConsumerWidget {
   const ChooseControllerPage({super.key});
@@ -25,6 +26,24 @@ class ChooseControllerPage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Wybierz sterownik'),
+        actions: [
+          TextButton(
+            onPressed: selectedController != null 
+              ? () async {
+                  await ref.read(selectedControllerProvider.notifier).saveToPreferences();
+                  if (context.mounted) {
+                    context.goNamed(
+                      HomePage.pageConfig.name,
+                      pathParameters: {
+                        'tab': Parameters.pageConfig.name,
+                      },
+                    );
+                  }
+                }
+              : null,
+            child: const Text('Dalej'),
+          ),
+        ],
       ),
       body: Column(
         children: [
@@ -35,12 +54,12 @@ class ChooseControllerPage extends ConsumerWidget {
                 itemBuilder: (context, index) {
                   final controller = controllers[index];
                   final isSelected = selectedController?.id == controller.id;
-                  
+
                   return ListTile(
                     title: Text(controller.name),
                     trailing: isSelected ? const Icon(Icons.check) : null,
-                    onTap: () => 
-                    ref.read(selectedControllerProvider.notifier)
+                    onTap: () => ref
+                        .read(selectedControllerProvider.notifier)
                         .select(controller),
                   );
                 },
@@ -49,18 +68,6 @@ class ChooseControllerPage extends ConsumerWidget {
               error: (error, stack) => Center(
                 child: Text('Error: $error'),
               ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: ElevatedButton(
-              onPressed: selectedController != null
-                  ? () => context.go('/home')  // Assuming you're using go_router
-                  : null,
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size.fromHeight(50),
-              ),
-              child: const Text('Akceptuj'),
             ),
           ),
         ],
