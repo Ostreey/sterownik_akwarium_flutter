@@ -7,6 +7,7 @@ import 'package:sterownik_akwarium/app/core/providers.dart';
 import 'package:sterownik_akwarium/app/domain/models/sensor_model/sensor_model.dart';
 import 'package:sterownik_akwarium/app/domain/models/timer_page_model/timer_page_model.dart';
 import 'package:sterownik_akwarium/app/pages/alarms_page/alarms.dart';
+import 'package:sterownik_akwarium/app/pages/choose_controller_page/choose_controller_page.dart';
 import 'package:sterownik_akwarium/app/pages/login_page/login_page.dart';
 import 'package:sterownik_akwarium/app/pages/parameters_page/mqtt_provider.dart';
 import 'package:sterownik_akwarium/app/pages/widgets/snackbar.dart';
@@ -234,6 +235,16 @@ class _HomePageState extends ConsumerState<HomePage> {
               },
             ),
             const Divider(),
+                  ListTile(
+              leading: const Icon(
+                  Icons.change_circle), // Choose an appropriate icon
+              title: const Text("Zmień sterownik"),
+              onTap: () {
+                context.goNamed(
+                  ChooseControllerPage.pageConfig.name,
+                );
+              },
+            ),
             ListTile(
               leading: const Icon(
                   Icons.login_outlined), // Choose an appropriate icon

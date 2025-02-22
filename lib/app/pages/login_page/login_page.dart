@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sterownik_akwarium/app/core/services/preferences_service.dart';
+import 'package:sterownik_akwarium/app/pages/choose_controller_page/choose_controller_page.dart';
+import 'package:sterownik_akwarium/app/pages/choose_controller_page/choose_controller_view_model_provider.dart';
 import 'package:sterownik_akwarium/app/pages/home_page/home_page.dart';
 import 'package:sterownik_akwarium/app/pages/parameters_page/parameters.dart';
 import 'package:sterownik_akwarium/app/pages/register_page/register_page.dart';
@@ -22,16 +25,24 @@ class LoginPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final loginState = ref.watch(loginViewModelProvider);
     final loginViewModel = ref.watch(loginViewModelProvider.notifier);
-    ref.listen(loginViewModelProvider, (previous, next) {
+    ref.listen(loginViewModelProvider, (previous, next) async {
       if (next is AsyncError) {
         Snackbar.show(context, next.error.toString());
       } else if (next is AsyncData) {
-        context.goNamed(
-          HomePage.pageConfig.name,
-          pathParameters: {
-            'tab': Parameters.pageConfig.name,
-          },
-        );
+        final savedControllerId =
+            await PreferencesService().getString(PreferenceKey.controllerId);
+        if (savedControllerId != null) {
+          context.goNamed(
+            HomePage.pageConfig.name,
+            pathParameters: {
+              'tab': Parameters.pageConfig.name,
+            },
+          );
+        } else {
+          context.goNamed(
+            ChooseControllerPage.pageConfig.name,
+          );
+        }
       }
     });
 
@@ -52,7 +63,8 @@ class LoginPage extends ConsumerWidget {
               ),
               const SizedBox(height: 10),
               TextButton(
-                onPressed: () => context.pushNamed(RegisterPage.pageConfig.name),
+                onPressed: () =>
+                    context.pushNamed(RegisterPage.pageConfig.name),
                 child: const Text("Nie masz konta? Zarejestruj sterownik"),
               ),
             ],
@@ -118,4 +130,3 @@ class LoginPage extends ConsumerWidget {
     );
   }
 }
-

@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sterownik_akwarium/app/core/page_config.dart';
+import 'package:sterownik_akwarium/app/core/services/preferences_service.dart';
 import 'package:sterownik_akwarium/app/pages/choose_controller_page/choose_controller_page.dart';
+import 'package:sterownik_akwarium/app/pages/home_page/home_page.dart';
 import 'package:sterownik_akwarium/app/pages/login_page/login_page.dart';
+import 'package:sterownik_akwarium/app/pages/parameters_page/parameters.dart';
 
 import '../../core/providers.dart';
 
@@ -33,18 +36,23 @@ class _SplashScreenState extends ConsumerState<SplashScreenPage> {
 
   @override
   Widget build(BuildContext context) {
-    // Listen to auth state changes in build method
     ref.listen(authStateProvider, (previous, next) {
-      next.whenData((user) {
+      next.whenData((user) async {
         if (user != null) {
-          // context.goNamed(
-          //   HomePage.pageConfig.name,
-          //   pathParameters: {
-          //     'tab': Parameters.pageConfig.name,
-          //   },
-          // );
-
-          context.goNamed(ChooseControllerPage.pageConfig.name);
+          final savedControllerId =
+              await PreferencesService().getString(PreferenceKey.controllerId);
+          if (savedControllerId != null) {
+            context.goNamed(
+              HomePage.pageConfig.name,
+              pathParameters: {
+                'tab': Parameters.pageConfig.name,
+              },
+            );
+          } else {
+            context.goNamed(
+              ChooseControllerPage.pageConfig.name,
+            );
+          }
         } else {
           context.goNamed(LoginPage.pageConfig.name);
         }
