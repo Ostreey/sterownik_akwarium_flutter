@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sterownik_akwarium/app/pages/widgets/custom_button.dart';
 
 import '../../core/page_config.dart';
+import 'add_controller_provider.dart';
 import 'choose_controller_view_model_provider.dart';
 
 final selectedControllerProvider = StateProvider<String?>((ref) => null);
@@ -17,9 +19,8 @@ class ChooseControllerPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final controllersAsync = ref.watch(controllersProvider);
     final selectedController = ref.watch(selectedControllerProvider);
-    final controllersNotifier = ref.read(controllersProvider.notifier);
+    final controllersAsync = ref.watch(controllersProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -46,14 +47,13 @@ class ChooseControllerPage extends ConsumerWidget {
         error: (error, _) => Center(child: Text('Error: $error')),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _showAddControllerDialog(context, controllersNotifier),
+        onPressed: () => _showAddControllerDialog(context, ref),
         child: const Icon(Icons.add),
       ),
     );
   }
 
-  void _showAddControllerDialog(
-      BuildContext context, Controllers controllersNotifier) {
+  void _showAddControllerDialog(BuildContext context, WidgetRef ref) {
     final nameController = TextEditingController();
     final idController = TextEditingController();
 
@@ -80,16 +80,31 @@ class ChooseControllerPage extends ConsumerWidget {
             ],
           ),
           actions: [
-            TextButton(
-              onPressed: () async {
-                final name = nameController.text;
-                final id = idController.text;
-                if (name.isNotEmpty && id.isNotEmpty) {
-                  await controllersNotifier.addNewController(name, id);
-                  Navigator.of(context).pop();
-                }
+            Consumer(
+              builder: (context, ref, child) {
+                final addControllerNotifier =
+                    ref.read(addControllerNotifierProvider.notifier);
+                final addControllerListener =
+                    ref.watch(addControllerNotifierProvider);
+                return CustomButton(
+                  isLoading: addControllerListener.isLoading,
+                  text: 'Dodaj',
+                  onPressed: () async {
+                    final name = nameController.text;
+                    final id = idController.text;
+                    if (name.isNotEmpty && id.isNotEmpty) {
+                      await addControllerNotifier.addController(name, id);
+                      Navigator.of(context).pop();
+                    }
+                  },
+                );
               },
-              child: const Text('Add'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Anuluj'),
             ),
           ],
         );
