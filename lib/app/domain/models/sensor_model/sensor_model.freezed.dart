@@ -12,7 +12,7 @@ part of 'sensor_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 SensorModel _$SensorModelFromJson(Map<String, dynamic> json) {
   return _SensorModel.fromJson(json);
@@ -52,8 +52,12 @@ mixin _$SensorModel {
   TimerDeviceModel get soc6 => throw _privateConstructorUsedError;
   TimerDeviceModel get soc7 => throw _privateConstructorUsedError;
 
+  /// Serializes this SensorModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of SensorModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $SensorModelCopyWith<SensorModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -121,6 +125,8 @@ class _$SensorModelCopyWithImpl<$Res, $Val extends SensorModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of SensorModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -284,6 +290,8 @@ class _$SensorModelCopyWithImpl<$Res, $Val extends SensorModel>
     ) as $Val);
   }
 
+  /// Create a copy of SensorModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $TimerDeviceModelCopyWith<$Res> get pompa1 {
@@ -292,6 +300,8 @@ class _$SensorModelCopyWithImpl<$Res, $Val extends SensorModel>
     });
   }
 
+  /// Create a copy of SensorModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $TimerDeviceModelCopyWith<$Res> get pompa2 {
@@ -300,6 +310,8 @@ class _$SensorModelCopyWithImpl<$Res, $Val extends SensorModel>
     });
   }
 
+  /// Create a copy of SensorModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $TimerDeviceModelCopyWith<$Res> get circul1 {
@@ -308,6 +320,8 @@ class _$SensorModelCopyWithImpl<$Res, $Val extends SensorModel>
     });
   }
 
+  /// Create a copy of SensorModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $TimerDeviceModelCopyWith<$Res> get circul2 {
@@ -316,6 +330,8 @@ class _$SensorModelCopyWithImpl<$Res, $Val extends SensorModel>
     });
   }
 
+  /// Create a copy of SensorModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $TimerDeviceModelCopyWith<$Res> get led {
@@ -324,6 +340,8 @@ class _$SensorModelCopyWithImpl<$Res, $Val extends SensorModel>
     });
   }
 
+  /// Create a copy of SensorModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $TimerDeviceModelCopyWith<$Res> get soc1 {
@@ -332,6 +350,8 @@ class _$SensorModelCopyWithImpl<$Res, $Val extends SensorModel>
     });
   }
 
+  /// Create a copy of SensorModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $TimerDeviceModelCopyWith<$Res> get soc2 {
@@ -340,6 +360,8 @@ class _$SensorModelCopyWithImpl<$Res, $Val extends SensorModel>
     });
   }
 
+  /// Create a copy of SensorModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $TimerDeviceModelCopyWith<$Res> get soc3 {
@@ -348,6 +370,8 @@ class _$SensorModelCopyWithImpl<$Res, $Val extends SensorModel>
     });
   }
 
+  /// Create a copy of SensorModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $TimerDeviceModelCopyWith<$Res> get soc4 {
@@ -356,6 +380,8 @@ class _$SensorModelCopyWithImpl<$Res, $Val extends SensorModel>
     });
   }
 
+  /// Create a copy of SensorModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $TimerDeviceModelCopyWith<$Res> get soc5 {
@@ -364,6 +390,8 @@ class _$SensorModelCopyWithImpl<$Res, $Val extends SensorModel>
     });
   }
 
+  /// Create a copy of SensorModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $TimerDeviceModelCopyWith<$Res> get soc6 {
@@ -372,6 +400,8 @@ class _$SensorModelCopyWithImpl<$Res, $Val extends SensorModel>
     });
   }
 
+  /// Create a copy of SensorModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $TimerDeviceModelCopyWith<$Res> get soc7 {
@@ -456,6 +486,8 @@ class __$$SensorModelImplCopyWithImpl<$Res>
       _$SensorModelImpl _value, $Res Function(_$SensorModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of SensorModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -759,7 +791,7 @@ class _$SensorModelImpl implements _SensorModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SensorModelImpl &&
@@ -807,7 +839,7 @@ class _$SensorModelImpl implements _SensorModel {
             (identical(other.soc7, soc7) || other.soc7 == soc7));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
@@ -844,7 +876,9 @@ class _$SensorModelImpl implements _SensorModel {
         soc7
       ]);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SensorModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SensorModelImplCopyWith<_$SensorModelImpl> get copyWith =>
@@ -957,8 +991,11 @@ abstract class _SensorModel implements SensorModel {
   TimerDeviceModel get soc6;
   @override
   TimerDeviceModel get soc7;
+
+  /// Create a copy of SensorModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SensorModelImplCopyWith<_$SensorModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

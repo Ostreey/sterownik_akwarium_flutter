@@ -14,7 +14,7 @@ _$SensorModelImpl _$$SensorModelImplFromJson(Map<String, dynamic> json) =>
       airTemp: (json['airTemp'] as num?)?.toDouble() ?? 0.0,
       airTempMin: (json['airTempMin'] as num?)?.toDouble() ?? 0.0,
       airTempMax: (json['airTempMax'] as num?)?.toDouble() ?? 0.0,
-      airTempFreq: json['airTempFreq'] as int? ?? 0,
+      airTempFreq: (json['airTempFreq'] as num?)?.toInt() ?? 0,
       ph: (json['ph'] as num?)?.toDouble() ?? 0.0,
       phSet: (json['phSet'] as num?)?.toDouble() ?? 0.0,
       phHisteresis: (json['phHisteresis'] as num?)?.toDouble() ?? 0.0,

@@ -12,7 +12,7 @@ part of 'timer_device_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 TimerDeviceModel _$TimerDeviceModelFromJson(Map<String, dynamic> json) {
   return _TimerDeviceModel.fromJson(json);
@@ -24,8 +24,12 @@ mixin _$TimerDeviceModel {
   bool get state => throw _privateConstructorUsedError;
   Timer get timer => throw _privateConstructorUsedError;
 
+  /// Serializes this TimerDeviceModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of TimerDeviceModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $TimerDeviceModelCopyWith<TimerDeviceModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -51,6 +55,8 @@ class _$TimerDeviceModelCopyWithImpl<$Res, $Val extends TimerDeviceModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of TimerDeviceModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -74,6 +80,8 @@ class _$TimerDeviceModelCopyWithImpl<$Res, $Val extends TimerDeviceModel>
     ) as $Val);
   }
 
+  /// Create a copy of TimerDeviceModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $TimerCopyWith<$Res> get timer {
@@ -105,6 +113,8 @@ class __$$TimerDeviceModelImplCopyWithImpl<$Res>
       $Res Function(_$TimerDeviceModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of TimerDeviceModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -154,7 +164,7 @@ class _$TimerDeviceModelImpl implements _TimerDeviceModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TimerDeviceModelImpl &&
@@ -163,11 +173,13 @@ class _$TimerDeviceModelImpl implements _TimerDeviceModel {
             (identical(other.timer, timer) || other.timer == timer));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, speed, state, timer);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TimerDeviceModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TimerDeviceModelImplCopyWith<_$TimerDeviceModelImpl> get copyWith =>
@@ -197,8 +209,11 @@ abstract class _TimerDeviceModel implements TimerDeviceModel {
   bool get state;
   @override
   Timer get timer;
+
+  /// Create a copy of TimerDeviceModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TimerDeviceModelImplCopyWith<_$TimerDeviceModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -213,8 +228,12 @@ mixin _$Timer {
   Time get on => throw _privateConstructorUsedError;
   Time get off => throw _privateConstructorUsedError;
 
+  /// Serializes this Timer to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Timer
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $TimerCopyWith<Timer> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -239,6 +258,8 @@ class _$TimerCopyWithImpl<$Res, $Val extends Timer>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Timer
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -262,6 +283,8 @@ class _$TimerCopyWithImpl<$Res, $Val extends Timer>
     ) as $Val);
   }
 
+  /// Create a copy of Timer
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $TimeCopyWith<$Res> get on {
@@ -270,6 +293,8 @@ class _$TimerCopyWithImpl<$Res, $Val extends Timer>
     });
   }
 
+  /// Create a copy of Timer
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $TimeCopyWith<$Res> get off {
@@ -302,6 +327,8 @@ class __$$TimerImplCopyWithImpl<$Res>
       _$TimerImpl _value, $Res Function(_$TimerImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Timer
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -351,7 +378,7 @@ class _$TimerImpl implements _Timer {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TimerImpl &&
@@ -360,11 +387,13 @@ class _$TimerImpl implements _Timer {
             (identical(other.off, off) || other.off == off));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, week, on, off);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Timer
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TimerImplCopyWith<_$TimerImpl> get copyWith =>
@@ -390,8 +419,11 @@ abstract class _Timer implements Timer {
   Time get on;
   @override
   Time get off;
+
+  /// Create a copy of Timer
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TimerImplCopyWith<_$TimerImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -406,8 +438,12 @@ mixin _$Time {
   int get m => throw _privateConstructorUsedError;
   int get s => throw _privateConstructorUsedError;
 
+  /// Serializes this Time to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Time
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $TimeCopyWith<Time> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -429,6 +465,8 @@ class _$TimeCopyWithImpl<$Res, $Val extends Time>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Time
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -470,6 +508,8 @@ class __$$TimeImplCopyWithImpl<$Res>
   __$$TimeImplCopyWithImpl(_$TimeImpl _value, $Res Function(_$TimeImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Time
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -518,7 +558,7 @@ class _$TimeImpl implements _Time {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TimeImpl &&
@@ -527,11 +567,13 @@ class _$TimeImpl implements _Time {
             (identical(other.s, s) || other.s == s));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, h, m, s);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Time
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TimeImplCopyWith<_$TimeImpl> get copyWith =>
@@ -556,8 +598,11 @@ abstract class _Time implements Time {
   int get m;
   @override
   int get s;
+
+  /// Create a copy of Time
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TimeImplCopyWith<_$TimeImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

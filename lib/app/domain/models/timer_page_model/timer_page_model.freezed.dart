@@ -12,7 +12,7 @@ part of 'timer_page_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 TimerPageModel _$TimerPageModelFromJson(Map<String, dynamic> json) {
   return _TimerPageModel.fromJson(json);
@@ -24,8 +24,12 @@ mixin _$TimerPageModel {
   String get endpoint => throw _privateConstructorUsedError;
   TimerDeviceModel get timerDeviceModel => throw _privateConstructorUsedError;
 
+  /// Serializes this TimerPageModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of TimerPageModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $TimerPageModelCopyWith<TimerPageModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -52,6 +56,8 @@ class _$TimerPageModelCopyWithImpl<$Res, $Val extends TimerPageModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of TimerPageModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -75,6 +81,8 @@ class _$TimerPageModelCopyWithImpl<$Res, $Val extends TimerPageModel>
     ) as $Val);
   }
 
+  /// Create a copy of TimerPageModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $TimerDeviceModelCopyWith<$Res> get timerDeviceModel {
@@ -107,6 +115,8 @@ class __$$TimerPageModelImplCopyWithImpl<$Res>
       _$TimerPageModelImpl _value, $Res Function(_$TimerPageModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of TimerPageModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -155,7 +165,7 @@ class _$TimerPageModelImpl implements _TimerPageModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TimerPageModelImpl &&
@@ -167,12 +177,14 @@ class _$TimerPageModelImpl implements _TimerPageModel {
                 other.timerDeviceModel == timerDeviceModel));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, appBarTitle, endpoint, timerDeviceModel);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TimerPageModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TimerPageModelImplCopyWith<_$TimerPageModelImpl> get copyWith =>
@@ -202,8 +214,11 @@ abstract class _TimerPageModel implements TimerPageModel {
   String get endpoint;
   @override
   TimerDeviceModel get timerDeviceModel;
+
+  /// Create a copy of TimerPageModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TimerPageModelImplCopyWith<_$TimerPageModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

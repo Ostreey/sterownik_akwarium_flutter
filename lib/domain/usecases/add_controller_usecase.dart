@@ -14,6 +14,6 @@ class AddControllerUseCase {
     if (user == null) {
       return Result.failure('User not logged in');
     }
-    return await _firebaseRepository.addNewController(user.uid, controller);
+    return await _firebaseRepository.addController(user.uid, controller);
   }
 }

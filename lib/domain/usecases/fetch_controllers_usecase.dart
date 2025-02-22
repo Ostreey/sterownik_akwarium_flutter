@@ -14,6 +14,6 @@ class FetchControllersUseCase {
     if (user == null) {
       return Result.failure('User not logged in');
     }
-    return _firebaseRepository.fetchControllers(user.uid);
+    return await _firebaseRepository.fetchControllers(user.uid);
   }
 }

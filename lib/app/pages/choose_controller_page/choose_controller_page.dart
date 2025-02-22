@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/page_config.dart';
 import 'choose_controller_view_model_provider.dart';
 
+final selectedControllerProvider = StateProvider<String?>((ref) => null);
+
 class ChooseControllerPage extends ConsumerWidget {
   const ChooseControllerPage({Key? key}) : super(key: key);
 
@@ -15,26 +17,26 @@ class ChooseControllerPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final controllerState = ref.watch(chooseControllerViewModelProvider);
-    final controllerViewModel =
-        ref.watch(chooseControllerViewModelProvider.notifier);
+    final controllersAsync = ref.watch(controllersProvider);
+    final selectedController = ref.watch(selectedControllerProvider);
+    final controllersNotifier = ref.read(controllersProvider.notifier);
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Wybierz sterownik'),
       ),
-      body: controllerState.when(
+      body: controllersAsync.when(
         data: (controllers) => ListView.builder(
           itemCount: controllers.length,
           itemBuilder: (context, index) {
             final controller = controllers[index];
             return ListTile(
               title: Text(controller.name),
-              leading: Radio(
-                value: controller.id,
-                groupValue: controllerViewModel.selectedControllerId,
+              leading: Radio<String>(
+                value: controller.name,
+                groupValue: selectedController,
                 onChanged: (value) {
-                  controllerViewModel.selectController(value as String);
+                  ref.read(selectedControllerProvider.notifier).state = value;
                 },
               ),
             );
@@ -44,14 +46,14 @@ class ChooseControllerPage extends ConsumerWidget {
         error: (error, _) => Center(child: Text('Error: $error')),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _showAddControllerDialog(context, controllerViewModel),
+        onPressed: () => _showAddControllerDialog(context, controllersNotifier),
         child: const Icon(Icons.add),
       ),
     );
   }
 
   void _showAddControllerDialog(
-      BuildContext context, ChooseControllerViewModel controllerViewModel) {
+      BuildContext context, Controllers controllersNotifier) {
     final nameController = TextEditingController();
     final idController = TextEditingController();
 
@@ -59,27 +61,31 @@ class ChooseControllerPage extends ConsumerWidget {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Add New Controller'),
+          title: const Text('Dodaj nowy sterownik'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 controller: nameController,
-                decoration: const InputDecoration(labelText: 'Controller Name'),
+                decoration: const InputDecoration(
+                    labelText: 'Nazwa sterownika',
+                    hintText: 'np. Akwarium w salonie'),
               ),
               TextField(
                 controller: idController,
-                decoration: const InputDecoration(labelText: 'Controller ID'),
+                decoration: const InputDecoration(
+                    labelText: 'Numer seryjny sterownika',
+                    hintText: 'np. AQ001'),
               ),
             ],
           ),
           actions: [
             TextButton(
-              onPressed: () {
+              onPressed: () async {
                 final name = nameController.text;
                 final id = idController.text;
                 if (name.isNotEmpty && id.isNotEmpty) {
-                  controllerViewModel.addNewController(name, id);
+                  await controllersNotifier.addNewController(name, id);
                   Navigator.of(context).pop();
                 }
               },

@@ -12,7 +12,7 @@ part of 'devices_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 DevicesModel _$DevicesModelFromJson(Map<String, dynamic> json) {
   return _DevicesModel.fromJson(json);
@@ -33,8 +33,12 @@ mixin _$DevicesModel {
   bool get socket6 => throw _privateConstructorUsedError;
   bool get socket7 => throw _privateConstructorUsedError;
 
+  /// Serializes this DevicesModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of DevicesModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $DevicesModelCopyWith<DevicesModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -76,6 +80,8 @@ class _$DevicesModelCopyWithImpl<$Res, $Val extends DevicesModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of DevicesModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -144,6 +150,8 @@ class _$DevicesModelCopyWithImpl<$Res, $Val extends DevicesModel>
     ) as $Val);
   }
 
+  /// Create a copy of DevicesModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $TimerDeviceModelCopyWith<$Res> get pompa1 {
@@ -152,6 +160,8 @@ class _$DevicesModelCopyWithImpl<$Res, $Val extends DevicesModel>
     });
   }
 
+  /// Create a copy of DevicesModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $TimerDeviceModelCopyWith<$Res> get pompa2 {
@@ -160,6 +170,8 @@ class _$DevicesModelCopyWithImpl<$Res, $Val extends DevicesModel>
     });
   }
 
+  /// Create a copy of DevicesModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $TimerDeviceModelCopyWith<$Res> get circulation1 {
@@ -168,6 +180,8 @@ class _$DevicesModelCopyWithImpl<$Res, $Val extends DevicesModel>
     });
   }
 
+  /// Create a copy of DevicesModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $TimerDeviceModelCopyWith<$Res> get circulation2 {
@@ -176,6 +190,8 @@ class _$DevicesModelCopyWithImpl<$Res, $Val extends DevicesModel>
     });
   }
 
+  /// Create a copy of DevicesModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $TimerDeviceModelCopyWith<$Res> get led {
@@ -227,6 +243,8 @@ class __$$DevicesModelImplCopyWithImpl<$Res>
       _$DevicesModelImpl _value, $Res Function(_$DevicesModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of DevicesModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -359,7 +377,7 @@ class _$DevicesModelImpl implements _DevicesModel {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$DevicesModelImpl &&
@@ -379,7 +397,7 @@ class _$DevicesModelImpl implements _DevicesModel {
             (identical(other.socket7, socket7) || other.socket7 == socket7));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -396,7 +414,9 @@ class _$DevicesModelImpl implements _DevicesModel {
       socket6,
       socket7);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of DevicesModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$DevicesModelImplCopyWith<_$DevicesModelImpl> get copyWith =>
@@ -452,8 +472,11 @@ abstract class _DevicesModel implements DevicesModel {
   bool get socket6;
   @override
   bool get socket7;
+
+  /// Create a copy of DevicesModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DevicesModelImplCopyWith<_$DevicesModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

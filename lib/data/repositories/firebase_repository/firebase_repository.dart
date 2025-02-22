@@ -24,14 +24,18 @@ class FirebaseRepository {
     }
   }
 
-  Future<Result<void>> addNewController(
+  Future<Result<void>> addController(
       String userId, Controller controller) async {
     try {
       await _firestore
           .collection('users')
           .doc(userId)
           .collection('controllers')
-          .add(controller.toMap());
+          .doc(controller.id)
+          .set({
+        'name': controller.name,
+        'createdAt': FieldValue.serverTimestamp(),
+      });
 
       return Result.success(null);
     } catch (e) {

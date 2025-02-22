@@ -4,7 +4,10 @@ class Controller {
   final String id;
   final String name;
 
-  Controller({required this.id, required this.name});
+  Controller({
+    required this.id,
+    required this.name,
+  });
 
   factory Controller.fromDocument(DocumentSnapshot doc) {
     return Controller(
