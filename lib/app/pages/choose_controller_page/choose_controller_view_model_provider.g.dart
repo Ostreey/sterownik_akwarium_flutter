@@ -23,5 +23,22 @@ final controllersProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef ControllersRef = AutoDisposeFutureProviderRef<List<Controller>>;
+String _$selectedControllerHash() =>
+    r'b6c9e24ef31bb7bad88cdad8038d474fdf851d60';
+
+/// See also [SelectedController].
+@ProviderFor(SelectedController)
+final selectedControllerProvider =
+    AutoDisposeNotifierProvider<SelectedController, Controller?>.internal(
+  SelectedController.new,
+  name: r'selectedControllerProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$selectedControllerHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$SelectedController = AutoDisposeNotifier<Controller?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

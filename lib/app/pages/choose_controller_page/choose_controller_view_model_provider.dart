@@ -13,6 +13,15 @@ Future<List<Controller>> controllers(Ref ref) async {
   return result.fold((controllers) => controllers, (error) => throw error);
 }
 
+@riverpod
+class SelectedController extends _$SelectedController {
+  @override
+  Controller? build() => null;
+
+  void select(Controller controller) => state = controller;
+  void clear() => state = null;
+}
+
 // class Controllers extends _$Controllers {
 //   @override
 //   FutureOr<List<Controller>> build() async {

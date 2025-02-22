@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sterownik_akwarium/app/pages/widgets/custom_button.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../core/page_config.dart';
 import 'add_controller_provider.dart';
 import 'choose_controller_view_model_provider.dart';
 
-final selectedControllerProvider = StateProvider<String?>((ref) => null);
 
 class ChooseControllerPage extends ConsumerWidget {
-  const ChooseControllerPage({Key? key}) : super(key: key);
+  const ChooseControllerPage({super.key});
 
   static const pageConfig = PageConfig(
     icon: Icons.settings_outlined,
@@ -19,32 +19,51 @@ class ChooseControllerPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedController = ref.watch(selectedControllerProvider);
     final controllersAsync = ref.watch(controllersProvider);
+    final selectedController = ref.watch(selectedControllerProvider);
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Wybierz sterownik'),
       ),
-      body: controllersAsync.when(
-        data: (controllers) => ListView.builder(
-          itemCount: controllers.length,
-          itemBuilder: (context, index) {
-            final controller = controllers[index];
-            return ListTile(
-              title: Text(controller.name),
-              leading: Radio<String>(
-                value: controller.name,
-                groupValue: selectedController,
-                onChanged: (value) {
-                  ref.read(selectedControllerProvider.notifier).state = value;
+      body: Column(
+        children: [
+          Expanded(
+            child: controllersAsync.when(
+              data: (controllers) => ListView.builder(
+                itemCount: controllers.length,
+                itemBuilder: (context, index) {
+                  final controller = controllers[index];
+                  final isSelected = selectedController?.id == controller.id;
+                  
+                  return ListTile(
+                    title: Text(controller.name),
+                    trailing: isSelected ? const Icon(Icons.check) : null,
+                    onTap: () => 
+                    ref.read(selectedControllerProvider.notifier)
+                        .select(controller),
+                  );
                 },
               ),
-            );
-          },
-        ),
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, _) => Center(child: Text('Error: $error')),
+              loading: () => const Center(child: CircularProgressIndicator()),
+              error: (error, stack) => Center(
+                child: Text('Error: $error'),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: ElevatedButton(
+              onPressed: selectedController != null
+                  ? () => context.go('/home')  // Assuming you're using go_router
+                  : null,
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size.fromHeight(50),
+              ),
+              child: const Text('Akceptuj'),
+            ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _showAddControllerDialog(context, ref),
