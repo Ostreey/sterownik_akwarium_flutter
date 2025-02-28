@@ -2,17 +2,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sterownik_akwarium/app/core/mqttData.dart';
 import 'package:sterownik_akwarium/app/domain/models/devices_model/devices_model.dart';
 import 'package:sterownik_akwarium/app/domain/models/sensor_model/sensor_model.dart';
+import 'package:sterownik_akwarium/app/pages/choose_controller_page/choose_controller_view_model_provider.dart';
 import 'package:sterownik_akwarium/app/pages/devices_page/devices_provider.dart';
 import 'package:sterownik_akwarium/data/clients/mqtt.dart';
 
-final StateProvider<String> deviceNumberProvider = StateProvider<String>((ref) {
-  return "001";
-});
 
 final mqttUpdatesProvider = StreamProvider<SensorModel>((ref) {
   final mqttClient = ref.watch(mqttClientProvider);
-  const deviceNumber = "001";
-  mqttClient.connect().then((_) => mqttClient.subscribe(deviceNumber));
+  final selectedController = ref.watch(selectedControllerProvider);
+  
+  final deviceId = selectedController?.id ?? "";
+  
+  mqttClient.connect().then((_) => mqttClient.subscribe(deviceId));
 
   mqttClient.updates.listen((sensorModel) {
     ref.read(devicesProvider.notifier).updateDevices(DevicesModel(

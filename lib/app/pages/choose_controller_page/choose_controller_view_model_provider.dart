@@ -19,7 +19,7 @@ Future<List<Controller>> controllers(Ref ref) async {
   return controllers;
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 class SelectedController extends _$SelectedController {
   @override
   Controller? build() => null;
@@ -45,26 +45,3 @@ class SelectedController extends _$SelectedController {
     }
   }
 }
-
-// class Controllers extends _$Controllers {
-//   @override
-//   FutureOr<List<Controller>> build() async {
-//     final fetchUseCase = ref.read(fetchControllersUseCaseProvider);
-//     final result = await fetchUseCase.execute();
-//     return result.fold(
-//       (controllers) => controllers,
-//       (error) => throw error,
-//     );
-//   }
-
-//   Future<void> addNewController(String name, String serialNumber) async {
-//     final addUseCase = ref.read(addControllerUseCaseProvider);
-//     final controller = Controller(id: serialNumber, name: name);
-//     final result = await addUseCase.execute(controller);
-
-//     result.fold(
-//       (_) => ref.invalidateSelf(), // Refresh the list
-//       (error) => throw error,
-//     );
-//   }
-// }
