@@ -17,9 +17,8 @@ class AddControllerNotifier extends _$AddControllerNotifier {
     final controller = Controller(id: serialNumber, name: name);
     final result = await addUseCase.execute(controller);
 
-    result.fold(
-      (_) {
-        state = const AsyncValue.data(null);
+    result.fold((_) {
+      state = const AsyncValue.data(null);
         ref.invalidate(controllersProvider);
       },
       (error) => state = AsyncValue.error(error, StackTrace.current),

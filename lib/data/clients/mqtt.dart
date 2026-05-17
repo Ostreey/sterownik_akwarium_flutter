@@ -6,6 +6,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
+import 'package:sterownik_akwarium/app/domain/models/sensor_discovery_model/sensor_discovery_model.dart';
 import 'package:sterownik_akwarium/app/domain/models/sensor_model/sensor_model.dart';
 
 class MyMqttClient {
@@ -15,9 +16,12 @@ class MyMqttClient {
       StreamController<SensorModel>.broadcast();
   final StreamController<bool> _espStatusController =
       StreamController<bool>.broadcast();
+  final StreamController<SensorDiscoveryModel> _sensorScanController =
+      StreamController<SensorDiscoveryModel>.broadcast();
 
   Stream<SensorModel> get updates => _mqttUpdatesController.stream;
   Stream<bool> get espStatus => _espStatusController.stream;
+  Stream<SensorDiscoveryModel> get sensorScanUpdates => _sensorScanController.stream;
 
   final String mqttServer;
   final int mqttPort;
@@ -87,7 +91,9 @@ class MyMqttClient {
   void subscribe(String topic) {
     _client.subscribe(topic, MqttQos.atLeastOnce);
     String statusTopic = "$topic/status";
+    String sensorsTopic = "$topic/sensors_found";
     _client.subscribe(statusTopic, MqttQos.atLeastOnce);
+    _client.subscribe(sensorsTopic, MqttQos.atLeastOnce);
     _client.updates!.listen((List<MqttReceivedMessage<MqttMessage?>>? c) {
       final MqttPublishMessage recMess = c![0].payload as MqttPublishMessage;
       final String receivedTopic = c[0].topic;
@@ -100,6 +106,10 @@ class MyMqttClient {
         if (receivedTopic == statusTopic) {
           print("Status Update: $payload");
           _espStatusController.add(payload == "connected" ? true : false);
+        } else if (receivedTopic == sensorsTopic) {
+          final jsonData = json.decode(payload) as Map<String, dynamic>;
+          final discovery = SensorDiscoveryModel.fromJson(jsonData);
+          _sensorScanController.add(discovery);
         } else {
           final jsonData = json.decode(payload) as Map<String, dynamic>;
           log("MQTTDATA:  $jsonData");
@@ -155,5 +165,7 @@ class MyMqttClient {
 
   void dispose() {
     _mqttUpdatesController.close();
+    _espStatusController.close();
+    _sensorScanController.close();
   }
 }

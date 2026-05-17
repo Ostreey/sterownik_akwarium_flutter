@@ -14,6 +14,7 @@ import 'package:sterownik_akwarium/app/pages/water_temp_edit_page/water_temp_edi
 
 import '../pages/home_page/home_page.dart';
 import '../pages/parameters_page/parameters.dart';
+import '../pages/scan_sensors_page/scan_sensors_page.dart';
 import '../pages/timer_page/timer_page.dart';
 import 'go_router_observer.dart';
 
@@ -108,5 +109,10 @@ final routes =
     path: "/choose_controller",
     name: ChooseControllerPage.pageConfig.name,
     builder: (context, state) => const ChooseControllerPage(),
+  ),
+  GoRoute(
+    path: "/scan_sensors",
+    name: ScanSensorsPage.pageConfig.name,
+    builder: (context, state) => const ScanSensorsPage(),
   ),
 ]);

@@ -11,8 +11,10 @@ import 'package:sterownik_akwarium/app/pages/login_page/login_page.dart';
 import 'package:sterownik_akwarium/app/pages/parameters_page/mqtt_provider.dart';
 import 'package:sterownik_akwarium/app/pages/widgets/snackbar.dart';
 
+import '../choose_controller_page/choose_controller_page.dart';
 import '../devices_page/devices.dart';
 import '../parameters_page/parameters.dart';
+import '../scan_sensors_page/scan_sensors_page.dart';
 import '../timer_page/timer_page.dart';
 
 class HomePage extends ConsumerStatefulWidget {
@@ -231,6 +233,24 @@ class _HomePageState extends ConsumerState<HomePage> {
                     endpoint: "$deviceNumber/soc7",
                     timerDeviceModel: sensorData.soc7);
                 context.pushNamed(TimerPage.pageConfig.name, extra: model);
+              },
+            ),
+            const Divider(),
+            ListTile(
+              leading: const Icon(Icons.swap_horiz),
+              title: const Text("Zmień sterownik"),
+              onTap: () {
+                Navigator.of(context).pop();
+                context.pushNamed(ChooseControllerPage.pageConfig.name);
+              },
+            ),
+            const Divider(),
+            ListTile(
+              leading: const Icon(Icons.sensors),
+              title: const Text("Konfiguracja czujników DS18B20"),
+              onTap: () {
+                Navigator.of(context).pop();
+                context.pushNamed(ScanSensorsPage.pageConfig.name);
               },
             ),
             const Divider(),

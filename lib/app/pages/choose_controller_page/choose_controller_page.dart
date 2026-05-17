@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sterownik_akwarium/app/pages/widgets/custom_button.dart';
 
 import '../../core/page_config.dart';
+import '../home_page/home_page.dart';
+import '../parameters_page/parameters.dart';
 import 'add_controller_provider.dart';
 import 'choose_controller_view_model_provider.dart';
 
@@ -25,6 +28,16 @@ class ChooseControllerPage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Wybierz sterownik'),
+        actions: [
+          if (selectedController != null)
+            TextButton(
+              onPressed: () => context.goNamed(
+                HomePage.pageConfig.name,
+                pathParameters: {'tab': Parameters.pageConfig.name},
+              ),
+              child: const Text('Dalej'),
+            ),
+        ],
       ),
       body: controllersAsync.when(
         data: (controllers) => ListView.builder(
