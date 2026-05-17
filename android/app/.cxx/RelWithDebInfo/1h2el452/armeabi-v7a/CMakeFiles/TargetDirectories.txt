@@ -1,2 +1,0 @@
-C:/Users/dostrowski3/Documents/sterownik_akwarium_flutter/android/app/.cxx/RelWithDebInfo/1h2el452/armeabi-v7a/CMakeFiles/edit_cache.dir
-C:/Users/dostrowski3/Documents/sterownik_akwarium_flutter/android/app/.cxx/RelWithDebInfo/1h2el452/armeabi-v7a/CMakeFiles/rebuild_cache.dir

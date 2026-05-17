@@ -7,6 +7,8 @@ import 'package:sterownik_akwarium/app/core/providers.dart';
 import 'package:sterownik_akwarium/app/domain/models/sensor_model/sensor_model.dart';
 import 'package:sterownik_akwarium/app/domain/models/timer_page_model/timer_page_model.dart';
 import 'package:sterownik_akwarium/app/pages/alarms_page/alarms.dart';
+import 'package:sterownik_akwarium/app/pages/choose_controller_page/choose_controller_page.dart';
+import 'package:sterownik_akwarium/app/pages/choose_controller_page/choose_controller_view_model_provider.dart';
 import 'package:sterownik_akwarium/app/pages/login_page/login_page.dart';
 import 'package:sterownik_akwarium/app/pages/parameters_page/mqtt_provider.dart';
 import 'package:sterownik_akwarium/app/pages/widgets/snackbar.dart';
@@ -43,12 +45,13 @@ class HomePage extends ConsumerStatefulWidget {
 }
 
 class _HomePageState extends ConsumerState<HomePage> {
-  static const String deviceNumber = "001";
   @override
   Widget build(BuildContext context) {
     SensorModel sensorData = const SensorModel();
     final sensorDataAsyncValue = ref.watch(mqttUpdatesProvider);
     final homePageViewmodel = ref.watch(homePageViewmodelProvider);
+    final selectedController = ref.watch(selectedControllerProvider);
+    
     sensorDataAsyncValue.whenData((value) => sensorData = value);
 
     ref.listen(homePageViewmodelProvider, (previous, next) {
@@ -100,7 +103,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "Pompa 1",
-                    endpoint: "$deviceNumber/pump1",
+                    endpoint: "${selectedController?.id}/pump1",
                     timerDeviceModel: sensorData.pompa1);
                 context.pushNamed(TimerPage.pageConfig.name, extra: model);
               },
@@ -112,7 +115,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "Pompa 2",
-                    endpoint: "$deviceNumber/pump2",
+                    endpoint: "${selectedController?.id}/pump2",
                     timerDeviceModel: sensorData.pompa2);
                 context.pushNamed(TimerPage.pageConfig.name, extra: model);
               },
@@ -124,7 +127,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "Cyrkulacja 1",
-                    endpoint: "$deviceNumber/circul1",
+                    endpoint: "${selectedController?.id}/circul1",
                     timerDeviceModel: sensorData.circul1);
                 context.pushNamed(TimerPage.pageConfig.name, extra: model);
               },
@@ -136,7 +139,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "Cyrkulacja 2",
-                    endpoint: "$deviceNumber/circul2",
+                    endpoint: "${selectedController?.id}/circul2",
                     timerDeviceModel: sensorData.circul2);
                 context.pushNamed(TimerPage.pageConfig.name, extra: model);
               },
@@ -148,7 +151,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "LED",
-                    endpoint: "$deviceNumber/led",
+                    endpoint: "${selectedController?.id}/led",
                     timerDeviceModel: sensorData.led);
                 context.pushNamed(TimerPage.pageConfig.name, extra: model);
               },
@@ -160,7 +163,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "Gniazdo 1",
-                    endpoint: "$deviceNumber/soc1",
+                    endpoint: "${selectedController?.id}/soc1",
                     timerDeviceModel: sensorData.soc1);
                 context.pushNamed(TimerPage.pageConfig.name, extra: model);
               },
@@ -172,7 +175,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "Gniazdo 2",
-                    endpoint: "$deviceNumber/soc2",
+                    endpoint: "${selectedController?.id}/soc2",
                     timerDeviceModel: sensorData.soc2);
                 context.pushNamed(TimerPage.pageConfig.name, extra: model);
               },
@@ -184,7 +187,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "Gniazdo 3",
-                    endpoint: "$deviceNumber/soc3",
+                    endpoint: "${selectedController?.id}/soc3",
                     timerDeviceModel: sensorData.soc3);
                 context.pushNamed(TimerPage.pageConfig.name, extra: model);
               },
@@ -196,7 +199,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "Gniazdo 4",
-                    endpoint: "$deviceNumber/soc4",
+                    endpoint: "${selectedController?.id}/soc4",
                     timerDeviceModel: sensorData.soc4);
                 context.pushNamed(TimerPage.pageConfig.name, extra: model);
               },
@@ -208,7 +211,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "Gniazdo 5",
-                    endpoint: "$deviceNumber/soc5",
+                    endpoint: "${selectedController?.id}/soc5",
                     timerDeviceModel: sensorData.soc5);
                 context.pushNamed(TimerPage.pageConfig.name, extra: model);
               },
@@ -219,7 +222,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "Gniazdo 6",
-                    endpoint: "$deviceNumber/soc6",
+                    endpoint: "${selectedController?.id}/soc6",
                     timerDeviceModel: sensorData.soc6);
                 context.pushNamed(TimerPage.pageConfig.name, extra: model);
               },
@@ -230,12 +233,22 @@ class _HomePageState extends ConsumerState<HomePage> {
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "Gniazdo 7",
-                    endpoint: "$deviceNumber/soc7",
+                    endpoint: "${selectedController?.id}/soc7",
                     timerDeviceModel: sensorData.soc7);
                 context.pushNamed(TimerPage.pageConfig.name, extra: model);
               },
             ),
             const Divider(),
+                  ListTile(
+              leading: const Icon(
+                  Icons.change_circle), // Choose an appropriate icon
+              title: const Text("Zmień sterownik"),
+              onTap: () {
+                context.goNamed(
+                  ChooseControllerPage.pageConfig.name,
+                );
+              },
+            ),
             ListTile(
               leading: const Icon(Icons.swap_horiz),
               title: const Text("Zmień sterownik"),

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sterownik_akwarium/app/domain/models/parameters_edit_page_model/parameters_edit_page_model.dart';
 import 'package:sterownik_akwarium/app/domain/models/sensor_model/sensor_model.dart';
 import 'package:sterownik_akwarium/app/pages/air_temperature_edit_page/air_temp_edit_page.dart';
+import 'package:sterownik_akwarium/app/pages/choose_controller_page/choose_controller_view_model_provider.dart';
 import 'package:sterownik_akwarium/app/pages/parameters_page/widgets/gauge_container.dart';
 import 'package:sterownik_akwarium/app/pages/ph_edit_page/ph_edit_page.dart';
 import 'package:sterownik_akwarium/app/pages/water_temp_edit_page/water_temp_edit_page.dart';
@@ -38,14 +39,14 @@ class _ParametersState extends ConsumerState<Parameters>
     super.dispose();
   }
 
-  /// This method acts like `onResume()` in Android
+  
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
       final mqttClient = ref.read(mqttClientProvider);
       if (!mqttClient.isConnected()) {
         mqttClient.connect().then((_) {
-          final deviceNumber = ref.read(deviceNumberProvider);
+          final deviceNumber = ref.read(selectedControllerProvider)?.id ?? "";
 
           mqttClient.subscribe(deviceNumber);
         });
@@ -63,7 +64,8 @@ class _ParametersState extends ConsumerState<Parameters>
     final sensorDataAsyncValue = ref.watch(mqttUpdatesProvider);
     sensorDataAsyncValue.whenData((value) => sensorData = value);
     final espStatus = ref.watch(mqttStatusProvider);
-    const String deviceNumber = "001";
+    final selectedController = ref.watch(selectedControllerProvider);
+    final deviceNumber = selectedController?.id ?? "";
 
     return SafeArea(
       child: SingleChildScrollView(
