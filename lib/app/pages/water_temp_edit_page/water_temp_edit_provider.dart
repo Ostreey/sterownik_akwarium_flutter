@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mqtt_client/mqtt_client.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sterownik_akwarium/app/pages/parameters_page/mqtt_provider.dart';
 
@@ -15,16 +14,16 @@ class Publish extends _$Publish {
 
   Future<void> publish(String endpoint, String minValue, String maxValue,
       [String frequency = "0"]) async {
-    // 7. read the repository using ref
-    final mqttClient = ref.read(mqttClientProvider);
+    // 7. read the transport using ref
+    final transport = ref.read(activeTransportProvider);
     // 8. set the loading state
     state = const AsyncLoading();
     // 9. sign in and update the state (data or error)
 
-    final data = MqttClientPayloadBuilder();
-    data.addString(
-        "{\"minValue\":$minValue,\"maxValue\":$maxValue, \"freq\":$frequency}");
-    state = await AsyncValue.guard(() => mqttClient.publish(endpoint, data));
+    final payload =
+        "{\"minValue\":$minValue,\"maxValue\":$maxValue, \"freq\":$frequency}";
+    state =
+        await AsyncValue.guard(() => transport.sendCommand(endpoint, payload));
     debugPrint("PUBLISH TEST: $state");
   }
 }

@@ -5,18 +5,19 @@ import 'package:sterownik_akwarium/app/domain/models/sensor_discovery_model/sens
 import 'package:sterownik_akwarium/app/domain/models/sensor_model/sensor_model.dart';
 import 'package:sterownik_akwarium/app/pages/choose_controller_page/choose_controller_view_model_provider.dart';
 import 'package:sterownik_akwarium/app/pages/devices_page/devices_provider.dart';
-import 'package:sterownik_akwarium/data/clients/mqtt.dart';
+import 'package:sterownik_akwarium/data/transport/cloud_mqtt_transport.dart';
+import 'package:sterownik_akwarium/data/transport/controller_transport.dart';
 
 
 final mqttUpdatesProvider = StreamProvider<SensorModel>((ref) {
-  final mqttClient = ref.watch(mqttClientProvider);
+  final transport = ref.watch(activeTransportProvider);
   final selectedController = ref.watch(selectedControllerProvider);
-  
-  final deviceId = selectedController?.id ?? "";
-  
-  mqttClient.connect().then((_) => mqttClient.subscribe(deviceId));
 
-  mqttClient.updates.listen((sensorModel) {
+  final deviceId = selectedController?.id ?? "";
+
+  transport.connect(deviceId);
+
+  transport.telemetry.listen((sensorModel) {
     ref.read(devicesProvider.notifier).updateDevices(DevicesModel(
           circulation1: sensorModel.circul1,
           circulation2: sensorModel.circul2,
@@ -33,20 +34,27 @@ final mqttUpdatesProvider = StreamProvider<SensorModel>((ref) {
         ));
   });
 
-  return mqttClient.updates;
+  return transport.telemetry;
 });
 
 final mqttStatusProvider = StreamProvider<bool>((ref) {
-  final mqttClient = ref.watch(mqttClientProvider);
-  return mqttClient.espStatus;
+  final transport = ref.watch(activeTransportProvider);
+  return transport.availability;
 });
 
 final sensorScanProvider = StreamProvider<SensorDiscoveryModel>((ref) {
-  return ref.watch(mqttClientProvider).sensorScanUpdates;
+  return ref.watch(activeTransportProvider).sensorScan;
 });
 
-final mqttClientProvider = Provider<MyMqttClient>((ref) {
-  return MyMqttClient(
+/// Aktualnie aktywny kanał do sterownika. Faza 2: zawsze chmura (HiveMQ).
+/// Faza 3 podmieni to na wybór lokalny/chmura (mDNS + connectivity).
+/// Reszta apki watchuje TEN provider, nie konkretną implementację.
+final activeTransportProvider = Provider<ControllerTransport>((ref) {
+  return ref.watch(cloudMqttTransportProvider);
+});
+
+final cloudMqttTransportProvider = Provider<CloudMqttTransport>((ref) {
+  return CloudMqttTransport(
     mqttServer: MqttConstants.server,
     mqttPort: MqttConstants.port,
     mqttUser: MqttConstants.user,

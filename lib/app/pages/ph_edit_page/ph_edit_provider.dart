@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mqtt_client/mqtt_client.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sterownik_akwarium/app/pages/parameters_page/mqtt_provider.dart';
 
@@ -15,12 +14,12 @@ class PhEdit extends _$PhEdit {
 
   Future<void> publish(
       String endpoint, String phSet, String phHisteresis) async {
-    final mqttClient = ref.read(mqttClientProvider);
+    final transport = ref.read(activeTransportProvider);
     state = const AsyncLoading();
-    final data = MqttClientPayloadBuilder();
-    data.addString("{\"setValue\":$phSet,\"histeresis\":$phHisteresis}");
+    final payload = "{\"setValue\":$phSet,\"histeresis\":$phHisteresis}";
     debugPrint("data sent now: $phSet + $phHisteresis");
-    state = await AsyncValue.guard(() => mqttClient.publish(endpoint, data));
+    state =
+        await AsyncValue.guard(() => transport.sendCommand(endpoint, payload));
     debugPrint("PUBLISH TEST: $state");
   }
 }

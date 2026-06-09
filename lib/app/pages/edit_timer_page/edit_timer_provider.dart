@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:mqtt_client/mqtt_client.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:sterownik_akwarium/app/domain/models/timer_device_model/timer_device_model.dart';
 import 'package:sterownik_akwarium/app/pages/parameters_page/mqtt_provider.dart';
@@ -14,13 +13,12 @@ class EditTimer extends _$EditTimer {
   FutureOr<void> build() {}
 
   Future<void> publishViaMqtt(Timer timerData, String endpoint) async {
-    final mqttClient = ref.read(mqttClientProvider);
+    final transport = ref.read(activeTransportProvider);
     state = const AsyncLoading();
 
-    final data = MqttClientPayloadBuilder();
-    final jsonData = timerData.toJson();
-    data.addString(jsonEncode(jsonData));
-    state = await AsyncValue.guard(() => mqttClient.publish(endpoint, data));
+    final payload = jsonEncode(timerData.toJson());
+    state =
+        await AsyncValue.guard(() => transport.sendCommand(endpoint, payload));
     debugPrint("PUBLISH TEST: $state");
   }
 }

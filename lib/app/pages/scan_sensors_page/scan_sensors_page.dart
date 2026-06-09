@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mqtt_client/mqtt_client.dart';
 import 'package:sterownik_akwarium/app/core/page_config.dart';
 import 'package:sterownik_akwarium/app/pages/parameters_page/mqtt_provider.dart';
 
@@ -34,18 +33,16 @@ class _ScanSensorsPageState extends ConsumerState<ScanSensorsPage> {
   bool _isSending = false;
 
   void _triggerScan() {
-    final mqttClient = ref.read(mqttClientProvider);
-    final builder = MqttClientPayloadBuilder();
-    builder.addString(json.encode({"cmd": "scan"}));
-    mqttClient.publish("$_deviceNumber/scan_sensors", builder);
+    final transport = ref.read(activeTransportProvider);
+    transport.sendCommand(
+        "$_deviceNumber/scan_sensors", json.encode({"cmd": "scan"}));
   }
 
   Future<void> _saveAssignment(String rom, String role) async {
     setState(() => _isSending = true);
-    final mqttClient = ref.read(mqttClientProvider);
-    final builder = MqttClientPayloadBuilder();
-    builder.addString(json.encode({"role": role, "rom": rom}));
-    await mqttClient.publish("$_deviceNumber/assign_sensor", builder);
+    final transport = ref.read(activeTransportProvider);
+    await transport.sendCommand(
+        "$_deviceNumber/assign_sensor", json.encode({"role": role, "rom": rom}));
     if (mounted) {
       setState(() => _isSending = false);
       ScaffoldMessenger.of(context).showSnackBar(

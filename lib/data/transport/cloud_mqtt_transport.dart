@@ -8,22 +8,35 @@ import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
 import 'package:sterownik_akwarium/app/domain/models/sensor_discovery_model/sensor_discovery_model.dart';
 import 'package:sterownik_akwarium/app/domain/models/sensor_model/sensor_model.dart';
+import 'package:sterownik_akwarium/data/transport/controller_transport.dart';
 
-class MyMqttClient {
+/// Kanał chmurowy do sterownika przez HiveMQ Cloud (MQTT over TLS, 8883).
+///
+/// To dawny `MyMqttClient` przebrany w [ControllerTransport] — zachowanie 1:1
+/// (te same topiki, QoS, parsowanie). Topiki komend buduje sam transport
+/// (dawne `_toCommandTopic` w `mqtt.dart`).
+class CloudMqttTransport implements ControllerTransport {
   late MqttServerClient _client;
 
-  final StreamController<SensorModel> _mqttUpdatesController =
+  final StreamController<SensorModel> _telemetryController =
       StreamController<SensorModel>.broadcast();
-  final StreamController<bool> _espStatusController =
+  final StreamController<bool> _availabilityController =
       StreamController<bool>.broadcast();
   final StreamController<SensorDiscoveryModel> _sensorScanController =
       StreamController<SensorDiscoveryModel>.broadcast();
   final StreamController<CommandAck> _ackController =
       StreamController<CommandAck>.broadcast();
 
-  Stream<SensorModel> get updates => _mqttUpdatesController.stream;
-  Stream<bool> get espStatus => _espStatusController.stream;
-  Stream<SensorDiscoveryModel> get sensorScanUpdates => _sensorScanController.stream;
+  @override
+  TransportKind get kind => TransportKind.cloud;
+
+  @override
+  Stream<SensorModel> get telemetry => _telemetryController.stream;
+  @override
+  Stream<bool> get availability => _availabilityController.stream;
+  @override
+  Stream<SensorDiscoveryModel> get sensorScan => _sensorScanController.stream;
+  @override
   Stream<CommandAck> get acks => _ackController.stream;
 
   final String mqttServer;
@@ -32,7 +45,7 @@ class MyMqttClient {
   final String mqttPassword;
   final String certificate;
 
-  MyMqttClient({
+  CloudMqttTransport({
     required this.mqttServer,
     required this.mqttPort,
     required this.mqttUser,
@@ -42,21 +55,22 @@ class MyMqttClient {
     _client = MqttServerClient.withPort(mqttServer, 'flutter_client', mqttPort);
     _initializeClient();
   }
-  bool isConnected() {
-    return _client.connectionStatus!.state == MqttConnectionState.connected;
-  }
+
+  @override
+  bool get isConnected =>
+      _client.connectionStatus?.state == MqttConnectionState.connected;
 
   void _initializeClient() {
     _client.logging(on: true);
     _client.keepAlivePeriod = 60;
     _client.setProtocolV311();
 
-    _client.onConnected = onConnected;
-    _client.onDisconnected = onDisconnected;
-    _client.onUnsubscribed = onUnsubscribed;
-    _client.onSubscribed = onSubscribed;
-    _client.onSubscribeFail = onSubscribeFail;
-    _client.pongCallback = pong;
+    _client.onConnected = _onConnected;
+    _client.onDisconnected = _onDisconnected;
+    _client.onUnsubscribed = _onUnsubscribed;
+    _client.onSubscribed = _onSubscribed;
+    _client.onSubscribeFail = _onSubscribeFail;
+    _client.pongCallback = _pong;
 
     _client.secure = true;
 
@@ -65,7 +79,8 @@ class MyMqttClient {
     _client.securityContext = context;
   }
 
-  Future<void> connect() async {
+  @override
+  Future<void> connect(String deviceId) async {
     final connMessage = MqttConnectMessage()
         .withWillTopic('willtopic')
         .withWillMessage('Will message')
@@ -84,6 +99,7 @@ class MyMqttClient {
 
     if (_client.connectionStatus?.state == MqttConnectionState.connected) {
       print('MQTT Client Connected');
+      _subscribe(deviceId);
     } else {
       print(
           'MQTT Client Connection Failed - status is ${_client.connectionStatus}');
@@ -91,7 +107,7 @@ class MyMqttClient {
     }
   }
 
-  void subscribe(String deviceId) {
+  void _subscribe(String deviceId) {
     // Faza 1: struktura <id>/state|avail|cmd|ack|evt (clean break ze starego
     // golego "001" / "001/status").
     final String stateTopic = "$deviceId/state";
@@ -115,7 +131,7 @@ class MyMqttClient {
       try {
         if (receivedTopic == availTopic) {
           print("Availability: $payload");
-          _espStatusController.add(payload == "online");
+          _availabilityController.add(payload == "online");
         } else if (receivedTopic == sensorsTopic) {
           final jsonData = json.decode(payload) as Map<String, dynamic>;
           final discovery = SensorDiscoveryModel.fromJson(jsonData);
@@ -127,7 +143,7 @@ class MyMqttClient {
           final jsonData = json.decode(payload) as Map<String, dynamic>;
           log("MQTTDATA:  $jsonData");
           final sensorModel = SensorModel.fromJson(jsonData);
-          _mqttUpdatesController.add(sensorModel); // Emit SensorModel instance
+          _telemetryController.add(sensorModel); // Emit SensorModel instance
         }
       } catch (e, stackTrace) {
         print('Error parsing JSON: $e');
@@ -137,13 +153,14 @@ class MyMqttClient {
     });
   }
 
-  Future<void> publish(String topic, MqttClientPayloadBuilder data) async {
-    // Faza 1: komendy ida na <id>/cmd/<target>. Wywolania w UI wciaz podaja
-    // "<id>/<target>" - przepisujemy w jednym miejscu (Faza 2 przeniesie
-    // budowanie topikow do warstwy transportu).
-    final cmdTopic = _toCommandTopic(topic);
+  @override
+  Future<void> sendCommand(String target, String payload) async {
+    // Komendy ida na <id>/cmd/<target>. UI podaje device-qualified "<id>/<target>",
+    // przepisujemy w jednym miejscu (logika dawnego _toCommandTopic z mqtt.dart).
+    final cmdTopic = _toCommandTopic(target);
+    final builder = MqttClientPayloadBuilder()..addString(payload);
     try {
-      _client.publishMessage(cmdTopic, MqttQos.exactlyOnce, data.payload!);
+      _client.publishMessage(cmdTopic, MqttQos.exactlyOnce, builder.payload!);
       debugPrint("topic sent now: $cmdTopic");
     } catch (e) {
       debugPrint("Error: $e");
@@ -159,45 +176,40 @@ class MyMqttClient {
     return "$id/cmd/$target";
   }
 
-  void disconnect() {
+  @override
+  Future<void> disconnect() async {
     _client.disconnect();
   }
 
-  void onConnected() {
+  void _onConnected() {
     print('MQTT Client Connected');
   }
 
-  void onDisconnected() {
+  void _onDisconnected() {
     print('MQTT Client Disconnected');
   }
 
-  void onSubscribed(String topic) {
+  void _onSubscribed(String topic) {
     print('Subscribed to $topic');
   }
 
-  void onUnsubscribed(String? topic) {
+  void _onUnsubscribed(String? topic) {
     print('Unsubscribed from $topic');
   }
 
-  void onSubscribeFail(String topic) {
+  void _onSubscribeFail(String topic) {
     print('Failed to subscribe $topic');
   }
 
-  void pong() {
+  void _pong() {
     print('Ping response client callback invoked');
   }
 
+  @override
   void dispose() {
-    _mqttUpdatesController.close();
-    _espStatusController.close();
+    _telemetryController.close();
+    _availabilityController.close();
     _sensorScanController.close();
     _ackController.close();
   }
-}
-
-/// Potwierdzenie komendy z firmware (topic aq/<id>/ack/<target>).
-class CommandAck {
-  final String target;
-  final String payload;
-  CommandAck({required this.target, required this.payload});
 }

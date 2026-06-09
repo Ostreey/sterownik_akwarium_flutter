@@ -43,17 +43,14 @@ class _ParametersState extends ConsumerState<Parameters>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      final mqttClient = ref.read(mqttClientProvider);
-      if (!mqttClient.isConnected()) {
-        mqttClient.connect().then((_) {
-          final deviceNumber = ref.read(selectedControllerProvider)?.id ?? "";
-
-          mqttClient.subscribe(deviceNumber);
-        });
+      final transport = ref.read(activeTransportProvider);
+      if (!transport.isConnected) {
+        final deviceNumber = ref.read(selectedControllerProvider)?.id ?? "";
+        transport.connect(deviceNumber);
       }
     } else if (state == AppLifecycleState.paused) {
-      final mqttClient = ref.read(mqttClientProvider);
-      mqttClient.disconnect();
+      final transport = ref.read(activeTransportProvider);
+      transport.disconnect();
     }
   }
 
