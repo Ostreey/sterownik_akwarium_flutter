@@ -51,7 +51,9 @@ class _HomePageState extends ConsumerState<HomePage> {
     final sensorDataAsyncValue = ref.watch(mqttUpdatesProvider);
     final homePageViewmodel = ref.watch(homePageViewmodelProvider);
     final selectedController = ref.watch(selectedControllerProvider);
-    
+    // Status z topiku <id>/avail (online/offline). Dopoki nie przyjdzie -> offline.
+    final isOnline = ref.watch(mqttStatusProvider).valueOrNull ?? false;
+
     sensorDataAsyncValue.whenData((value) => sensorData = value);
 
     ref.listen(homePageViewmodelProvider, (previous, next) {
@@ -64,13 +66,13 @@ class _HomePageState extends ConsumerState<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Row(
+        title: Row(
           children: [
-            Text("Podłączony"),
-            Spacer(),
+            Text(isOnline ? "Podłączony" : "Niepodłączony"),
+            const Spacer(),
             Icon(
-              Icons.wifi,
-              color: Colors.green,
+              isOnline ? Icons.wifi : Icons.wifi_off,
+              color: isOnline ? Colors.green : Colors.red,
             ),
           ],
         ),
