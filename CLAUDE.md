@@ -28,7 +28,7 @@ lib/
 │   ├── domain/models/  sensor_model, devices_model, timer_device_model, ...
 │   └── pages/        UI per ekran
 ├── data/
-│   ├── clients/mqtt.dart           MyMqttClient
+│   ├── transport/                  ControllerTransport (interfejs) + CloudMqttTransport
 │   └── repositories/               auth_repository, firebase_repository
 ├── domain/usecases/                login, register, logout, fetch/add controller
 └── main.dart
@@ -37,6 +37,7 @@ lib/
 ## Zasady pracy w tym kodzie
 
 - **State management = Riverpod.** Nie wprowadzaj `Provider`, `Bloc`, `GetX` itp.
+- **Komunikacja ze sterownikiem = `ControllerTransport`** ([`lib/data/transport/`](lib/data/transport/)). UI i providery rozmawiają przez `activeTransportProvider` (zwraca `ControllerTransport`), NIGDY przez konkretną implementację. `sendCommand(target, payload)` przyjmuje device-qualified `target` `"<id>/<target>"` i payload jako String — nie używaj `MqttClientPayloadBuilder` w UI. Faza 2 ma tylko `CloudMqttTransport` (HiveMQ); Faza 3 dołoży `LocalMqttTransport` za tym samym interfejsem.
 - **Routing = GoRouter.** Wszystkie nowe trasy przez konfigurację w [`lib/app/core/router.dart`](lib/app/core/router.dart).
 - **Modele = Freezed + json_serializable.** Po każdej zmianie modelu uruchom `dart run build_runner build --delete-conflicting-outputs`. Nie ręcznie edytuj plików `.freezed.dart` / `.g.dart`.
 - **`deviceNumber = "001"` zaszyte** w kilku miejscach ([`lib/app/core/providers.dart`](lib/app/core/providers.dart), parameters_page, home_page). Nie ruszaj póki nie zrobimy flow przez [`choose_controller_page`](lib/app/pages/choose_controller_page) (Roadmap pkt 3).
