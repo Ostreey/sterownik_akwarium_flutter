@@ -1,12 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.INTERNET"/>
-    <!-- Faza 3: odkrywanie sterownika w LAN przez mDNS (multicast_dns).
-         CHANGE_WIFI_MULTICAST_STATE jest wymagane do odbioru pakietow multicast;
-         dodatkowo w runtime trzeba trzymac WifiManager.MulticastLock (do zrobienia
-         przy tescie na Androidzie - inaczej discovery moze nic nie znalezc i apka
-         spadnie na chmure). ACCESS_NETWORK_STATE dla connectivity_plus. -->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <!-- MulticastLock: wymagane do odbioru pakietow multicast (mDNS discovery).
+         WifiLock: utrzymuje radio WiFi aktywne w tle (zapobiega zrywaniu polaczenia
+         MQTT do lokalnego brokera ESP32 przy uśpieniu ekranu). -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE"/>
     <application
         android:label="sterownik_akwarium"
         android:name="${applicationName}"
