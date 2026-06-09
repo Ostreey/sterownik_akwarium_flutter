@@ -74,12 +74,24 @@ final activeTransportKindProvider = Provider<TransportKind>((ref) {
 class TransportManager extends Notifier<ControllerTransport> {
   final ControllerDiscovery _discovery = ControllerDiscovery();
   StreamSubscription<ConnectivityResult>? _connSub;
+  Timer? _periodicEval;
   bool _evaluating = false;
+
+  // Kiedy ostatnio podmieniliśmy transport. Świeżo utworzony transport łączy się
+  // asynchronicznie (connect woła mqttUpdatesProvider) — w tym oknie isConnected
+  // jest false, więc nie traktujemy go jako "martwy do rekonektu".
+  DateTime _lastSwapAt = DateTime.now();
+  static const Duration _settleGrace = Duration(seconds: 8);
+  // Okresowa re-ewaluacja: domyka cykl rozłącz→podłącz (powrót na lokalny gdy
+  // sterownik wróci do LAN) i rekonekt martwego kanału. Bez tego apka tkwi na
+  // raz wybranym transporcie do następnej zmiany sieci.
+  static const Duration _evalInterval = Duration(seconds: 15);
 
   @override
   ControllerTransport build() {
     ref.onDispose(() {
       _connSub?.cancel();
+      _periodicEval?.cancel();
       // state to bieżący transport — sprzątamy go przy zamykaniu providera.
       state.disconnect();
       state.dispose();
@@ -97,8 +109,12 @@ class TransportManager extends Notifier<ControllerTransport> {
       _evaluate();
     });
 
+    // Okresowo: powrót na lokalny po reconnecie sterownika + rekonekt martwego.
+    _periodicEval = Timer.periodic(_evalInterval, (_) => _evaluate());
+
     // Start: domyślnie chmura (natychmiast dostępna), w tle szukamy lokalnego.
     TLog.log('manager', 'start na chmurze, w tle szukam lokalnego');
+    _lastSwapAt = DateTime.now(); // grace dla startowego transportu
     final initial = _buildCloud();
     scheduleMicrotask(_evaluate);
     return initial;
@@ -129,19 +145,32 @@ class TransportManager extends Notifier<ControllerTransport> {
       final deviceId = ref.read(selectedControllerProvider)?.id ?? "";
       final ep = deviceId.isEmpty ? null : await _discovery.discover(deviceId);
 
-      final wantLocal = ep != null;
       final isLocal = state.kind == TransportKind.local;
+      final connected = state.isConnected;
+      // W oknie grace świeży transport jeszcze się łączy — nie rekonektujemy go.
+      final settling = DateTime.now().difference(_lastSwapAt) < _settleGrace;
       TLog.log('manager',
-          'eval: wantLocal=$wantLocal, aktywny=${state.kind.name} (connected=${state.isConnected})');
+          'eval: lokalny dostepny=${ep != null}, aktywny=${state.kind.name} (connected=$connected, settling=$settling)');
 
-      if (wantLocal && !isLocal) {
-        _swap(_buildLocal(ep)); // znaleziono w LAN -> przełącz na lokalny
-      } else if (!wantLocal && isLocal) {
-        _swap(_buildCloud()); // zniknął z LAN -> wróć na chmurę
+      if (ep != null) {
+        // Lokalny osiągalny w LAN — chcemy być na nim.
+        if (!isLocal) {
+          _swap(_buildLocal(ep)); // przełącz chmura -> lokalny
+        } else if (!connected && !settling) {
+          _swap(_buildLocal(ep)); // lokalny martwy -> rekonekt (świeża instancja/IP)
+        } else {
+          TLog.log('manager', 'eval: zostawiam local');
+        }
       } else {
-        TLog.log('manager', 'eval: zostawiam ${state.kind.name}');
+        // Brak lokalnego w LAN — chmura.
+        if (isLocal) {
+          _swap(_buildCloud()); // zniknął z LAN -> wróć na chmurę
+        } else if (!connected && !settling) {
+          _swap(_buildCloud()); // chmura martwa -> rekonekt
+        } else {
+          TLog.log('manager', 'eval: zostawiam cloud');
+        }
       }
-      // wantLocal && isLocal lub !wantLocal && !isLocal -> zostaw bieżący.
     } finally {
       _evaluating = false;
     }
@@ -150,6 +179,7 @@ class TransportManager extends Notifier<ControllerTransport> {
   void _swap(ControllerTransport next) {
     final old = state;
     TLog.log('manager', 'SWAP ${old.kind.name} -> ${next.kind.name}');
+    _lastSwapAt = DateTime.now();
     state = next; // dependenci (mqttUpdates/status/scan) przepną się na nowy
     old.disconnect();
     old.dispose();
