@@ -142,13 +142,40 @@ class TransportManager extends Notifier<ControllerTransport> {
     }
     _evaluating = true;
     try {
-      final deviceId = ref.read(selectedControllerProvider)?.id ?? "";
-      final ep = deviceId.isEmpty ? null : await _discovery.discover(deviceId);
-
       final isLocal = state.kind == TransportKind.local;
       final connected = state.isConnected;
       // W oknie grace świeży transport jeszcze się łączy — nie rekonektujemy go.
       final settling = DateTime.now().difference(_lastSwapAt) < _settleGrace;
+
+      // Opt 1: mDNS/lokalny ma sens tylko w LAN (WiFi/ethernet). Na danych
+      // komórkowych / bez sieci nie odpalamy discovery (oszczędność) i zostajemy
+      // na chmurze.
+      final conn = await Connectivity().checkConnectivity();
+      final onLan =
+          conn == ConnectivityResult.wifi || conn == ConnectivityResult.ethernet;
+
+      if (!onLan) {
+        if (isLocal) {
+          TLog.log('manager', 'eval: brak LAN ($conn) -> chmura');
+          _swap(_buildCloud()); // poza LAN lokalny nieosiągalny -> chmura
+        } else if (!connected && !settling) {
+          _swap(_buildCloud()); // chmura martwa -> rekonekt
+        } else {
+          TLog.log('manager', 'eval: brak LAN ($conn), zostawiam cloud');
+        }
+        return;
+      }
+
+      // Opt 2: jesteśmy lokalnie i połączeni -> nie ma po co odpytywać mDNS.
+      // Utratę połączenia wykryje watchdog telemetrii (-> avail=offline), a
+      // ten sam timer i tak wróci tu za 15 s gdy connected spadnie.
+      if (isLocal && connected) {
+        TLog.log('manager', 'eval: local+connected -> pomijam discovery');
+        return;
+      }
+
+      final deviceId = ref.read(selectedControllerProvider)?.id ?? "";
+      final ep = deviceId.isEmpty ? null : await _discovery.discover(deviceId);
       TLog.log('manager',
           'eval: lokalny dostepny=${ep != null}, aktywny=${state.kind.name} (connected=$connected, settling=$settling)');
 
