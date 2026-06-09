@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sterownik_akwarium/app/core/mqttData.dart';
 import 'package:sterownik_akwarium/app/domain/models/devices_model/devices_model.dart';
@@ -69,11 +70,14 @@ final activeTransportKindProvider = Provider<TransportKind>((ref) {
 /// Zasada: „lokalny, jeśli osiągalny; inaczej chmura". Sterownik rozgłasza się
 /// w LAN przez mDNS; jeśli telefon jest w tej samej sieci, łączymy się wprost
 /// do brokera na sterowniku (szybciej, działa bez internetu). Poza domem mDNS
-/// nic nie znajdzie → chmura HiveMQ. Decyzja zapada przy starcie i przy każdej
-/// zmianie sieci (connectivity_plus).
-class TransportManager extends Notifier<ControllerTransport> {
+/// nic nie znajdzie → chmura HiveMQ. Decyzja zapada przy starcie, przy każdej
+/// zmianie sieci (connectivity_plus), po powrocie z tła (AppLifecycleState) oraz
+/// gdy aktywny transport zgłosi utratę połączenia (avail=false).
+class TransportManager extends Notifier<ControllerTransport>
+    with WidgetsBindingObserver {
   final ControllerDiscovery _discovery = ControllerDiscovery();
   StreamSubscription<ConnectivityResult>? _connSub;
+  StreamSubscription<bool>? _availSub;
   Timer? _periodicEval;
   bool _evaluating = false;
 
@@ -83,19 +87,21 @@ class TransportManager extends Notifier<ControllerTransport> {
   DateTime _lastSwapAt = DateTime.now();
   static const Duration _settleGrace = Duration(seconds: 8);
   // Okresowa re-ewaluacja: domyka cykl rozłącz→podłącz (powrót na lokalny gdy
-  // sterownik wróci do LAN) i rekonekt martwego kanału. Bez tego apka tkwi na
-  // raz wybranym transporcie do następnej zmiany sieci.
+  // sterownik wróci do LAN) i rekonekt martwego kanału.
   static const Duration _evalInterval = Duration(seconds: 15);
 
   @override
   ControllerTransport build() {
     ref.onDispose(() {
+      WidgetsBinding.instance.removeObserver(this);
       _connSub?.cancel();
+      _availSub?.cancel();
       _periodicEval?.cancel();
-      // state to bieżący transport — sprzątamy go przy zamykaniu providera.
       state.disconnect();
       state.dispose();
     });
+
+    WidgetsBinding.instance.addObserver(this);
 
     // Re-ewaluacja przy zmianie sieci (WiFi <-> komórka, inna sieć WiFi).
     _connSub = Connectivity().onConnectivityChanged.listen((result) {
@@ -109,15 +115,41 @@ class TransportManager extends Notifier<ControllerTransport> {
       _evaluate();
     });
 
-    // Okresowo: powrót na lokalny po reconnecie sterownika + rekonekt martwego.
+    // Okresowo: fallback gdy inne triggery nie wystarczą.
     _periodicEval = Timer.periodic(_evalInterval, (_) => _evaluate());
 
     // Start: domyślnie chmura (natychmiast dostępna), w tle szukamy lokalnego.
     TLog.log('manager', 'start na chmurze, w tle szukam lokalnego');
-    _lastSwapAt = DateTime.now(); // grace dla startowego transportu
+    _lastSwapAt = DateTime.now();
     final initial = _buildCloud();
+    _watchAvailability(initial);
     scheduleMicrotask(_evaluate);
     return initial;
+  }
+
+  // Nasłuchuje strumień availability aktywnego transportu. Gdy transport zgłosi
+  // avail=false (watchdog, rozłączenie), od razu wyzwalamy re-ewaluację zamiast
+  // czekać na periodyczny timer (nawet do 15 s).
+  void _watchAvailability(ControllerTransport transport) {
+    _availSub?.cancel();
+    _availSub = transport.availability.listen((avail) {
+      if (!avail) {
+        final settling = DateTime.now().difference(_lastSwapAt) < _settleGrace;
+        if (!settling) {
+          TLog.log('manager', 'avail=false -> natychmiastowa re-ewaluacja');
+          _evaluate();
+        }
+      }
+    });
+  }
+
+  // Powrót z tła: natychmiastowa re-ewaluacja zamiast czekania na periodyczny timer.
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState lifecycleState) {
+    if (lifecycleState == AppLifecycleState.resumed) {
+      TLog.log('manager', 'foreground (resumed) -> re-ewaluacja');
+      _evaluate();
+    }
   }
 
   CloudMqttTransport _buildCloud() => CloudMqttTransport(
@@ -207,6 +239,7 @@ class TransportManager extends Notifier<ControllerTransport> {
     final old = state;
     TLog.log('manager', 'SWAP ${old.kind.name} -> ${next.kind.name}');
     _lastSwapAt = DateTime.now();
+    _watchAvailability(next);
     state = next; // dependenci (mqttUpdates/status/scan) przepną się na nowy
     old.disconnect();
     old.dispose();
