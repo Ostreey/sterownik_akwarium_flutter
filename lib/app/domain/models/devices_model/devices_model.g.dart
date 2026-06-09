@@ -14,6 +14,21 @@ _$DevicesModelImpl _$$DevicesModelImplFromJson(Map<String, dynamic> json) =>
       pompa2: json['pompa2'] == null
           ? const TimerDeviceModel()
           : TimerDeviceModel.fromJson(json['pompa2'] as Map<String, dynamic>),
+      pompa3: json['pompa3'] == null
+          ? const TimerDeviceModel()
+          : TimerDeviceModel.fromJson(json['pompa3'] as Map<String, dynamic>),
+      pompa4: json['pompa4'] == null
+          ? const TimerDeviceModel()
+          : TimerDeviceModel.fromJson(json['pompa4'] as Map<String, dynamic>),
+      pompa5: json['pompa5'] == null
+          ? const TimerDeviceModel()
+          : TimerDeviceModel.fromJson(json['pompa5'] as Map<String, dynamic>),
+      pompa6: json['pompa6'] == null
+          ? const TimerDeviceModel()
+          : TimerDeviceModel.fromJson(json['pompa6'] as Map<String, dynamic>),
+      pompa7: json['pompa7'] == null
+          ? const TimerDeviceModel()
+          : TimerDeviceModel.fromJson(json['pompa7'] as Map<String, dynamic>),
       circulation1: json['circulation1'] == null
           ? const TimerDeviceModel()
           : TimerDeviceModel.fromJson(
@@ -38,6 +53,11 @@ Map<String, dynamic> _$$DevicesModelImplToJson(_$DevicesModelImpl instance) =>
     <String, dynamic>{
       'pompa1': instance.pompa1,
       'pompa2': instance.pompa2,
+      'pompa3': instance.pompa3,
+      'pompa4': instance.pompa4,
+      'pompa5': instance.pompa5,
+      'pompa6': instance.pompa6,
+      'pompa7': instance.pompa7,
       'circulation1': instance.circulation1,
       'circulation2': instance.circulation2,
       'led': instance.led,

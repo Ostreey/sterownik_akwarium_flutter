@@ -11,6 +11,11 @@ class DevicesModel with _$DevicesModel {
   const factory DevicesModel({
     @Default(TimerDeviceModel()) TimerDeviceModel pompa1,
     @Default(TimerDeviceModel()) TimerDeviceModel pompa2,
+    @Default(TimerDeviceModel()) TimerDeviceModel pompa3,
+    @Default(TimerDeviceModel()) TimerDeviceModel pompa4,
+    @Default(TimerDeviceModel()) TimerDeviceModel pompa5,
+    @Default(TimerDeviceModel()) TimerDeviceModel pompa6,
+    @Default(TimerDeviceModel()) TimerDeviceModel pompa7,
     @Default(TimerDeviceModel()) TimerDeviceModel circulation1,
     @Default(TimerDeviceModel()) TimerDeviceModel circulation2,
     @Default(TimerDeviceModel()) TimerDeviceModel led,

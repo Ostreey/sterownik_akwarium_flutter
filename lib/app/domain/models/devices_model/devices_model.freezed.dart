@@ -22,6 +22,11 @@ DevicesModel _$DevicesModelFromJson(Map<String, dynamic> json) {
 mixin _$DevicesModel {
   TimerDeviceModel get pompa1 => throw _privateConstructorUsedError;
   TimerDeviceModel get pompa2 => throw _privateConstructorUsedError;
+  TimerDeviceModel get pompa3 => throw _privateConstructorUsedError;
+  TimerDeviceModel get pompa4 => throw _privateConstructorUsedError;
+  TimerDeviceModel get pompa5 => throw _privateConstructorUsedError;
+  TimerDeviceModel get pompa6 => throw _privateConstructorUsedError;
+  TimerDeviceModel get pompa7 => throw _privateConstructorUsedError;
   TimerDeviceModel get circulation1 => throw _privateConstructorUsedError;
   TimerDeviceModel get circulation2 => throw _privateConstructorUsedError;
   TimerDeviceModel get led => throw _privateConstructorUsedError;
@@ -52,6 +57,11 @@ abstract class $DevicesModelCopyWith<$Res> {
   $Res call(
       {TimerDeviceModel pompa1,
       TimerDeviceModel pompa2,
+      TimerDeviceModel pompa3,
+      TimerDeviceModel pompa4,
+      TimerDeviceModel pompa5,
+      TimerDeviceModel pompa6,
+      TimerDeviceModel pompa7,
       TimerDeviceModel circulation1,
       TimerDeviceModel circulation2,
       TimerDeviceModel led,
@@ -65,6 +75,11 @@ abstract class $DevicesModelCopyWith<$Res> {
 
   $TimerDeviceModelCopyWith<$Res> get pompa1;
   $TimerDeviceModelCopyWith<$Res> get pompa2;
+  $TimerDeviceModelCopyWith<$Res> get pompa3;
+  $TimerDeviceModelCopyWith<$Res> get pompa4;
+  $TimerDeviceModelCopyWith<$Res> get pompa5;
+  $TimerDeviceModelCopyWith<$Res> get pompa6;
+  $TimerDeviceModelCopyWith<$Res> get pompa7;
   $TimerDeviceModelCopyWith<$Res> get circulation1;
   $TimerDeviceModelCopyWith<$Res> get circulation2;
   $TimerDeviceModelCopyWith<$Res> get led;
@@ -87,6 +102,11 @@ class _$DevicesModelCopyWithImpl<$Res, $Val extends DevicesModel>
   $Res call({
     Object? pompa1 = null,
     Object? pompa2 = null,
+    Object? pompa3 = null,
+    Object? pompa4 = null,
+    Object? pompa5 = null,
+    Object? pompa6 = null,
+    Object? pompa7 = null,
     Object? circulation1 = null,
     Object? circulation2 = null,
     Object? led = null,
@@ -106,6 +126,26 @@ class _$DevicesModelCopyWithImpl<$Res, $Val extends DevicesModel>
       pompa2: null == pompa2
           ? _value.pompa2
           : pompa2 // ignore: cast_nullable_to_non_nullable
+              as TimerDeviceModel,
+      pompa3: null == pompa3
+          ? _value.pompa3
+          : pompa3 // ignore: cast_nullable_to_non_nullable
+              as TimerDeviceModel,
+      pompa4: null == pompa4
+          ? _value.pompa4
+          : pompa4 // ignore: cast_nullable_to_non_nullable
+              as TimerDeviceModel,
+      pompa5: null == pompa5
+          ? _value.pompa5
+          : pompa5 // ignore: cast_nullable_to_non_nullable
+              as TimerDeviceModel,
+      pompa6: null == pompa6
+          ? _value.pompa6
+          : pompa6 // ignore: cast_nullable_to_non_nullable
+              as TimerDeviceModel,
+      pompa7: null == pompa7
+          ? _value.pompa7
+          : pompa7 // ignore: cast_nullable_to_non_nullable
               as TimerDeviceModel,
       circulation1: null == circulation1
           ? _value.circulation1
@@ -174,6 +214,56 @@ class _$DevicesModelCopyWithImpl<$Res, $Val extends DevicesModel>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
+  $TimerDeviceModelCopyWith<$Res> get pompa3 {
+    return $TimerDeviceModelCopyWith<$Res>(_value.pompa3, (value) {
+      return _then(_value.copyWith(pompa3: value) as $Val);
+    });
+  }
+
+  /// Create a copy of DevicesModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $TimerDeviceModelCopyWith<$Res> get pompa4 {
+    return $TimerDeviceModelCopyWith<$Res>(_value.pompa4, (value) {
+      return _then(_value.copyWith(pompa4: value) as $Val);
+    });
+  }
+
+  /// Create a copy of DevicesModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $TimerDeviceModelCopyWith<$Res> get pompa5 {
+    return $TimerDeviceModelCopyWith<$Res>(_value.pompa5, (value) {
+      return _then(_value.copyWith(pompa5: value) as $Val);
+    });
+  }
+
+  /// Create a copy of DevicesModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $TimerDeviceModelCopyWith<$Res> get pompa6 {
+    return $TimerDeviceModelCopyWith<$Res>(_value.pompa6, (value) {
+      return _then(_value.copyWith(pompa6: value) as $Val);
+    });
+  }
+
+  /// Create a copy of DevicesModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $TimerDeviceModelCopyWith<$Res> get pompa7 {
+    return $TimerDeviceModelCopyWith<$Res>(_value.pompa7, (value) {
+      return _then(_value.copyWith(pompa7: value) as $Val);
+    });
+  }
+
+  /// Create a copy of DevicesModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
   $TimerDeviceModelCopyWith<$Res> get circulation1 {
     return $TimerDeviceModelCopyWith<$Res>(_value.circulation1, (value) {
       return _then(_value.copyWith(circulation1: value) as $Val);
@@ -212,6 +302,11 @@ abstract class _$$DevicesModelImplCopyWith<$Res>
   $Res call(
       {TimerDeviceModel pompa1,
       TimerDeviceModel pompa2,
+      TimerDeviceModel pompa3,
+      TimerDeviceModel pompa4,
+      TimerDeviceModel pompa5,
+      TimerDeviceModel pompa6,
+      TimerDeviceModel pompa7,
       TimerDeviceModel circulation1,
       TimerDeviceModel circulation2,
       TimerDeviceModel led,
@@ -227,6 +322,16 @@ abstract class _$$DevicesModelImplCopyWith<$Res>
   $TimerDeviceModelCopyWith<$Res> get pompa1;
   @override
   $TimerDeviceModelCopyWith<$Res> get pompa2;
+  @override
+  $TimerDeviceModelCopyWith<$Res> get pompa3;
+  @override
+  $TimerDeviceModelCopyWith<$Res> get pompa4;
+  @override
+  $TimerDeviceModelCopyWith<$Res> get pompa5;
+  @override
+  $TimerDeviceModelCopyWith<$Res> get pompa6;
+  @override
+  $TimerDeviceModelCopyWith<$Res> get pompa7;
   @override
   $TimerDeviceModelCopyWith<$Res> get circulation1;
   @override
@@ -250,6 +355,11 @@ class __$$DevicesModelImplCopyWithImpl<$Res>
   $Res call({
     Object? pompa1 = null,
     Object? pompa2 = null,
+    Object? pompa3 = null,
+    Object? pompa4 = null,
+    Object? pompa5 = null,
+    Object? pompa6 = null,
+    Object? pompa7 = null,
     Object? circulation1 = null,
     Object? circulation2 = null,
     Object? led = null,
@@ -269,6 +379,26 @@ class __$$DevicesModelImplCopyWithImpl<$Res>
       pompa2: null == pompa2
           ? _value.pompa2
           : pompa2 // ignore: cast_nullable_to_non_nullable
+              as TimerDeviceModel,
+      pompa3: null == pompa3
+          ? _value.pompa3
+          : pompa3 // ignore: cast_nullable_to_non_nullable
+              as TimerDeviceModel,
+      pompa4: null == pompa4
+          ? _value.pompa4
+          : pompa4 // ignore: cast_nullable_to_non_nullable
+              as TimerDeviceModel,
+      pompa5: null == pompa5
+          ? _value.pompa5
+          : pompa5 // ignore: cast_nullable_to_non_nullable
+              as TimerDeviceModel,
+      pompa6: null == pompa6
+          ? _value.pompa6
+          : pompa6 // ignore: cast_nullable_to_non_nullable
+              as TimerDeviceModel,
+      pompa7: null == pompa7
+          ? _value.pompa7
+          : pompa7 // ignore: cast_nullable_to_non_nullable
               as TimerDeviceModel,
       circulation1: null == circulation1
           ? _value.circulation1
@@ -320,6 +450,11 @@ class _$DevicesModelImpl implements _DevicesModel {
   const _$DevicesModelImpl(
       {this.pompa1 = const TimerDeviceModel(),
       this.pompa2 = const TimerDeviceModel(),
+      this.pompa3 = const TimerDeviceModel(),
+      this.pompa4 = const TimerDeviceModel(),
+      this.pompa5 = const TimerDeviceModel(),
+      this.pompa6 = const TimerDeviceModel(),
+      this.pompa7 = const TimerDeviceModel(),
       this.circulation1 = const TimerDeviceModel(),
       this.circulation2 = const TimerDeviceModel(),
       this.led = const TimerDeviceModel(),
@@ -340,6 +475,21 @@ class _$DevicesModelImpl implements _DevicesModel {
   @override
   @JsonKey()
   final TimerDeviceModel pompa2;
+  @override
+  @JsonKey()
+  final TimerDeviceModel pompa3;
+  @override
+  @JsonKey()
+  final TimerDeviceModel pompa4;
+  @override
+  @JsonKey()
+  final TimerDeviceModel pompa5;
+  @override
+  @JsonKey()
+  final TimerDeviceModel pompa6;
+  @override
+  @JsonKey()
+  final TimerDeviceModel pompa7;
   @override
   @JsonKey()
   final TimerDeviceModel circulation1;
@@ -373,7 +523,7 @@ class _$DevicesModelImpl implements _DevicesModel {
 
   @override
   String toString() {
-    return 'DevicesModel(pompa1: $pompa1, pompa2: $pompa2, circulation1: $circulation1, circulation2: $circulation2, led: $led, socket1: $socket1, socket2: $socket2, socket3: $socket3, socket4: $socket4, socket5: $socket5, socket6: $socket6, socket7: $socket7)';
+    return 'DevicesModel(pompa1: $pompa1, pompa2: $pompa2, pompa3: $pompa3, pompa4: $pompa4, pompa5: $pompa5, pompa6: $pompa6, pompa7: $pompa7, circulation1: $circulation1, circulation2: $circulation2, led: $led, socket1: $socket1, socket2: $socket2, socket3: $socket3, socket4: $socket4, socket5: $socket5, socket6: $socket6, socket7: $socket7)';
   }
 
   @override
@@ -383,6 +533,11 @@ class _$DevicesModelImpl implements _DevicesModel {
             other is _$DevicesModelImpl &&
             (identical(other.pompa1, pompa1) || other.pompa1 == pompa1) &&
             (identical(other.pompa2, pompa2) || other.pompa2 == pompa2) &&
+            (identical(other.pompa3, pompa3) || other.pompa3 == pompa3) &&
+            (identical(other.pompa4, pompa4) || other.pompa4 == pompa4) &&
+            (identical(other.pompa5, pompa5) || other.pompa5 == pompa5) &&
+            (identical(other.pompa6, pompa6) || other.pompa6 == pompa6) &&
+            (identical(other.pompa7, pompa7) || other.pompa7 == pompa7) &&
             (identical(other.circulation1, circulation1) ||
                 other.circulation1 == circulation1) &&
             (identical(other.circulation2, circulation2) ||
@@ -403,6 +558,11 @@ class _$DevicesModelImpl implements _DevicesModel {
       runtimeType,
       pompa1,
       pompa2,
+      pompa3,
+      pompa4,
+      pompa5,
+      pompa6,
+      pompa7,
       circulation1,
       circulation2,
       led,
@@ -434,6 +594,11 @@ abstract class _DevicesModel implements DevicesModel {
   const factory _DevicesModel(
       {final TimerDeviceModel pompa1,
       final TimerDeviceModel pompa2,
+      final TimerDeviceModel pompa3,
+      final TimerDeviceModel pompa4,
+      final TimerDeviceModel pompa5,
+      final TimerDeviceModel pompa6,
+      final TimerDeviceModel pompa7,
       final TimerDeviceModel circulation1,
       final TimerDeviceModel circulation2,
       final TimerDeviceModel led,
@@ -452,6 +617,16 @@ abstract class _DevicesModel implements DevicesModel {
   TimerDeviceModel get pompa1;
   @override
   TimerDeviceModel get pompa2;
+  @override
+  TimerDeviceModel get pompa3;
+  @override
+  TimerDeviceModel get pompa4;
+  @override
+  TimerDeviceModel get pompa5;
+  @override
+  TimerDeviceModel get pompa6;
+  @override
+  TimerDeviceModel get pompa7;
   @override
   TimerDeviceModel get circulation1;
   @override
