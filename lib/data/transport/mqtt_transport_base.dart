@@ -43,6 +43,16 @@ abstract class MqttTransportBase implements ControllerTransport {
   final String mqttUser;
   final String mqttPassword;
 
+  // Watchdog świeżości telemetrii — TYLKO dla kanału lokalnego. Broker lokalny
+  // (PicoMQTT) ignoruje LWT, więc nie ma komunikatu "offline" gdy sterownik
+  // zniknie; a martwe TCP `mqtt_client` wykrywa dopiero po keepalive (~60 s).
+  // Dlatego: sterownik publikuje `001/state` co 3 s, a my uznajemy go za offline
+  // jeśli nie przyjdzie żaden przez [_localStaleTimeout]. (Chmura ma autorytatywny
+  // retained `001/avail` z LWT — tam watchdog nie działa.)
+  Timer? _localWatchdog;
+  bool? _lastAvail; // dedup: emituj avail tylko przy zmianie
+  static const Duration _localStaleTimeout = Duration(seconds: 9);
+
   MqttTransportBase({
     required this.mqttServer,
     required this.mqttPort,
@@ -100,8 +110,8 @@ abstract class MqttTransportBase implements ControllerTransport {
       // polaczenia z nim = sterownik zyje (broker dziala na sterowniku). Dla
       // chmury avail przychodzi z retained topiku <id>/avail (nie syntezujemy).
       if (kind == TransportKind.local) {
-        TLog.log(kind.name, 'avail=online (syntetyczny, lokalny)');
-        _availabilityController.add(true);
+        TLog.log(kind.name, 'avail=online (lokalny) + start watchdog telemetrii');
+        _kickLocalWatchdog();
       }
     } else {
       TLog.log(kind.name,
@@ -134,7 +144,7 @@ abstract class MqttTransportBase implements ControllerTransport {
       try {
         if (receivedTopic == availTopic) {
           print("Availability: $payload");
-          _availabilityController.add(payload == "online");
+          _emitAvail(payload == "online");
         } else if (receivedTopic == sensorsTopic) {
           final jsonData = json.decode(payload) as Map<String, dynamic>;
           final discovery = SensorDiscoveryModel.fromJson(jsonData);
@@ -147,6 +157,9 @@ abstract class MqttTransportBase implements ControllerTransport {
           log("MQTTDATA:  $jsonData");
           final sensorModel = SensorModel.fromJson(jsonData);
           _telemetryController.add(sensorModel);
+          // Świeża telemetria = sterownik żyje. Lokalnie to nasz główny sygnał
+          // "online" (broker bez LWT) i reset watchdoga offline.
+          if (kind == TransportKind.local) _kickLocalWatchdog();
         }
       } catch (e, stackTrace) {
         print('Error parsing JSON: $e');
@@ -182,13 +195,34 @@ abstract class MqttTransportBase implements ControllerTransport {
     _client.disconnect();
   }
 
+  // Emituje availability tylko przy zmianie (dedup), bezpiecznie po close.
+  void _emitAvail(bool value) {
+    if (_availabilityController.isClosed) return;
+    if (_lastAvail == value) return;
+    _lastAvail = value;
+    _availabilityController.add(value);
+  }
+
+  // Reset watchdoga przy świeżej telemetrii: oznacz online i przeładuj timer.
+  // Gdy przez [_localStaleTimeout] nie przyjdzie kolejny `001/state` -> offline.
+  void _kickLocalWatchdog() {
+    _localWatchdog?.cancel();
+    _emitAvail(true);
+    _localWatchdog = Timer(_localStaleTimeout, () {
+      TLog.log(kind.name,
+          'brak telemetrii ${_localStaleTimeout.inSeconds}s -> avail=offline');
+      _emitAvail(false);
+    });
+  }
+
   void _onConnected() => TLog.log(kind.name, 'onConnected');
   void _onDisconnected() {
     TLog.log(kind.name, 'onDisconnected');
     // Lokalnie: utrata polaczenia z brokerem = sterownik nieosiagalny w LAN.
-    if (kind == TransportKind.local && !_availabilityController.isClosed) {
+    if (kind == TransportKind.local) {
+      _localWatchdog?.cancel();
       TLog.log(kind.name, 'avail=offline (rozlaczono lokalny broker)');
-      _availabilityController.add(false);
+      _emitAvail(false);
     }
   }
 
@@ -199,6 +233,7 @@ abstract class MqttTransportBase implements ControllerTransport {
 
   @override
   void dispose() {
+    _localWatchdog?.cancel();
     _telemetryController.close();
     _availabilityController.close();
     _sensorScanController.close();
