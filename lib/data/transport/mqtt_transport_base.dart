@@ -53,6 +53,11 @@ abstract class MqttTransportBase implements ControllerTransport {
   bool? _lastAvail; // dedup: emituj avail tylko przy zmianie
   static const Duration _localStaleTimeout = Duration(seconds: 9);
 
+  // Faza 4: telemetria przychodzi w grupach 001/state/{sensors,devices,system}.
+  // Merge'ujemy cząstki w jeden akumulator i z niego budujemy SensorModel
+  // (decyzja: jeden scalony model zamiast osobnych per grupa).
+  final Map<String, dynamic> _stateAcc = {};
+
   MqttTransportBase({
     required this.mqttServer,
     required this.mqttPort,
@@ -121,14 +126,15 @@ abstract class MqttTransportBase implements ControllerTransport {
   }
 
   void _subscribe(String deviceId) {
-    // Struktura <id>/state|avail|cmd|ack|evt (Faza 1) - identyczna na obu
-    // brokerach (chmura i lokalny), wiec subskrypcje nie zaleza od kanalu.
-    final String stateTopic = "$deviceId/state";
+    // Struktura <id>/state/+|avail|cmd|ack|evt - identyczna na obu brokerach
+    // (chmura i lokalny), wiec subskrypcje nie zaleza od kanalu. Faza 4:
+    // telemetria w grupach <id>/state/{sensors,devices,system}.
+    final String statePrefix = "$deviceId/state/";
     final String availTopic = "$deviceId/avail";
     final String sensorsTopic = "$deviceId/evt/sensors";
     final String ackPrefix = "$deviceId/ack/";
 
-    _client.subscribe(stateTopic, MqttQos.atLeastOnce);
+    _client.subscribe("$statePrefix+", MqttQos.atLeastOnce);
     _client.subscribe(availTopic, MqttQos.atLeastOnce);
     _client.subscribe(sensorsTopic, MqttQos.atLeastOnce);
     _client.subscribe("$ackPrefix#", MqttQos.atLeastOnce);
@@ -152,10 +158,13 @@ abstract class MqttTransportBase implements ControllerTransport {
         } else if (receivedTopic.startsWith(ackPrefix)) {
           final target = receivedTopic.substring(ackPrefix.length);
           _ackController.add(CommandAck(target: target, payload: payload));
-        } else if (receivedTopic == stateTopic) {
+        } else if (receivedTopic.startsWith(statePrefix)) {
+          // Faza 4: grupa telemetrii (sensors/devices/system). Merge cząstki w
+          // akumulator i odbuduj scalony SensorModel.
           final jsonData = json.decode(payload) as Map<String, dynamic>;
-          log("MQTTDATA:  $jsonData");
-          final sensorModel = SensorModel.fromJson(jsonData);
+          log("MQTTDATA [$receivedTopic]: $jsonData");
+          _stateAcc.addAll(jsonData);
+          final sensorModel = SensorModel.fromJson(_stateAcc);
           _telemetryController.add(sensorModel);
           // Świeża telemetria = sterownik żyje. Lokalnie to nasz główny sygnał
           // "online" (broker bez LWT) i reset watchdoga offline.

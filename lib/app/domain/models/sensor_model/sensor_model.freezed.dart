@@ -50,7 +50,12 @@ mixin _$SensorModel {
   TimerDeviceModel get soc4 => throw _privateConstructorUsedError;
   TimerDeviceModel get soc5 => throw _privateConstructorUsedError;
   TimerDeviceModel get soc6 => throw _privateConstructorUsedError;
-  TimerDeviceModel get soc7 => throw _privateConstructorUsedError;
+  TimerDeviceModel get soc7 =>
+      throw _privateConstructorUsedError; // Faza 4: grupa 001/state/system — stany grzałek/wentylatorów + alarmy.
+  OutputStatusModel get heater1 => throw _privateConstructorUsedError;
+  OutputStatusModel get heater2 => throw _privateConstructorUsedError;
+  OutputStatusModel get fan1 => throw _privateConstructorUsedError;
+  OutputStatusModel get fan2 => throw _privateConstructorUsedError;
 
   /// Serializes this SensorModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -99,7 +104,11 @@ abstract class $SensorModelCopyWith<$Res> {
       TimerDeviceModel soc4,
       TimerDeviceModel soc5,
       TimerDeviceModel soc6,
-      TimerDeviceModel soc7});
+      TimerDeviceModel soc7,
+      OutputStatusModel heater1,
+      OutputStatusModel heater2,
+      OutputStatusModel fan1,
+      OutputStatusModel fan2});
 
   $TimerDeviceModelCopyWith<$Res> get pompa1;
   $TimerDeviceModelCopyWith<$Res> get pompa2;
@@ -113,6 +122,10 @@ abstract class $SensorModelCopyWith<$Res> {
   $TimerDeviceModelCopyWith<$Res> get soc5;
   $TimerDeviceModelCopyWith<$Res> get soc6;
   $TimerDeviceModelCopyWith<$Res> get soc7;
+  $OutputStatusModelCopyWith<$Res> get heater1;
+  $OutputStatusModelCopyWith<$Res> get heater2;
+  $OutputStatusModelCopyWith<$Res> get fan1;
+  $OutputStatusModelCopyWith<$Res> get fan2;
 }
 
 /// @nodoc
@@ -161,6 +174,10 @@ class _$SensorModelCopyWithImpl<$Res, $Val extends SensorModel>
     Object? soc5 = null,
     Object? soc6 = null,
     Object? soc7 = null,
+    Object? heater1 = null,
+    Object? heater2 = null,
+    Object? fan1 = null,
+    Object? fan2 = null,
   }) {
     return _then(_value.copyWith(
       waterTemp: null == waterTemp
@@ -287,6 +304,22 @@ class _$SensorModelCopyWithImpl<$Res, $Val extends SensorModel>
           ? _value.soc7
           : soc7 // ignore: cast_nullable_to_non_nullable
               as TimerDeviceModel,
+      heater1: null == heater1
+          ? _value.heater1
+          : heater1 // ignore: cast_nullable_to_non_nullable
+              as OutputStatusModel,
+      heater2: null == heater2
+          ? _value.heater2
+          : heater2 // ignore: cast_nullable_to_non_nullable
+              as OutputStatusModel,
+      fan1: null == fan1
+          ? _value.fan1
+          : fan1 // ignore: cast_nullable_to_non_nullable
+              as OutputStatusModel,
+      fan2: null == fan2
+          ? _value.fan2
+          : fan2 // ignore: cast_nullable_to_non_nullable
+              as OutputStatusModel,
     ) as $Val);
   }
 
@@ -409,6 +442,46 @@ class _$SensorModelCopyWithImpl<$Res, $Val extends SensorModel>
       return _then(_value.copyWith(soc7: value) as $Val);
     });
   }
+
+  /// Create a copy of SensorModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $OutputStatusModelCopyWith<$Res> get heater1 {
+    return $OutputStatusModelCopyWith<$Res>(_value.heater1, (value) {
+      return _then(_value.copyWith(heater1: value) as $Val);
+    });
+  }
+
+  /// Create a copy of SensorModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $OutputStatusModelCopyWith<$Res> get heater2 {
+    return $OutputStatusModelCopyWith<$Res>(_value.heater2, (value) {
+      return _then(_value.copyWith(heater2: value) as $Val);
+    });
+  }
+
+  /// Create a copy of SensorModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $OutputStatusModelCopyWith<$Res> get fan1 {
+    return $OutputStatusModelCopyWith<$Res>(_value.fan1, (value) {
+      return _then(_value.copyWith(fan1: value) as $Val);
+    });
+  }
+
+  /// Create a copy of SensorModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $OutputStatusModelCopyWith<$Res> get fan2 {
+    return $OutputStatusModelCopyWith<$Res>(_value.fan2, (value) {
+      return _then(_value.copyWith(fan2: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -450,7 +523,11 @@ abstract class _$$SensorModelImplCopyWith<$Res>
       TimerDeviceModel soc4,
       TimerDeviceModel soc5,
       TimerDeviceModel soc6,
-      TimerDeviceModel soc7});
+      TimerDeviceModel soc7,
+      OutputStatusModel heater1,
+      OutputStatusModel heater2,
+      OutputStatusModel fan1,
+      OutputStatusModel fan2});
 
   @override
   $TimerDeviceModelCopyWith<$Res> get pompa1;
@@ -476,6 +553,14 @@ abstract class _$$SensorModelImplCopyWith<$Res>
   $TimerDeviceModelCopyWith<$Res> get soc6;
   @override
   $TimerDeviceModelCopyWith<$Res> get soc7;
+  @override
+  $OutputStatusModelCopyWith<$Res> get heater1;
+  @override
+  $OutputStatusModelCopyWith<$Res> get heater2;
+  @override
+  $OutputStatusModelCopyWith<$Res> get fan1;
+  @override
+  $OutputStatusModelCopyWith<$Res> get fan2;
 }
 
 /// @nodoc
@@ -522,6 +607,10 @@ class __$$SensorModelImplCopyWithImpl<$Res>
     Object? soc5 = null,
     Object? soc6 = null,
     Object? soc7 = null,
+    Object? heater1 = null,
+    Object? heater2 = null,
+    Object? fan1 = null,
+    Object? fan2 = null,
   }) {
     return _then(_$SensorModelImpl(
       waterTemp: null == waterTemp
@@ -648,6 +737,22 @@ class __$$SensorModelImplCopyWithImpl<$Res>
           ? _value.soc7
           : soc7 // ignore: cast_nullable_to_non_nullable
               as TimerDeviceModel,
+      heater1: null == heater1
+          ? _value.heater1
+          : heater1 // ignore: cast_nullable_to_non_nullable
+              as OutputStatusModel,
+      heater2: null == heater2
+          ? _value.heater2
+          : heater2 // ignore: cast_nullable_to_non_nullable
+              as OutputStatusModel,
+      fan1: null == fan1
+          ? _value.fan1
+          : fan1 // ignore: cast_nullable_to_non_nullable
+              as OutputStatusModel,
+      fan2: null == fan2
+          ? _value.fan2
+          : fan2 // ignore: cast_nullable_to_non_nullable
+              as OutputStatusModel,
     ));
   }
 }
@@ -686,7 +791,11 @@ class _$SensorModelImpl implements _SensorModel {
       this.soc4 = const TimerDeviceModel(),
       this.soc5 = const TimerDeviceModel(),
       this.soc6 = const TimerDeviceModel(),
-      this.soc7 = const TimerDeviceModel()});
+      this.soc7 = const TimerDeviceModel(),
+      this.heater1 = const OutputStatusModel(),
+      this.heater2 = const OutputStatusModel(),
+      this.fan1 = const OutputStatusModel(),
+      this.fan2 = const OutputStatusModel()});
 
   factory _$SensorModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$SensorModelImplFromJson(json);
@@ -784,10 +893,23 @@ class _$SensorModelImpl implements _SensorModel {
   @override
   @JsonKey()
   final TimerDeviceModel soc7;
+// Faza 4: grupa 001/state/system — stany grzałek/wentylatorów + alarmy.
+  @override
+  @JsonKey()
+  final OutputStatusModel heater1;
+  @override
+  @JsonKey()
+  final OutputStatusModel heater2;
+  @override
+  @JsonKey()
+  final OutputStatusModel fan1;
+  @override
+  @JsonKey()
+  final OutputStatusModel fan2;
 
   @override
   String toString() {
-    return 'SensorModel(waterTemp: $waterTemp, waterTempMin: $waterTempMin, waterTempMax: $waterTempMax, airTemp: $airTemp, airTempMin: $airTempMin, airTempMax: $airTempMax, airTempFreq: $airTempFreq, ph: $ph, phSet: $phSet, phHisteresis: $phHisteresis, tds: $tds, tdsSet: $tdsSet, tdsHisteresis: $tdsHisteresis, co2: $co2, co2Min: $co2Min, co2Max: $co2Max, waterFlow: $waterFlow, waterFlowMin: $waterFlowMin, waterFlowMax: $waterFlowMax, pompa1: $pompa1, pompa2: $pompa2, circul1: $circul1, circul2: $circul2, led: $led, soc1: $soc1, soc2: $soc2, soc3: $soc3, soc4: $soc4, soc5: $soc5, soc6: $soc6, soc7: $soc7)';
+    return 'SensorModel(waterTemp: $waterTemp, waterTempMin: $waterTempMin, waterTempMax: $waterTempMax, airTemp: $airTemp, airTempMin: $airTempMin, airTempMax: $airTempMax, airTempFreq: $airTempFreq, ph: $ph, phSet: $phSet, phHisteresis: $phHisteresis, tds: $tds, tdsSet: $tdsSet, tdsHisteresis: $tdsHisteresis, co2: $co2, co2Min: $co2Min, co2Max: $co2Max, waterFlow: $waterFlow, waterFlowMin: $waterFlowMin, waterFlowMax: $waterFlowMax, pompa1: $pompa1, pompa2: $pompa2, circul1: $circul1, circul2: $circul2, led: $led, soc1: $soc1, soc2: $soc2, soc3: $soc3, soc4: $soc4, soc5: $soc5, soc6: $soc6, soc7: $soc7, heater1: $heater1, heater2: $heater2, fan1: $fan1, fan2: $fan2)';
   }
 
   @override
@@ -836,7 +958,11 @@ class _$SensorModelImpl implements _SensorModel {
             (identical(other.soc4, soc4) || other.soc4 == soc4) &&
             (identical(other.soc5, soc5) || other.soc5 == soc5) &&
             (identical(other.soc6, soc6) || other.soc6 == soc6) &&
-            (identical(other.soc7, soc7) || other.soc7 == soc7));
+            (identical(other.soc7, soc7) || other.soc7 == soc7) &&
+            (identical(other.heater1, heater1) || other.heater1 == heater1) &&
+            (identical(other.heater2, heater2) || other.heater2 == heater2) &&
+            (identical(other.fan1, fan1) || other.fan1 == fan1) &&
+            (identical(other.fan2, fan2) || other.fan2 == fan2));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -873,7 +999,11 @@ class _$SensorModelImpl implements _SensorModel {
         soc4,
         soc5,
         soc6,
-        soc7
+        soc7,
+        heater1,
+        heater2,
+        fan1,
+        fan2
       ]);
 
   /// Create a copy of SensorModel
@@ -924,7 +1054,11 @@ abstract class _SensorModel implements SensorModel {
       final TimerDeviceModel soc4,
       final TimerDeviceModel soc5,
       final TimerDeviceModel soc6,
-      final TimerDeviceModel soc7}) = _$SensorModelImpl;
+      final TimerDeviceModel soc7,
+      final OutputStatusModel heater1,
+      final OutputStatusModel heater2,
+      final OutputStatusModel fan1,
+      final OutputStatusModel fan2}) = _$SensorModelImpl;
 
   factory _SensorModel.fromJson(Map<String, dynamic> json) =
       _$SensorModelImpl.fromJson;
@@ -990,7 +1124,16 @@ abstract class _SensorModel implements SensorModel {
   @override
   TimerDeviceModel get soc6;
   @override
-  TimerDeviceModel get soc7;
+  TimerDeviceModel
+      get soc7; // Faza 4: grupa 001/state/system — stany grzałek/wentylatorów + alarmy.
+  @override
+  OutputStatusModel get heater1;
+  @override
+  OutputStatusModel get heater2;
+  @override
+  OutputStatusModel get fan1;
+  @override
+  OutputStatusModel get fan2;
 
   /// Create a copy of SensorModel
   /// with the given fields replaced by the non-null parameter values.

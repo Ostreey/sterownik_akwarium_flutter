@@ -63,6 +63,18 @@ _$SensorModelImpl _$$SensorModelImplFromJson(Map<String, dynamic> json) =>
       soc7: json['soc7'] == null
           ? const TimerDeviceModel()
           : TimerDeviceModel.fromJson(json['soc7'] as Map<String, dynamic>),
+      heater1: json['heater1'] == null
+          ? const OutputStatusModel()
+          : OutputStatusModel.fromJson(json['heater1'] as Map<String, dynamic>),
+      heater2: json['heater2'] == null
+          ? const OutputStatusModel()
+          : OutputStatusModel.fromJson(json['heater2'] as Map<String, dynamic>),
+      fan1: json['fan1'] == null
+          ? const OutputStatusModel()
+          : OutputStatusModel.fromJson(json['fan1'] as Map<String, dynamic>),
+      fan2: json['fan2'] == null
+          ? const OutputStatusModel()
+          : OutputStatusModel.fromJson(json['fan2'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$SensorModelImplToJson(_$SensorModelImpl instance) =>
@@ -98,4 +110,8 @@ Map<String, dynamic> _$$SensorModelImplToJson(_$SensorModelImpl instance) =>
       'soc5': instance.soc5,
       'soc6': instance.soc6,
       'soc7': instance.soc7,
+      'heater1': instance.heater1,
+      'heater2': instance.heater2,
+      'fan1': instance.fan1,
+      'fan2': instance.fan2,
     };

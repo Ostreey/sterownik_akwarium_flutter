@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import 'package:sterownik_akwarium/app/domain/models/output_status_model/output_status_model.dart';
 import 'package:sterownik_akwarium/app/domain/models/timer_device_model/timer_device_model.dart';
 
 part 'sensor_model.freezed.dart';
@@ -39,6 +40,11 @@ class SensorModel with _$SensorModel {
     @Default(TimerDeviceModel()) TimerDeviceModel soc5,
     @Default(TimerDeviceModel()) TimerDeviceModel soc6,
     @Default(TimerDeviceModel()) TimerDeviceModel soc7,
+    // Faza 4: grupa 001/state/system — stany grzałek/wentylatorów + alarmy.
+    @Default(OutputStatusModel()) OutputStatusModel heater1,
+    @Default(OutputStatusModel()) OutputStatusModel heater2,
+    @Default(OutputStatusModel()) OutputStatusModel fan1,
+    @Default(OutputStatusModel()) OutputStatusModel fan2,
   }) = _SensorModel;
 
   factory SensorModel.fromJson(Map<String, dynamic> json) =>
