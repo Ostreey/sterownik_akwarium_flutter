@@ -6,7 +6,7 @@ part of 'ph_edit_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$phEditHash() => r'054b0b9143c911e37dd83720870121151c8d4e88';
+String _$phEditHash() => r'4ecf7a8a4d1a0e76c3b4ffb9deec91dd151d3091';
 
 /// See also [PhEdit].
 @ProviderFor(PhEdit)

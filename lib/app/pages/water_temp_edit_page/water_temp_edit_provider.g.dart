@@ -6,7 +6,7 @@ part of 'water_temp_edit_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$publishHash() => r'b295204beb8f1f14594b5d3dcaa16008e4d50260';
+String _$publishHash() => r'8206987874502c59f45d5785b2aa324bd2e934ea';
 
 /// See also [Publish].
 @ProviderFor(Publish)

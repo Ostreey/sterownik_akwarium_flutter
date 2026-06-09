@@ -6,7 +6,7 @@ part of 'edit_timer_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$editTimerHash() => r'523b31f4cd70744112ec398d76baee843c9c17f1';
+String _$editTimerHash() => r'f0b6d069a292a1be1802b1c3f3f903e84b29d48a';
 
 /// See also [EditTimer].
 @ProviderFor(EditTimer)
