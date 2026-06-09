@@ -92,11 +92,12 @@ class MyMqttClient {
   }
 
   void subscribe(String deviceId) {
-    // Faza 1: namespace aq/<id>/... (clean break ze starego "001"/"001/status").
-    final String stateTopic = "aq/$deviceId/state";
-    final String availTopic = "aq/$deviceId/avail";
-    final String sensorsTopic = "aq/$deviceId/evt/sensors";
-    final String ackPrefix = "aq/$deviceId/ack/";
+    // Faza 1: struktura <id>/state|avail|cmd|ack|evt (clean break ze starego
+    // golego "001" / "001/status").
+    final String stateTopic = "$deviceId/state";
+    final String availTopic = "$deviceId/avail";
+    final String sensorsTopic = "$deviceId/evt/sensors";
+    final String ackPrefix = "$deviceId/ack/";
 
     _client.subscribe(stateTopic, MqttQos.atLeastOnce);
     _client.subscribe(availTopic, MqttQos.atLeastOnce);
@@ -137,7 +138,7 @@ class MyMqttClient {
   }
 
   Future<void> publish(String topic, MqttClientPayloadBuilder data) async {
-    // Faza 1: komendy ida na aq/<id>/cmd/<target>. Wywolania w UI wciaz podaja
+    // Faza 1: komendy ida na <id>/cmd/<target>. Wywolania w UI wciaz podaja
     // "<id>/<target>" - przepisujemy w jednym miejscu (Faza 2 przeniesie
     // budowanie topikow do warstwy transportu).
     final cmdTopic = _toCommandTopic(topic);
@@ -149,13 +150,13 @@ class MyMqttClient {
     }
   }
 
-  // "<id>/<target>" -> "aq/<id>/cmd/<target>".
+  // "<id>/<target>" -> "<id>/cmd/<target>".
   String _toCommandTopic(String topic) {
     final i = topic.indexOf('/');
     if (i < 0) return topic;
     final id = topic.substring(0, i);
     final target = topic.substring(i + 1);
-    return "aq/$id/cmd/$target";
+    return "$id/cmd/$target";
   }
 
   void disconnect() {
