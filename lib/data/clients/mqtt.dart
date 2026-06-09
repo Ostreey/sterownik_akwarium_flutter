@@ -18,10 +18,13 @@ class MyMqttClient {
       StreamController<bool>.broadcast();
   final StreamController<SensorDiscoveryModel> _sensorScanController =
       StreamController<SensorDiscoveryModel>.broadcast();
+  final StreamController<CommandAck> _ackController =
+      StreamController<CommandAck>.broadcast();
 
   Stream<SensorModel> get updates => _mqttUpdatesController.stream;
   Stream<bool> get espStatus => _espStatusController.stream;
   Stream<SensorDiscoveryModel> get sensorScanUpdates => _sensorScanController.stream;
+  Stream<CommandAck> get acks => _ackController.stream;
 
   final String mqttServer;
   final int mqttPort;
@@ -88,33 +91,41 @@ class MyMqttClient {
     }
   }
 
-  void subscribe(String topic) {
-    _client.subscribe(topic, MqttQos.atLeastOnce);
-    String statusTopic = "$topic/status";
-    String sensorsTopic = "$topic/sensors_found";
-    _client.subscribe(statusTopic, MqttQos.atLeastOnce);
+  void subscribe(String deviceId) {
+    // Faza 1: namespace aq/<id>/... (clean break ze starego "001"/"001/status").
+    final String stateTopic = "aq/$deviceId/state";
+    final String availTopic = "aq/$deviceId/avail";
+    final String sensorsTopic = "aq/$deviceId/evt/sensors";
+    final String ackPrefix = "aq/$deviceId/ack/";
+
+    _client.subscribe(stateTopic, MqttQos.atLeastOnce);
+    _client.subscribe(availTopic, MqttQos.atLeastOnce);
     _client.subscribe(sensorsTopic, MqttQos.atLeastOnce);
+    _client.subscribe("$ackPrefix#", MqttQos.atLeastOnce);
+
     _client.updates!.listen((List<MqttReceivedMessage<MqttMessage?>>? c) {
       final MqttPublishMessage recMess = c![0].payload as MqttPublishMessage;
       final String receivedTopic = c[0].topic;
       final String payload =
           MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
 
-      print('Received message: $payload from topic: $topic'); // For debugging
+      print('Received message: $payload from topic: $receivedTopic');
 
       try {
-        if (receivedTopic == statusTopic) {
-          print("Status Update: $payload");
-          _espStatusController.add(payload == "connected" ? true : false);
+        if (receivedTopic == availTopic) {
+          print("Availability: $payload");
+          _espStatusController.add(payload == "online");
         } else if (receivedTopic == sensorsTopic) {
           final jsonData = json.decode(payload) as Map<String, dynamic>;
           final discovery = SensorDiscoveryModel.fromJson(jsonData);
           _sensorScanController.add(discovery);
-        } else {
+        } else if (receivedTopic.startsWith(ackPrefix)) {
+          final target = receivedTopic.substring(ackPrefix.length);
+          _ackController.add(CommandAck(target: target, payload: payload));
+        } else if (receivedTopic == stateTopic) {
           final jsonData = json.decode(payload) as Map<String, dynamic>;
           log("MQTTDATA:  $jsonData");
           final sensorModel = SensorModel.fromJson(jsonData);
-
           _mqttUpdatesController.add(sensorModel); // Emit SensorModel instance
         }
       } catch (e, stackTrace) {
@@ -126,13 +137,25 @@ class MyMqttClient {
   }
 
   Future<void> publish(String topic, MqttClientPayloadBuilder data) async {
+    // Faza 1: komendy ida na aq/<id>/cmd/<target>. Wywolania w UI wciaz podaja
+    // "<id>/<target>" - przepisujemy w jednym miejscu (Faza 2 przeniesie
+    // budowanie topikow do warstwy transportu).
+    final cmdTopic = _toCommandTopic(topic);
     try {
-      var response =
-          _client.publishMessage(topic, MqttQos.exactlyOnce, data.payload!);
-      debugPrint("topic sent now: $topic");
+      _client.publishMessage(cmdTopic, MqttQos.exactlyOnce, data.payload!);
+      debugPrint("topic sent now: $cmdTopic");
     } catch (e) {
       debugPrint("Error: $e");
     }
+  }
+
+  // "<id>/<target>" -> "aq/<id>/cmd/<target>".
+  String _toCommandTopic(String topic) {
+    final i = topic.indexOf('/');
+    if (i < 0) return topic;
+    final id = topic.substring(0, i);
+    final target = topic.substring(i + 1);
+    return "aq/$id/cmd/$target";
   }
 
   void disconnect() {
@@ -167,5 +190,13 @@ class MyMqttClient {
     _mqttUpdatesController.close();
     _espStatusController.close();
     _sensorScanController.close();
+    _ackController.close();
   }
+}
+
+/// Potwierdzenie komendy z firmware (topic aq/<id>/ack/<target>).
+class CommandAck {
+  final String target;
+  final String payload;
+  CommandAck({required this.target, required this.payload});
 }
