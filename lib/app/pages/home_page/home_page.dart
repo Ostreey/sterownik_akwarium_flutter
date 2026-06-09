@@ -12,6 +12,7 @@ import 'package:sterownik_akwarium/app/pages/choose_controller_page/choose_contr
 import 'package:sterownik_akwarium/app/pages/login_page/login_page.dart';
 import 'package:sterownik_akwarium/app/pages/parameters_page/mqtt_provider.dart';
 import 'package:sterownik_akwarium/app/pages/widgets/snackbar.dart';
+import 'package:sterownik_akwarium/data/transport/controller_transport.dart';
 
 import '../choose_controller_page/choose_controller_page.dart';
 import '../devices_page/devices.dart';
@@ -53,6 +54,9 @@ class _HomePageState extends ConsumerState<HomePage> {
     final selectedController = ref.watch(selectedControllerProvider);
     // Status z topiku <id>/avail (online/offline). Dopoki nie przyjdzie -> offline.
     final isOnline = ref.watch(mqttStatusProvider).valueOrNull ?? false;
+    // Faza 3: czy aktywny kanal jest lokalny (LAN) czy przez chmure.
+    final transportKind = ref.watch(activeTransportKindProvider);
+    final isLocal = transportKind == TransportKind.local;
 
     sensorDataAsyncValue.whenData((value) => sensorData = value);
 
@@ -69,6 +73,18 @@ class _HomePageState extends ConsumerState<HomePage> {
         title: Row(
           children: [
             Text(isOnline ? "Podłączony" : "Niepodłączony"),
+            if (isOnline) ...[
+              const SizedBox(width: 8),
+              Icon(
+                isLocal ? Icons.home_outlined : Icons.cloud_outlined,
+                size: 20,
+              ),
+              const SizedBox(width: 4),
+              Text(
+                isLocal ? "lokalnie" : "chmura",
+                style: const TextStyle(fontSize: 12),
+              ),
+            ],
             const Spacer(),
             Icon(
               isOnline ? Icons.wifi : Icons.wifi_off,
