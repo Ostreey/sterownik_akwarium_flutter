@@ -9,6 +9,7 @@ import 'package:mqtt_client/mqtt_server_client.dart';
 import 'package:sterownik_akwarium/app/domain/models/sensor_discovery_model/sensor_discovery_model.dart';
 import 'package:sterownik_akwarium/app/domain/models/sensor_model/sensor_model.dart';
 import 'package:sterownik_akwarium/data/transport/controller_transport.dart';
+import 'package:sterownik_akwarium/data/transport/transport_log.dart';
 
 /// Wspólna implementacja [ControllerTransport] oparta o `mqtt_client`.
 ///
@@ -51,7 +52,7 @@ abstract class MqttTransportBase implements ControllerTransport {
     String? certificate,
   }) {
     _client = MqttServerClient.withPort(mqttServer, 'flutter_client', mqttPort);
-    _client.logging(on: true);
+    _client.logging(on: kTransportDebug);
     _client.keepAlivePeriod = 60;
     _client.setProtocolV311();
 
@@ -82,28 +83,29 @@ abstract class MqttTransportBase implements ControllerTransport {
         .startClean()
         .withWillQos(MqttQos.atLeastOnce);
 
-    print('MQTT_LOGS::[$kind] client connecting....');
+    TLog.log(kind.name, 'connect -> $mqttServer:$mqttPort (id=$deviceId)');
 
     _client.connectionMessage = connMessage;
     try {
       await _client.connect(mqttUser, mqttPassword);
     } on Exception catch (e) {
-      print('MQTT Client Connection Exception: $e');
+      TLog.log(kind.name, 'connect EXCEPTION: $e');
       _client.disconnect();
     }
 
     if (_client.connectionStatus?.state == MqttConnectionState.connected) {
-      print('MQTT Client Connected [$kind]');
+      TLog.log(kind.name, 'CONNECTED');
       _subscribe(deviceId);
       // Broker lokalny nie retainuje avail (ignoruje retained), a sam fakt
       // polaczenia z nim = sterownik zyje (broker dziala na sterowniku). Dla
       // chmury avail przychodzi z retained topiku <id>/avail (nie syntezujemy).
       if (kind == TransportKind.local) {
+        TLog.log(kind.name, 'avail=online (syntetyczny, lokalny)');
         _availabilityController.add(true);
       }
     } else {
-      print(
-          'MQTT Client Connection Failed - status is ${_client.connectionStatus}');
+      TLog.log(kind.name,
+          'connect FAILED - status ${_client.connectionStatus?.state}');
       _client.disconnect();
     }
   }
@@ -180,11 +182,12 @@ abstract class MqttTransportBase implements ControllerTransport {
     _client.disconnect();
   }
 
-  void _onConnected() => print('MQTT Client Connected [$kind]');
+  void _onConnected() => TLog.log(kind.name, 'onConnected');
   void _onDisconnected() {
-    print('MQTT Client Disconnected [$kind]');
+    TLog.log(kind.name, 'onDisconnected');
     // Lokalnie: utrata polaczenia z brokerem = sterownik nieosiagalny w LAN.
     if (kind == TransportKind.local && !_availabilityController.isClosed) {
+      TLog.log(kind.name, 'avail=offline (rozlaczono lokalny broker)');
       _availabilityController.add(false);
     }
   }

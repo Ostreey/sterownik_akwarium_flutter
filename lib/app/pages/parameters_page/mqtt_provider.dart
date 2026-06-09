@@ -12,6 +12,7 @@ import 'package:sterownik_akwarium/data/transport/cloud_mqtt_transport.dart';
 import 'package:sterownik_akwarium/data/transport/controller_discovery.dart';
 import 'package:sterownik_akwarium/data/transport/controller_transport.dart';
 import 'package:sterownik_akwarium/data/transport/local_mqtt_transport.dart';
+import 'package:sterownik_akwarium/data/transport/transport_log.dart';
 
 
 final mqttUpdatesProvider = StreamProvider<SensorModel>((ref) {
@@ -85,13 +86,19 @@ class TransportManager extends Notifier<ControllerTransport> {
     });
 
     // Re-ewaluacja przy zmianie sieci (WiFi <-> komórka, inna sieć WiFi).
-    _connSub =
-        Connectivity().onConnectivityChanged.listen((_) => _evaluate());
+    _connSub = Connectivity().onConnectivityChanged.listen((result) {
+      TLog.log('manager', 'zmiana sieci ($result) -> re-ewaluacja');
+      _evaluate();
+    });
 
     // Re-ewaluacja, gdy użytkownik zmieni sterownik.
-    ref.listen(selectedControllerProvider, (_, __) => _evaluate());
+    ref.listen(selectedControllerProvider, (_, __) {
+      TLog.log('manager', 'zmiana sterownika -> re-ewaluacja');
+      _evaluate();
+    });
 
     // Start: domyślnie chmura (natychmiast dostępna), w tle szukamy lokalnego.
+    TLog.log('manager', 'start na chmurze, w tle szukam lokalnego');
     final initial = _buildCloud();
     scheduleMicrotask(_evaluate);
     return initial;
@@ -113,7 +120,10 @@ class TransportManager extends Notifier<ControllerTransport> {
       );
 
   Future<void> _evaluate() async {
-    if (_evaluating) return;
+    if (_evaluating) {
+      TLog.log('manager', 're-ewaluacja w toku - pomijam');
+      return;
+    }
     _evaluating = true;
     try {
       final deviceId = ref.read(selectedControllerProvider)?.id ?? "";
@@ -121,11 +131,15 @@ class TransportManager extends Notifier<ControllerTransport> {
 
       final wantLocal = ep != null;
       final isLocal = state.kind == TransportKind.local;
+      TLog.log('manager',
+          'eval: wantLocal=$wantLocal, aktywny=${state.kind.name} (connected=${state.isConnected})');
 
       if (wantLocal && !isLocal) {
         _swap(_buildLocal(ep)); // znaleziono w LAN -> przełącz na lokalny
       } else if (!wantLocal && isLocal) {
         _swap(_buildCloud()); // zniknął z LAN -> wróć na chmurę
+      } else {
+        TLog.log('manager', 'eval: zostawiam ${state.kind.name}');
       }
       // wantLocal && isLocal lub !wantLocal && !isLocal -> zostaw bieżący.
     } finally {
@@ -135,6 +149,7 @@ class TransportManager extends Notifier<ControllerTransport> {
 
   void _swap(ControllerTransport next) {
     final old = state;
+    TLog.log('manager', 'SWAP ${old.kind.name} -> ${next.kind.name}');
     state = next; // dependenci (mqttUpdates/status/scan) przepną się na nowy
     old.disconnect();
     old.dispose();
