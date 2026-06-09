@@ -102,6 +102,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               leading: const Icon(Icons.heat_pump_outlined),
               // Choose an appropriate icon
               title: const Text("Pompa 1"),
+              enabled: isOnline,
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "Pompa 1",
@@ -114,6 +115,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               leading: const Icon(Icons.heat_pump_outlined),
               // Choose an appropriate icon
               title: const Text("Pompa 2"),
+              enabled: isOnline,
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "Pompa 2",
@@ -126,6 +128,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               leading: const Icon(Icons.water_drop),
               // Choose an appropriate icon
               title: const Text("Cyrkulacja 1"),
+              enabled: isOnline,
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "Cyrkulacja 1",
@@ -138,6 +141,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               leading: const Icon(Icons.water_drop),
               // Choose an appropriate icon
               title: const Text("Cyrkulacja 2"),
+              enabled: isOnline,
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "Cyrkulacja 2",
@@ -150,6 +154,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               leading: const Icon(Icons.lightbulb),
               // Choose an appropriate icon
               title: const Text("LED"),
+              enabled: isOnline,
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "LED",
@@ -162,6 +167,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               leading: const Icon(Icons.electrical_services),
               // Choose an appropriate icon
               title: const Text("Gniazdo 1"),
+              enabled: isOnline,
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "Gniazdo 1",
@@ -174,6 +180,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               leading: const Icon(Icons.electrical_services),
               // Choose an appropriate icon
               title: const Text("Gniazdo 2"),
+              enabled: isOnline,
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "Gniazdo 2",
@@ -186,6 +193,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               leading: const Icon(Icons.electrical_services),
               // Choose an appropriate icon
               title: const Text("Gniazdo 3"),
+              enabled: isOnline,
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "Gniazdo 3",
@@ -198,6 +206,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               leading: const Icon(Icons.electrical_services),
               // Choose an appropriate icon
               title: const Text("Gniazdo 4"),
+              enabled: isOnline,
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "Gniazdo 4",
@@ -210,6 +219,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               leading: const Icon(Icons.electrical_services),
               // Choose an appropriate icon
               title: const Text("Gniazdo 5"),
+              enabled: isOnline,
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "Gniazdo 5",
@@ -221,6 +231,7 @@ class _HomePageState extends ConsumerState<HomePage> {
             ListTile(
               leading: const Icon(Icons.electrical_services),
               title: const Text("Gniazdo 6"),
+              enabled: isOnline,
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "Gniazdo 6",
@@ -232,6 +243,7 @@ class _HomePageState extends ConsumerState<HomePage> {
             ListTile(
               leading: const Icon(Icons.electrical_services),
               title: const Text("Gniazdo 7"),
+              enabled: isOnline,
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "Gniazdo 7",
