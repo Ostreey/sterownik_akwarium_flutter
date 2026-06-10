@@ -6,6 +6,7 @@ import 'package:sterownik_akwarium/app/pages/air_temperature_edit_page/air_temp_
 import 'package:sterownik_akwarium/app/pages/change_socket_name/change_socket_name.dart';
 import 'package:sterownik_akwarium/app/pages/choose_controller_page/choose_controller_page.dart';
 import 'package:sterownik_akwarium/app/pages/edit_timer_page/edit_timer_page.dart';
+import 'package:sterownik_akwarium/app/pages/edit_timer_page/edit_timer_slot_model.dart';
 import 'package:sterownik_akwarium/app/pages/login_page/login_page.dart';
 import 'package:sterownik_akwarium/app/pages/ph_edit_page/ph_edit_page.dart';
 import 'package:sterownik_akwarium/app/pages/register_page/register_page.dart';
@@ -67,7 +68,7 @@ final routes =
     path: "/edit_timer",
     name: EditTimerPage.pageConfig.name,
     builder: (context, state) {
-      final TimerPageModel model = state.extra as TimerPageModel;
+      final EditTimerSlotModel model = state.extra as EditTimerSlotModel;
       return EditTimerPage(data: model);
     },
   ),

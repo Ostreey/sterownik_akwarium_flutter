@@ -22,7 +22,6 @@ TimerPageModel _$TimerPageModelFromJson(Map<String, dynamic> json) {
 mixin _$TimerPageModel {
   String get appBarTitle => throw _privateConstructorUsedError;
   String get endpoint => throw _privateConstructorUsedError;
-  TimerDeviceModel get timerDeviceModel => throw _privateConstructorUsedError;
 
   /// Serializes this TimerPageModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -40,10 +39,7 @@ abstract class $TimerPageModelCopyWith<$Res> {
           TimerPageModel value, $Res Function(TimerPageModel) then) =
       _$TimerPageModelCopyWithImpl<$Res, TimerPageModel>;
   @useResult
-  $Res call(
-      {String appBarTitle, String endpoint, TimerDeviceModel timerDeviceModel});
-
-  $TimerDeviceModelCopyWith<$Res> get timerDeviceModel;
+  $Res call({String appBarTitle, String endpoint});
 }
 
 /// @nodoc
@@ -63,7 +59,6 @@ class _$TimerPageModelCopyWithImpl<$Res, $Val extends TimerPageModel>
   $Res call({
     Object? appBarTitle = null,
     Object? endpoint = null,
-    Object? timerDeviceModel = null,
   }) {
     return _then(_value.copyWith(
       appBarTitle: null == appBarTitle
@@ -74,21 +69,7 @@ class _$TimerPageModelCopyWithImpl<$Res, $Val extends TimerPageModel>
           ? _value.endpoint
           : endpoint // ignore: cast_nullable_to_non_nullable
               as String,
-      timerDeviceModel: null == timerDeviceModel
-          ? _value.timerDeviceModel
-          : timerDeviceModel // ignore: cast_nullable_to_non_nullable
-              as TimerDeviceModel,
     ) as $Val);
-  }
-
-  /// Create a copy of TimerPageModel
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $TimerDeviceModelCopyWith<$Res> get timerDeviceModel {
-    return $TimerDeviceModelCopyWith<$Res>(_value.timerDeviceModel, (value) {
-      return _then(_value.copyWith(timerDeviceModel: value) as $Val);
-    });
   }
 }
 
@@ -100,11 +81,7 @@ abstract class _$$TimerPageModelImplCopyWith<$Res>
       __$$TimerPageModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String appBarTitle, String endpoint, TimerDeviceModel timerDeviceModel});
-
-  @override
-  $TimerDeviceModelCopyWith<$Res> get timerDeviceModel;
+  $Res call({String appBarTitle, String endpoint});
 }
 
 /// @nodoc
@@ -122,7 +99,6 @@ class __$$TimerPageModelImplCopyWithImpl<$Res>
   $Res call({
     Object? appBarTitle = null,
     Object? endpoint = null,
-    Object? timerDeviceModel = null,
   }) {
     return _then(_$TimerPageModelImpl(
       appBarTitle: null == appBarTitle
@@ -133,10 +109,6 @@ class __$$TimerPageModelImplCopyWithImpl<$Res>
           ? _value.endpoint
           : endpoint // ignore: cast_nullable_to_non_nullable
               as String,
-      timerDeviceModel: null == timerDeviceModel
-          ? _value.timerDeviceModel
-          : timerDeviceModel // ignore: cast_nullable_to_non_nullable
-              as TimerDeviceModel,
     ));
   }
 }
@@ -145,9 +117,7 @@ class __$$TimerPageModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$TimerPageModelImpl implements _TimerPageModel {
   const _$TimerPageModelImpl(
-      {required this.appBarTitle,
-      required this.endpoint,
-      required this.timerDeviceModel});
+      {required this.appBarTitle, required this.endpoint});
 
   factory _$TimerPageModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$TimerPageModelImplFromJson(json);
@@ -156,12 +126,10 @@ class _$TimerPageModelImpl implements _TimerPageModel {
   final String appBarTitle;
   @override
   final String endpoint;
-  @override
-  final TimerDeviceModel timerDeviceModel;
 
   @override
   String toString() {
-    return 'TimerPageModel(appBarTitle: $appBarTitle, endpoint: $endpoint, timerDeviceModel: $timerDeviceModel)';
+    return 'TimerPageModel(appBarTitle: $appBarTitle, endpoint: $endpoint)';
   }
 
   @override
@@ -172,15 +140,12 @@ class _$TimerPageModelImpl implements _TimerPageModel {
             (identical(other.appBarTitle, appBarTitle) ||
                 other.appBarTitle == appBarTitle) &&
             (identical(other.endpoint, endpoint) ||
-                other.endpoint == endpoint) &&
-            (identical(other.timerDeviceModel, timerDeviceModel) ||
-                other.timerDeviceModel == timerDeviceModel));
+                other.endpoint == endpoint));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, appBarTitle, endpoint, timerDeviceModel);
+  int get hashCode => Object.hash(runtimeType, appBarTitle, endpoint);
 
   /// Create a copy of TimerPageModel
   /// with the given fields replaced by the non-null parameter values.
@@ -202,8 +167,7 @@ class _$TimerPageModelImpl implements _TimerPageModel {
 abstract class _TimerPageModel implements TimerPageModel {
   const factory _TimerPageModel(
       {required final String appBarTitle,
-      required final String endpoint,
-      required final TimerDeviceModel timerDeviceModel}) = _$TimerPageModelImpl;
+      required final String endpoint}) = _$TimerPageModelImpl;
 
   factory _TimerPageModel.fromJson(Map<String, dynamic> json) =
       _$TimerPageModelImpl.fromJson;
@@ -212,8 +176,6 @@ abstract class _TimerPageModel implements TimerPageModel {
   String get appBarTitle;
   @override
   String get endpoint;
-  @override
-  TimerDeviceModel get timerDeviceModel;
 
   /// Create a copy of TimerPageModel
   /// with the given fields replaced by the non-null parameter values.

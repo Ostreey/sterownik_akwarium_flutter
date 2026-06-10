@@ -3,12 +3,14 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'timer_device_model.freezed.dart';
 part 'timer_device_model.g.dart';
 
+/// Stan bieżący urządzenia z telemetrii `001/state/devices` (Faza 4: niesie już
+/// TYLKO state+speed; konfiguracja timerów jest pobierana osobno przez
+/// `get_timers` → [DeviceTimersModel]).
 @freezed
 class TimerDeviceModel with _$TimerDeviceModel {
   const factory TimerDeviceModel({
     @Default(0) int speed,
     @Default(false) bool state,
-    @Default(Timer()) Timer timer,
   }) = _TimerDeviceModel;
 
   factory TimerDeviceModel.fromJson(Map<String, dynamic> json) =>

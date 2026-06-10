@@ -10,8 +10,6 @@ _$TimerPageModelImpl _$$TimerPageModelImplFromJson(Map<String, dynamic> json) =>
     _$TimerPageModelImpl(
       appBarTitle: json['appBarTitle'] as String,
       endpoint: json['endpoint'] as String,
-      timerDeviceModel: TimerDeviceModel.fromJson(
-          json['timerDeviceModel'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$TimerPageModelImplToJson(
@@ -19,5 +17,4 @@ Map<String, dynamic> _$$TimerPageModelImplToJson(
     <String, dynamic>{
       'appBarTitle': instance.appBarTitle,
       'endpoint': instance.endpoint,
-      'timerDeviceModel': instance.timerDeviceModel,
     };

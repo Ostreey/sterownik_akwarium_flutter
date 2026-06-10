@@ -4,6 +4,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sterownik_akwarium/app/core/mqttData.dart';
+import 'package:sterownik_akwarium/app/domain/models/device_timers_model/device_timers_model.dart';
 import 'package:sterownik_akwarium/app/domain/models/devices_model/devices_model.dart';
 import 'package:sterownik_akwarium/app/domain/models/sensor_discovery_model/sensor_discovery_model.dart';
 import 'package:sterownik_akwarium/app/domain/models/sensor_model/sensor_model.dart';
@@ -56,6 +57,12 @@ final mqttStatusProvider = StreamProvider<bool>((ref) {
 
 final sensorScanProvider = StreamProvider<SensorDiscoveryModel>((ref) {
   return ref.watch(activeTransportProvider).sensorScan;
+});
+
+/// Faza 4: konfiguracja timerów urządzenia (read-on-demand). Ekran timera woła
+/// `requestTimers(...)`, a tu nasłuchuje odpowiedzi firmware (`001/timers/<device>`).
+final timersProvider = StreamProvider<DeviceTimersModel>((ref) {
+  return ref.watch(activeTransportProvider).timers;
 });
 
 /// Aktualnie aktywny kanał do sterownika. Reszta apki watchuje TEN provider —

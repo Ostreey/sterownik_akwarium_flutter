@@ -22,7 +22,6 @@ TimerDeviceModel _$TimerDeviceModelFromJson(Map<String, dynamic> json) {
 mixin _$TimerDeviceModel {
   int get speed => throw _privateConstructorUsedError;
   bool get state => throw _privateConstructorUsedError;
-  Timer get timer => throw _privateConstructorUsedError;
 
   /// Serializes this TimerDeviceModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -40,9 +39,7 @@ abstract class $TimerDeviceModelCopyWith<$Res> {
           TimerDeviceModel value, $Res Function(TimerDeviceModel) then) =
       _$TimerDeviceModelCopyWithImpl<$Res, TimerDeviceModel>;
   @useResult
-  $Res call({int speed, bool state, Timer timer});
-
-  $TimerCopyWith<$Res> get timer;
+  $Res call({int speed, bool state});
 }
 
 /// @nodoc
@@ -62,7 +59,6 @@ class _$TimerDeviceModelCopyWithImpl<$Res, $Val extends TimerDeviceModel>
   $Res call({
     Object? speed = null,
     Object? state = null,
-    Object? timer = null,
   }) {
     return _then(_value.copyWith(
       speed: null == speed
@@ -73,21 +69,7 @@ class _$TimerDeviceModelCopyWithImpl<$Res, $Val extends TimerDeviceModel>
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
               as bool,
-      timer: null == timer
-          ? _value.timer
-          : timer // ignore: cast_nullable_to_non_nullable
-              as Timer,
     ) as $Val);
-  }
-
-  /// Create a copy of TimerDeviceModel
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $TimerCopyWith<$Res> get timer {
-    return $TimerCopyWith<$Res>(_value.timer, (value) {
-      return _then(_value.copyWith(timer: value) as $Val);
-    });
   }
 }
 
@@ -99,10 +81,7 @@ abstract class _$$TimerDeviceModelImplCopyWith<$Res>
       __$$TimerDeviceModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int speed, bool state, Timer timer});
-
-  @override
-  $TimerCopyWith<$Res> get timer;
+  $Res call({int speed, bool state});
 }
 
 /// @nodoc
@@ -120,7 +99,6 @@ class __$$TimerDeviceModelImplCopyWithImpl<$Res>
   $Res call({
     Object? speed = null,
     Object? state = null,
-    Object? timer = null,
   }) {
     return _then(_$TimerDeviceModelImpl(
       speed: null == speed
@@ -131,10 +109,6 @@ class __$$TimerDeviceModelImplCopyWithImpl<$Res>
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
               as bool,
-      timer: null == timer
-          ? _value.timer
-          : timer // ignore: cast_nullable_to_non_nullable
-              as Timer,
     ));
   }
 }
@@ -142,8 +116,7 @@ class __$$TimerDeviceModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$TimerDeviceModelImpl implements _TimerDeviceModel {
-  const _$TimerDeviceModelImpl(
-      {this.speed = 0, this.state = false, this.timer = const Timer()});
+  const _$TimerDeviceModelImpl({this.speed = 0, this.state = false});
 
   factory _$TimerDeviceModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$TimerDeviceModelImplFromJson(json);
@@ -154,13 +127,10 @@ class _$TimerDeviceModelImpl implements _TimerDeviceModel {
   @override
   @JsonKey()
   final bool state;
-  @override
-  @JsonKey()
-  final Timer timer;
 
   @override
   String toString() {
-    return 'TimerDeviceModel(speed: $speed, state: $state, timer: $timer)';
+    return 'TimerDeviceModel(speed: $speed, state: $state)';
   }
 
   @override
@@ -169,13 +139,12 @@ class _$TimerDeviceModelImpl implements _TimerDeviceModel {
         (other.runtimeType == runtimeType &&
             other is _$TimerDeviceModelImpl &&
             (identical(other.speed, speed) || other.speed == speed) &&
-            (identical(other.state, state) || other.state == state) &&
-            (identical(other.timer, timer) || other.timer == timer));
+            (identical(other.state, state) || other.state == state));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, speed, state, timer);
+  int get hashCode => Object.hash(runtimeType, speed, state);
 
   /// Create a copy of TimerDeviceModel
   /// with the given fields replaced by the non-null parameter values.
@@ -195,10 +164,8 @@ class _$TimerDeviceModelImpl implements _TimerDeviceModel {
 }
 
 abstract class _TimerDeviceModel implements TimerDeviceModel {
-  const factory _TimerDeviceModel(
-      {final int speed,
-      final bool state,
-      final Timer timer}) = _$TimerDeviceModelImpl;
+  const factory _TimerDeviceModel({final int speed, final bool state}) =
+      _$TimerDeviceModelImpl;
 
   factory _TimerDeviceModel.fromJson(Map<String, dynamic> json) =
       _$TimerDeviceModelImpl.fromJson;
@@ -207,8 +174,6 @@ abstract class _TimerDeviceModel implements TimerDeviceModel {
   int get speed;
   @override
   bool get state;
-  @override
-  Timer get timer;
 
   /// Create a copy of TimerDeviceModel
   /// with the given fields replaced by the non-null parameter values.

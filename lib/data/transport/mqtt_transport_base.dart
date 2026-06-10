@@ -6,6 +6,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
+import 'package:sterownik_akwarium/app/domain/models/device_timers_model/device_timers_model.dart';
 import 'package:sterownik_akwarium/app/domain/models/sensor_discovery_model/sensor_discovery_model.dart';
 import 'package:sterownik_akwarium/app/domain/models/sensor_model/sensor_model.dart';
 import 'package:sterownik_akwarium/data/transport/controller_transport.dart';
@@ -28,6 +29,8 @@ abstract class MqttTransportBase implements ControllerTransport {
       StreamController<SensorDiscoveryModel>.broadcast();
   final StreamController<CommandAck> _ackController =
       StreamController<CommandAck>.broadcast();
+  final StreamController<DeviceTimersModel> _timersController =
+      StreamController<DeviceTimersModel>.broadcast();
 
   @override
   Stream<SensorModel> get telemetry => _telemetryController.stream;
@@ -37,6 +40,8 @@ abstract class MqttTransportBase implements ControllerTransport {
   Stream<SensorDiscoveryModel> get sensorScan => _sensorScanController.stream;
   @override
   Stream<CommandAck> get acks => _ackController.stream;
+  @override
+  Stream<DeviceTimersModel> get timers => _timersController.stream;
 
   final String mqttServer;
   final int mqttPort;
@@ -133,11 +138,14 @@ abstract class MqttTransportBase implements ControllerTransport {
     final String availTopic = "$deviceId/avail";
     final String sensorsTopic = "$deviceId/evt/sensors";
     final String ackPrefix = "$deviceId/ack/";
+    // Faza 4: konfiguracja timerow read-on-demand (<id>/timers/<device>).
+    final String timersPrefix = "$deviceId/timers/";
 
     _client.subscribe("$statePrefix+", MqttQos.atLeastOnce);
     _client.subscribe(availTopic, MqttQos.atLeastOnce);
     _client.subscribe(sensorsTopic, MqttQos.atLeastOnce);
     _client.subscribe("$ackPrefix#", MqttQos.atLeastOnce);
+    _client.subscribe("$timersPrefix+", MqttQos.atLeastOnce);
 
     _client.updates!.listen((List<MqttReceivedMessage<MqttMessage?>>? c) {
       final MqttPublishMessage recMess = c![0].payload as MqttPublishMessage;
@@ -158,6 +166,10 @@ abstract class MqttTransportBase implements ControllerTransport {
         } else if (receivedTopic.startsWith(ackPrefix)) {
           final target = receivedTopic.substring(ackPrefix.length);
           _ackController.add(CommandAck(target: target, payload: payload));
+        } else if (receivedTopic.startsWith(timersPrefix)) {
+          // Faza 4: odpowiedz na get_timers (6 slotow urzadzenia).
+          final jsonData = json.decode(payload) as Map<String, dynamic>;
+          _timersController.add(DeviceTimersModel.fromJson(jsonData));
         } else if (receivedTopic.startsWith(statePrefix)) {
           // Faza 4: grupa telemetrii (sensors/devices/system). Merge cząstki w
           // akumulator i odbuduj scalony SensorModel.
@@ -188,6 +200,19 @@ abstract class MqttTransportBase implements ControllerTransport {
     } catch (e) {
       debugPrint("Error: $e");
     }
+  }
+
+  @override
+  Future<void> requestTimers(String deviceTarget) async {
+    // deviceTarget = "<id>/<device>" (np. "001/pompa1"). Komenda get_timers
+    // niesie nazwe urzadzenia w payloadzie; firmware odsyla 6 slotow na
+    // <id>/timers/<device> (strumien `timers`).
+    final i = deviceTarget.indexOf('/');
+    if (i < 0) return;
+    final id = deviceTarget.substring(0, i);
+    final device = deviceTarget.substring(i + 1);
+    final payload = json.encode({"device": device});
+    await sendCommand("$id/get_timers", payload);
   }
 
   // "<id>/<target>" -> "<id>/cmd/<target>".
@@ -247,5 +272,6 @@ abstract class MqttTransportBase implements ControllerTransport {
     _availabilityController.close();
     _sensorScanController.close();
     _ackController.close();
+    _timersController.close();
   }
 }

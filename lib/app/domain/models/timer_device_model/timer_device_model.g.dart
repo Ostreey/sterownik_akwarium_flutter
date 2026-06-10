@@ -11,9 +11,6 @@ _$TimerDeviceModelImpl _$$TimerDeviceModelImplFromJson(
     _$TimerDeviceModelImpl(
       speed: (json['speed'] as num?)?.toInt() ?? 0,
       state: json['state'] as bool? ?? false,
-      timer: json['timer'] == null
-          ? const Timer()
-          : Timer.fromJson(json['timer'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$TimerDeviceModelImplToJson(
@@ -21,7 +18,6 @@ Map<String, dynamic> _$$TimerDeviceModelImplToJson(
     <String, dynamic>{
       'speed': instance.speed,
       'state': instance.state,
-      'timer': instance.timer,
     };
 
 _$TimerImpl _$$TimerImplFromJson(Map<String, dynamic> json) => _$TimerImpl(

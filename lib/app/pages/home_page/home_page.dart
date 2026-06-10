@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sterownik_akwarium/app/core/page_config.dart';
 import 'package:sterownik_akwarium/app/core/providers.dart';
-import 'package:sterownik_akwarium/app/domain/models/sensor_model/sensor_model.dart';
 import 'package:sterownik_akwarium/app/domain/models/timer_page_model/timer_page_model.dart';
 import 'package:sterownik_akwarium/app/pages/alarms_page/alarms.dart';
 import 'package:sterownik_akwarium/app/pages/choose_controller_page/choose_controller_page.dart';
@@ -48,8 +47,9 @@ class HomePage extends ConsumerStatefulWidget {
 class _HomePageState extends ConsumerState<HomePage> {
   @override
   Widget build(BuildContext context) {
-    SensorModel sensorData = const SensorModel();
-    final sensorDataAsyncValue = ref.watch(mqttUpdatesProvider);
+    // Watch utrzymuje aktywne polaczenie/telemetrie; same wartosci nie sa tu
+    // potrzebne (konfiguracje timerow ekran timera pobiera read-on-demand).
+    ref.watch(mqttUpdatesProvider);
     final homePageViewmodel = ref.watch(homePageViewmodelProvider);
     final selectedController = ref.watch(selectedControllerProvider);
     // Status z topiku <id>/avail (online/offline). Dopoki nie przyjdzie -> offline.
@@ -57,8 +57,6 @@ class _HomePageState extends ConsumerState<HomePage> {
     // Faza 3: czy aktywny kanal jest lokalny (LAN) czy przez chmure.
     final transportKind = ref.watch(activeTransportKindProvider);
     final isLocal = transportKind == TransportKind.local;
-
-    sensorDataAsyncValue.whenData((value) => sensorData = value);
 
     ref.listen(homePageViewmodelProvider, (previous, next) {
       if (next is AsyncError) {
@@ -122,8 +120,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "Pompa 1",
-                    endpoint: "${selectedController?.id}/pump1",
-                    timerDeviceModel: sensorData.pompa1);
+                    endpoint: "${selectedController?.id}/pompa1");
                 context.pushNamed(TimerPage.pageConfig.name, extra: model);
               },
             ),
@@ -135,8 +132,62 @@ class _HomePageState extends ConsumerState<HomePage> {
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "Pompa 2",
-                    endpoint: "${selectedController?.id}/pump2",
-                    timerDeviceModel: sensorData.pompa2);
+                    endpoint: "${selectedController?.id}/pompa2");
+                context.pushNamed(TimerPage.pageConfig.name, extra: model);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.heat_pump_outlined),
+              title: const Text("Pompa 3"),
+              enabled: isOnline,
+              onTap: () {
+                final model = TimerPageModel(
+                    appBarTitle: "Pompa 3",
+                    endpoint: "${selectedController?.id}/pompa3");
+                context.pushNamed(TimerPage.pageConfig.name, extra: model);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.heat_pump_outlined),
+              title: const Text("Pompa 4"),
+              enabled: isOnline,
+              onTap: () {
+                final model = TimerPageModel(
+                    appBarTitle: "Pompa 4",
+                    endpoint: "${selectedController?.id}/pompa4");
+                context.pushNamed(TimerPage.pageConfig.name, extra: model);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.heat_pump_outlined),
+              title: const Text("Pompa 5"),
+              enabled: isOnline,
+              onTap: () {
+                final model = TimerPageModel(
+                    appBarTitle: "Pompa 5",
+                    endpoint: "${selectedController?.id}/pompa5");
+                context.pushNamed(TimerPage.pageConfig.name, extra: model);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.heat_pump_outlined),
+              title: const Text("Pompa 6"),
+              enabled: isOnline,
+              onTap: () {
+                final model = TimerPageModel(
+                    appBarTitle: "Pompa 6",
+                    endpoint: "${selectedController?.id}/pompa6");
+                context.pushNamed(TimerPage.pageConfig.name, extra: model);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.heat_pump_outlined),
+              title: const Text("Pompa 7"),
+              enabled: isOnline,
+              onTap: () {
+                final model = TimerPageModel(
+                    appBarTitle: "Pompa 7",
+                    endpoint: "${selectedController?.id}/pompa7");
                 context.pushNamed(TimerPage.pageConfig.name, extra: model);
               },
             ),
@@ -148,8 +199,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "Cyrkulacja 1",
-                    endpoint: "${selectedController?.id}/circul1",
-                    timerDeviceModel: sensorData.circul1);
+                    endpoint: "${selectedController?.id}/circul1");
                 context.pushNamed(TimerPage.pageConfig.name, extra: model);
               },
             ),
@@ -161,8 +211,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "Cyrkulacja 2",
-                    endpoint: "${selectedController?.id}/circul2",
-                    timerDeviceModel: sensorData.circul2);
+                    endpoint: "${selectedController?.id}/circul2");
                 context.pushNamed(TimerPage.pageConfig.name, extra: model);
               },
             ),
@@ -174,8 +223,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "LED",
-                    endpoint: "${selectedController?.id}/led",
-                    timerDeviceModel: sensorData.led);
+                    endpoint: "${selectedController?.id}/led");
                 context.pushNamed(TimerPage.pageConfig.name, extra: model);
               },
             ),
@@ -187,8 +235,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "Gniazdo 1",
-                    endpoint: "${selectedController?.id}/soc1",
-                    timerDeviceModel: sensorData.soc1);
+                    endpoint: "${selectedController?.id}/soc1");
                 context.pushNamed(TimerPage.pageConfig.name, extra: model);
               },
             ),
@@ -200,8 +247,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "Gniazdo 2",
-                    endpoint: "${selectedController?.id}/soc2",
-                    timerDeviceModel: sensorData.soc2);
+                    endpoint: "${selectedController?.id}/soc2");
                 context.pushNamed(TimerPage.pageConfig.name, extra: model);
               },
             ),
@@ -213,8 +259,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "Gniazdo 3",
-                    endpoint: "${selectedController?.id}/soc3",
-                    timerDeviceModel: sensorData.soc3);
+                    endpoint: "${selectedController?.id}/soc3");
                 context.pushNamed(TimerPage.pageConfig.name, extra: model);
               },
             ),
@@ -226,8 +271,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "Gniazdo 4",
-                    endpoint: "${selectedController?.id}/soc4",
-                    timerDeviceModel: sensorData.soc4);
+                    endpoint: "${selectedController?.id}/soc4");
                 context.pushNamed(TimerPage.pageConfig.name, extra: model);
               },
             ),
@@ -239,8 +283,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "Gniazdo 5",
-                    endpoint: "${selectedController?.id}/soc5",
-                    timerDeviceModel: sensorData.soc5);
+                    endpoint: "${selectedController?.id}/soc5");
                 context.pushNamed(TimerPage.pageConfig.name, extra: model);
               },
             ),
@@ -251,8 +294,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "Gniazdo 6",
-                    endpoint: "${selectedController?.id}/soc6",
-                    timerDeviceModel: sensorData.soc6);
+                    endpoint: "${selectedController?.id}/soc6");
                 context.pushNamed(TimerPage.pageConfig.name, extra: model);
               },
             ),
@@ -263,8 +305,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               onTap: () {
                 final model = TimerPageModel(
                     appBarTitle: "Gniazdo 7",
-                    endpoint: "${selectedController?.id}/soc7",
-                    timerDeviceModel: sensorData.soc7);
+                    endpoint: "${selectedController?.id}/soc7");
                 context.pushNamed(TimerPage.pageConfig.name, extra: model);
               },
             ),

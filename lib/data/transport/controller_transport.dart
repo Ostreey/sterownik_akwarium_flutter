@@ -1,3 +1,4 @@
+import 'package:sterownik_akwarium/app/domain/models/device_timers_model/device_timers_model.dart';
 import 'package:sterownik_akwarium/app/domain/models/sensor_discovery_model/sensor_discovery_model.dart';
 import 'package:sterownik_akwarium/app/domain/models/sensor_model/sensor_model.dart';
 
@@ -30,6 +31,10 @@ abstract class ControllerTransport {
   /// Potwierdzenia komend (`<id>/ack/<target>`).
   Stream<CommandAck> get acks;
 
+  /// Konfiguracja timerów urządzenia (Faza 4: odpowiedź na `get_timers`,
+  /// topik `<id>/timers/<device>`). Read-on-demand — patrz [requestTimers].
+  Stream<DeviceTimersModel> get timers;
+
   /// Łączy z brokerem i subskrybuje topiki danego sterownika.
   Future<void> connect(String deviceId);
 
@@ -42,6 +47,13 @@ abstract class ControllerTransport {
   /// `"001/scan_sensors"`); transport sam przepisuje ją na topik komendy
   /// `"<id>/cmd/<target>"`. [payload] to gotowy string JSON.
   Future<void> sendCommand(String target, String payload);
+
+  /// Prosi sterownik o konfigurację timerów danego urządzenia (Faza 4).
+  ///
+  /// [deviceTarget] to device-qualified `"<id>/<device>"` (np. `"001/pompa1"`),
+  /// gdzie `<device>` to nazwa używana przez firmware (pompa1/circul1/soc1/led).
+  /// Odpowiedź przychodzi strumieniem [timers].
+  Future<void> requestTimers(String deviceTarget);
 
   /// Zwalnia zasoby (zamyka strumienie). Po wywołaniu transport jest nieużywalny.
   void dispose();
