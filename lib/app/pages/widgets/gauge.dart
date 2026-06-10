@@ -43,8 +43,22 @@ class Gauge extends StatelessWidget {
     final themeColor = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
-    final double minRange = minAlarmValue * 0.9;
-    final double maxRange = maxAlarmValue * 1.1;
+    // Wartosci alarmowe moga przyjsc w dowolnej kolejnosci: dla temp. WODY
+    // (grzanie) min < max, ale dla temp. POWIETRZA (chlodzenie) logika jest
+    // odwrocona i min > max. Gauge wymaga osi min < max, inaczej gauge_indicator
+    // rzuca "Invalid argument(s)". Dlatego sortujemy na lo/hi - zielona strefa
+    // "ok" jest miedzy nimi niezaleznie od kolejnosci.
+    final double lo =
+        minAlarmValue < maxAlarmValue ? minAlarmValue : maxAlarmValue;
+    final double hi =
+        minAlarmValue < maxAlarmValue ? maxAlarmValue : minAlarmValue;
+    final double minRange = lo * 0.9;
+    // Zabezpieczenie: gdy lo==hi (lub po skalowaniu max<=min) wymus minimalny
+    // rozjazd osi, zeby gauge mial poprawny zakres.
+    final double maxRange = (hi * 1.1) > minRange ? (hi * 1.1) : minRange + 1;
+    // Wskaznik musi miescic sie w osi - inaczej tez wyjatek (np. odczyt-smiec
+    // przy odlaczonym czujniku). Tekst i tak pokazuje realny currentValue.
+    final double pointerValue = currentValue.clamp(minRange, maxRange);
     return Stack(
       children: [
         SizedBox(
@@ -53,7 +67,7 @@ class Gauge extends StatelessWidget {
             duration: const Duration(seconds: 1),
             curve: Curves.elasticOut,
             radius: 100,
-            value: currentValue,
+            value: pointerValue,
             axis: GaugeAxis(
               min: minRange,
               max: maxRange,
@@ -77,18 +91,18 @@ class Gauge extends StatelessWidget {
               segments: [
                 GaugeSegment(
                   from: minRange,
-                  to: minAlarmValue,
+                  to: lo,
                   color: getAlarmValueColor(themeColor),
                   cornerRadius: Radius.zero,
                 ),
                 GaugeSegment(
-                  from: minAlarmValue,
-                  to: maxAlarmValue,
+                  from: lo,
+                  to: hi,
                   color: getValidValueColor(themeColor),
                   cornerRadius: Radius.zero,
                 ),
                 GaugeSegment(
-                  from: maxAlarmValue,
+                  from: hi,
                   to: maxRange,
                   color: getAlarmValueColor(themeColor),
                   cornerRadius: Radius.zero,
@@ -104,8 +118,7 @@ class Gauge extends StatelessWidget {
           child: Center(
             child: Text(
               parseCurentValue(currentValue) + unit,
-              style: ((currentValue > minAlarmValue) &&
-                      (currentValue < maxAlarmValue))
+              style: ((currentValue > lo) && (currentValue < hi))
                   ? textTheme.titleLarge!.copyWith(color: themeColor.primary)
                   : textTheme.titleLarge!.copyWith(
                       color: themeColor.error), // Adjust text style as needed
